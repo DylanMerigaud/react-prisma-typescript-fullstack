@@ -9,12 +9,17 @@ enum Aliment {
   Poulet
 }
 
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
 type Mutation {
   createDraft(authorId: ID, title: String): Post!
   createUser(data: UserCreateInput!): User!
   deletePost(where: PostWhereUniqueInput!): Post
   publish(id: ID): Post
-  signup(email: String, name: String): User!
+  signup(email: String, name: String): AuthPayload!
   testoss(aliment: Aliment): Test!
 }
 

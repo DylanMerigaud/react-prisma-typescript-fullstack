@@ -120,6 +120,10 @@ export interface NexusGenEnums {
 }
 
 export interface NexusGenRootTypes {
+  AuthPayload: { // root type
+    token: string; // String!
+    user: NexusGenRootTypes['User']; // User!
+  }
   Mutation: {};
   Post: { // root type
     id: string; // ID!
@@ -156,12 +160,16 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
 }
 
 export interface NexusGenFieldTypes {
+  AuthPayload: { // field return type
+    token: string; // String!
+    user: NexusGenRootTypes['User']; // User!
+  }
   Mutation: { // field return type
     createDraft: NexusGenRootTypes['Post']; // Post!
     createUser: NexusGenRootTypes['User']; // User!
     deletePost: NexusGenRootTypes['Post'] | null; // Post
     publish: NexusGenRootTypes['Post'] | null; // Post
-    signup: NexusGenRootTypes['User']; // User!
+    signup: NexusGenRootTypes['AuthPayload']; // AuthPayload!
     testoss: NexusGenRootTypes['Test']; // Test!
   }
   Post: { // field return type
@@ -237,7 +245,7 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Mutation" | "Post" | "Query" | "Test" | "User";
+export type NexusGenObjectNames = "AuthPayload" | "Mutation" | "Post" | "Query" | "Test" | "User";
 
 export type NexusGenInputNames = "PostCreateManyWithoutAuthorInput" | "PostCreateWithoutAuthorInput" | "PostWhereInput" | "PostWhereUniqueInput" | "UserCreateInput" | "UserWhereInput";
 
