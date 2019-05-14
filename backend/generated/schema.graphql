@@ -18,8 +18,9 @@ type Mutation {
   createDraft(authorId: ID, title: String): Post!
   createUser(data: UserCreateInput!): User!
   deletePost(where: PostWhereUniqueInput!): Post
+  login(email: String!, password: String!): AuthPayload!
   publish(id: ID): Post
-  signup(email: String, name: String): AuthPayload!
+  signup(email: String!, name: String!, password: String!): AuthPayload!
   testoss(aliment: Aliment): Test!
 }
 

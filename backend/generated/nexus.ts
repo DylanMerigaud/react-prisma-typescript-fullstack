@@ -168,6 +168,7 @@ export interface NexusGenFieldTypes {
     createDraft: NexusGenRootTypes['Post']; // Post!
     createUser: NexusGenRootTypes['User']; // User!
     deletePost: NexusGenRootTypes['Post'] | null; // Post
+    login: NexusGenRootTypes['AuthPayload']; // AuthPayload!
     publish: NexusGenRootTypes['Post'] | null; // Post
     signup: NexusGenRootTypes['AuthPayload']; // AuthPayload!
     testoss: NexusGenRootTypes['Test']; // Test!
@@ -208,12 +209,17 @@ export interface NexusGenArgTypes {
     deletePost: { // args
       where: NexusGenInputs['PostWhereUniqueInput']; // PostWhereUniqueInput!
     }
+    login: { // args
+      email: string; // String!
+      password: string; // String!
+    }
     publish: { // args
       id?: string | null; // ID
     }
     signup: { // args
-      email?: string | null; // String
-      name?: string | null; // String
+      email: string; // String!
+      name: string; // String!
+      password: string; // String!
     }
     testoss: { // args
       aliment?: NexusGenEnums['Aliment'] | null; // Aliment

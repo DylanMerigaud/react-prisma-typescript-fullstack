@@ -7,11 +7,11 @@ import { GraphQLServer } from 'graphql-yoga'
 import { rule, shield } from 'graphql-shield'
 import * as yup from 'yup'
 import { ContextParameters } from 'graphql-yoga/dist/types'
-import { clearConfigCache } from 'prettier'
-import { INSPECT_MAX_BYTES } from 'buffer'
+// import { clearConfigCache } from 'prettier'
+// import { INSPECT_MAX_BYTES } from 'buffer'
 
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
+import * as bcrypt from 'bcrypt'
+import * as jwt from 'jsonwebtoken'
 
 const Query = prismaObjectType({
 	name: 'Query',
@@ -78,19 +78,49 @@ const Mutation = prismaObjectType({
 		t.field('signup', {
 			type: 'AuthPayload',
 			args: {
-				name: stringArg(),
-				email: stringArg()
+				name: stringArg({ nullable: false }),
+				email: stringArg({ nullable: false }),
+				password: stringArg({ nullable: false })
 			},
 			resolve: async (_, { name, email, password }, ctx) => {
-				console.log({ bcrypt, jwt })
-
-				const password2 = await bcrypt.hashSync(password, 10)
+				const password2 = await bcrypt.hash(password, 10)
 
 				const user = await ctx.prisma.createUser({
 					name,
 					email,
 					password: password2
 				})
+
+				return {
+					token: jwt.sign({ userId: user.id }, 'APP_SECRET'),
+					user
+				}
+			}
+		})
+		t.field('login', {
+			type: 'AuthPayload',
+			args: {
+				email: stringArg({ nullable: false }),
+				password: stringArg({ nullable: false })
+			},
+			resolve: async (_, { email, password }, ctx) => {
+				const user = await ctx.prisma.users({ where: { email } })
+
+				if (!user)
+					return {
+						token: null,
+						user: null,
+						error: 'User not in db.'
+					}
+
+				const valid = bcrypt.compare(password, user.password)
+
+				if (!valid)
+					return {
+						token: null,
+						user: null,
+						error: 'Wrong password.'
+					}
 
 				return {
 					token: jwt.sign({ userId: user.id }, 'APP_SECRET'),
@@ -133,9 +163,15 @@ const schema = makePrismaSchema({
 
 const getUser = (req: ContextParameters) => {
 	const auth = req.request.get('Authorization')
+
+	console.log({ req })
+
 	if (auth === 'admin') {
 		return { role: 'admin' }
 	} else if (auth) {
+		const token = auth.replace('Bearer ', '')
+		const { userId } = jwt.verify(token, 'APP_SECRET')
+		// TODO prisma.getUser, retrouver le context
 		return { role: 'user' }
 	} else {
 		return null
