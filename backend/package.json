@@ -15,7 +15,7 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"bcryptjs": "^2.4.3",
+		"bcrypt": "^3.0.6",
 		"graphql": "^14.3.0",
 		"graphql-shield": "^5.3.5",
 		"graphql-yoga": "^1.17.4",
