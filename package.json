@@ -1,0 +1,8 @@
+{
+  "name": "messenger-project",
+  "version": "1.0.0",
+  "repository": "git@github.com:DylanMerigaud/messenger-project.git",
+  "author": "DylanMerigaud <dylanmerigaud@gmail.com>",
+  "license": "MIT",
+  "private": true
+}
