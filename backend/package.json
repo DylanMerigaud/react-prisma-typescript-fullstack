@@ -1,35 +1,37 @@
 {
-  "name": "backend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node index.ts",
-    "dev": "ts-node-dev --no-notify --respawn --transpileOnly ./",
-    "prisma:generate": "dotenv prisma generate",
-    "prisma:deploy": "dotenv prisma deploy",
-    "docker:up": "docker-compose up"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "graphql": "^14.3.0",
-    "graphql-shield": "^5.3.5",
-    "graphql-yoga": "^1.17.4",
-    "graphql-yup-middleware": "^0.0.1",
-    "nexus": "^0.11.7",
-    "nexus-prisma": "^0.3.7",
-    "prisma-client-lib": "^1.30.4",
-    "yup": "^0.27.0"
-  },
-  "devDependencies": {
-    "@types/graphql": "^14.2.0",
-    "@types/yup": "^0.26.13",
-    "dotenv-cli": "^2.0.0",
-    "ts-node": "^8.1.0",
-    "ts-node-dev": "^1.0.0-pre.38",
-    "typescript": "^3.4.5"
-  }
+	"name": "backend",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "ts-node index.ts",
+		"dev": "ts-node-dev --no-notify --respawn --transpileOnly ./",
+		"prisma:generate": "dotenv prisma generate",
+		"prisma:deploy": "dotenv prisma deploy",
+		"docker:up": "docker-compose up"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"bcryptjs": "^2.4.3",
+		"graphql": "^14.3.0",
+		"graphql-shield": "^5.3.5",
+		"graphql-yoga": "^1.17.4",
+		"graphql-yup-middleware": "^0.0.1",
+		"jsonwebtoken": "^8.5.1",
+		"nexus": "^0.11.7",
+		"nexus-prisma": "^0.3.7",
+		"prisma-client-lib": "^1.30.4",
+		"yup": "^0.27.0"
+	},
+	"devDependencies": {
+		"@types/graphql": "^14.2.0",
+		"@types/yup": "^0.26.13",
+		"dotenv-cli": "^2.0.0",
+		"ts-node": "^8.1.0",
+		"ts-node-dev": "^1.0.0-pre.38",
+		"typescript": "^3.4.5"
+	}
 }

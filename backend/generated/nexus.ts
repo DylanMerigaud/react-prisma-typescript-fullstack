@@ -161,6 +161,7 @@ export interface NexusGenFieldTypes {
     createUser: NexusGenRootTypes['User']; // User!
     deletePost: NexusGenRootTypes['Post'] | null; // Post
     publish: NexusGenRootTypes['Post'] | null; // Post
+    signup: NexusGenRootTypes['User']; // User!
     testoss: NexusGenRootTypes['Test']; // Test!
   }
   Post: { // field return type
@@ -201,6 +202,10 @@ export interface NexusGenArgTypes {
     }
     publish: { // args
       id?: string | null; // ID
+    }
+    signup: { // args
+      email?: string | null; // String
+      name?: string | null; // String
     }
     testoss: { // args
       aliment?: NexusGenEnums['Aliment'] | null; // Aliment
