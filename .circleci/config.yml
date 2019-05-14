@@ -1,4 +1,4 @@
-version: 2.1
+version: 2.0
 jobs:
   install:
     docker:
@@ -21,6 +21,7 @@ jobs:
     docker:
       - image: circleci/node:lts
     steps:
+      - checkout
       - run:
           name: Test Backend
           command: cd backend && yarn test
@@ -31,18 +32,21 @@ jobs:
     docker:
       - image: circleci/node:lts
     steps:
+      - checkout
       - run:
           name: Build Backend
-          command: cd backend && yarn test
+          command: cd backend && yarn build
       - run:
-          name: Test Frontend
-          command: cd frontend && yarn test
+          name: Build Frontend
+          command: cd frontend && yarn build
 workflows:
-  version: 2.1
-  install:
+  version: 2
+  default:
     jobs:
       - install
-  build_and_test:
-    jobs:
-      - build
-      - test
+      - build:
+          requires:
+            - install
+      - test:
+          requires:
+            - install
