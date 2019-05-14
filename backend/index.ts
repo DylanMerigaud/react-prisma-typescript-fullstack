@@ -118,17 +118,14 @@ const isUser = rule()(async (parent, args, ctx, info) => {
 
 // Permissions
 
-const permissions = shield(
-  {
-    Query: {},
-    Mutation: {
-      testoss: isAuthenticated
-    },
-    Test: isAdmin,
-    Aliment: isAuthenticated
+const permissions = shield({
+  Query: {},
+  Mutation: {
+    testoss: isAuthenticated
   },
-  { debug: true }
-);
+  Test: isAdmin,
+  Aliment: isAuthenticated
+});
 
 const server = new GraphQLServer({
   schema,

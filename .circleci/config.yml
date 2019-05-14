@@ -1,0 +1,48 @@
+version: 2.1
+jobs:
+  install:
+    docker:
+      - image: circleci/node:lts
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}-{{ checksum "./frontend/yarn.lock" }}-{{ checksum "./backend/yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}-{{ checksum "./frontend/yarn.lock" }}-{{ checksum "./backend/yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+  test:
+    docker:
+      - image: circleci/node:lts
+    steps:
+      - run:
+          name: Test Backend
+          command: cd backend && yarn test
+      - run:
+          name: Test Frontend
+          command: cd frontend && yarn test
+  build:
+    docker:
+      - image: circleci/node:lts
+    steps:
+      - run:
+          name: Build Backend
+          command: cd backend && yarn test
+      - run:
+          name: Test Frontend
+          command: cd frontend && yarn test
+workflows:
+  version: 2.1
+  install:
+    jobs:
+      - install
+  build_and_test:
+    jobs:
+      - build
+      - test
