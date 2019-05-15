@@ -17,6 +17,10 @@ jobs:
           key: yarn-packages-{{ checksum "yarn.lock" }}-{{ checksum "./frontend/yarn.lock" }}-{{ checksum "./backend/yarn.lock" }}
           paths:
             - ~/.cache/yarn
+      - persist_to_workspace:
+          root: $CIRCLE_WORKING_DIRECTORY
+          paths:
+            - "**/node_modules"
   test:
     docker:
       - image: circleci/node:lts
