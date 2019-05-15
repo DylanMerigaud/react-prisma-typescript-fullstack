@@ -9,13 +9,13 @@ jobs:
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}-{{ checksum "./frontend/yarn.lock" }}-{{ checksum "./backend/yarn.lock" }}
+            - ${CACHE_VERSION}-yarn-packages-{{ checksum "yarn.lock" }}-{{ checksum "./frontend/yarn.lock" }}-{{ checksum "./backend/yarn.lock" }}
       - run:
           name: Install Dependencies
           command: yarn install --frozen-lockfile
       - save_cache:
           name: Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}-{{ checksum "./frontend/yarn.lock" }}-{{ checksum "./backend/yarn.lock" }}
+          key: ${CACHE_VERSION}-yarn-packages-{{ checksum "yarn.lock" }}-{{ checksum "./frontend/yarn.lock" }}-{{ checksum "./backend/yarn.lock" }}
           paths:
             - ~/.cache/yarn
       - persist_to_workspace:
