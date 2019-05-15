@@ -9,11 +9,18 @@ enum Aliment {
   Poulet
 }
 
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
 type Mutation {
   createDraft(authorId: ID, title: String): Post!
   createUser(data: UserCreateInput!): User!
   deletePost(where: PostWhereUniqueInput!): Post
+  login(email: String!, password: String!): AuthPayload!
   publish(id: ID): Post
+  signup(email: String!, name: String!, password: String!): AuthPayload!
   testoss(aliment: Aliment): Test!
 }
 
@@ -89,6 +96,11 @@ type Query {
   postsByUser(email: String): [Post!]!
 }
 
+enum Role {
+  ADMIN
+  USER
+}
+
 type Test {
   id: ID!
   lol: String!
@@ -98,7 +110,9 @@ type User {
   email: String
   id: ID!
   name: String!
+  password: String!
   posts(after: String, before: String, first: Int, last: Int, orderBy: PostOrderByInput, skip: Int, where: PostWhereInput): [Post!]
+  role: Role!
   verifiedEmail: Boolean!
 }
 
@@ -106,7 +120,9 @@ input UserCreateInput {
   email: String
   id: ID
   name: String!
+  password: String!
   posts: PostCreateManyWithoutAuthorInput
+  role: Role!
   verifiedEmail: Boolean
 }
 
@@ -154,7 +170,25 @@ input UserWhereInput {
   name_not_in: [String!]
   name_not_starts_with: String
   name_starts_with: String
+  password: String
+  password_contains: String
+  password_ends_with: String
+  password_gt: String
+  password_gte: String
+  password_in: [String!]
+  password_lt: String
+  password_lte: String
+  password_not: String
+  password_not_contains: String
+  password_not_ends_with: String
+  password_not_in: [String!]
+  password_not_starts_with: String
+  password_starts_with: String
   posts_some: PostWhereInput
+  role: Role
+  role_in: [Role!]
+  role_not: Role
+  role_not_in: [Role!]
   verifiedEmail: Boolean
   verifiedEmail_not: Boolean
 }

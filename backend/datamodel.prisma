@@ -1,9 +1,17 @@
+
+enum Role {
+  ADMIN
+  USER
+}
+
 type User {
   id: ID! @id
   email: String @unique
   verifiedEmail: Boolean! @default(value: false)
   name: String!
   posts: [Post!]!
+  password: String!
+  role: Role!
 }
 
 type Post {
