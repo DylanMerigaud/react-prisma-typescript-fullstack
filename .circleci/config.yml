@@ -18,7 +18,7 @@ jobs:
           paths:
             - ~/.cache/yarn
       - persist_to_workspace:
-          root: $CIRCLE_WORKING_DIRECTORY
+          root: "${CIRCLE_WORKING_DIRECTORY}"
           paths:
             - "**/node_modules"
   test:
