@@ -3,6 +3,7 @@ jobs:
   install:
     docker:
       - image: circleci/node:lts
+    working_directory: ~/project
     steps:
       - checkout
       - restore_cache:
@@ -18,14 +19,17 @@ jobs:
           paths:
             - ~/.cache/yarn
       - persist_to_workspace:
-          root: "${CIRCLE_WORKING_DIRECTORY}"
+          root: /root/project
           paths:
             - "**/node_modules"
   test:
     docker:
       - image: circleci/node:lts
+    working_directory: ~/project
     steps:
       - checkout
+      - attach_workspace:
+          at: /root/project
       - run:
           name: Test Backend
           command: cd backend && yarn test
@@ -35,8 +39,11 @@ jobs:
   build:
     docker:
       - image: circleci/node:lts
+    working_directory: ~/project
     steps:
       - checkout
+      - attach_workspace:
+          at: /root/project
       - run:
           name: Build Backend
           command: cd backend && yarn build
