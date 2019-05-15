@@ -68,7 +68,7 @@ jobs:
           at: ~/project
       - run:
           name: Deploy
-          command: firebase deploy --token "$FRONTEND_FIREBASE_TOKEN"
+          command: cd frontend && firebase deploy --token "$FRONTEND_FIREBASE_TOKEN"
 
   test-backend:
     docker:
@@ -96,7 +96,7 @@ jobs:
           command: gcloud --quiet config set project ${BACKEND_GOOGLE_PROJECT_ID}
       - run:
           name: Deploy
-          command: gcloud app deploy
+          command: cd backend && gcloud app deploy
 
 workflows:
   version: 2
