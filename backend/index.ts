@@ -208,18 +208,18 @@ const getUser = async (req: ContextParameters) => {
 
 // TO FIX: la rule isAuthenticated est exécuté avant le retour de getUser donc le User n'est pas instancié
 const isAuthenticated = rule()(async (parent, args, ctx, info) => {
-	console.log('isAuthenticated: : ', { user: ctx.user })
-	// => isAuthenticated: :  { user: Promise { <pending> } }
-
-	return ctx.user !== null && ctx.user.id
+	const user = await ctx.user
+	return user !== null && user.id
 })
 
 const isAdmin = rule()(async (parent, args, ctx, info) => {
-	return ctx.user.role === 'ADMIN'
+	const user = await ctx.user
+	return user.role === 'ADMIN'
 })
 
 const isUser = rule()(async (parent, args, ctx, info) => {
-	return ctx.user.role === 'USER'
+	const user = await ctx.user
+	return user.role === 'USER'
 })
 
 // Permissions
