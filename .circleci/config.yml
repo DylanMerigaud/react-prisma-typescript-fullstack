@@ -19,7 +19,7 @@ jobs:
           paths:
             - ~/.cache/yarn
       - persist_to_workspace:
-          root: /root/project
+          root: ~/project
           paths:
             - "**/node_modules"
   test:
@@ -29,7 +29,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: /root/project
+          at: ~/project
       - run:
           name: Test Backend
           command: cd backend && yarn test
@@ -43,7 +43,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: /root/project
+          at: ~/project
       - run:
           name: Build Backend
           command: cd backend && yarn build
