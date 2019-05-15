@@ -96,7 +96,8 @@ const Mutation = prismaObjectType({
 				})
 
 				// User peut ne pas contenir .test mais doit forcement contenir .password, qui n'est pas retourné par la db et ne devrait pas l'être
-				// sinon erreur de prisma
+				// sinon erreur de prisma :
+				// Cannot return null for non-nullable field User.password.
 				console.log({ user })
 				// peut être fix en assignant password, dans ce cas fonctionne normalement
 				user.password = password2
@@ -114,7 +115,17 @@ const Mutation = prismaObjectType({
 				password: stringArg({ nullable: false })
 			},
 			resolve: async (_, { email, password }, ctx) => {
-				const user = await ctx.prisma.users({ where: { email } })
+				const user = await ctx.prisma.user({ email })
+
+				// devrait posséder user.role et user.password
+				console.log({ user })
+				/*
+					{ user:
+						{ id: '5cdc2c0802743900072166d0',
+							email: 'test@test.com',
+							verifiedEmail: false,
+							name: 'Test' } }
+				*/
 
 				if (!user)
 					return {
@@ -123,7 +134,7 @@ const Mutation = prismaObjectType({
 						error: 'User not in db.'
 					}
 
-				const valid = bcrypt.compare(password, user.password)
+				const valid = await bcrypt.compare(password, user.password)
 
 				if (!valid)
 					return {
@@ -198,6 +209,7 @@ const getUser = async (req: ContextParameters) => {
 // TO FIX: la rule isAuthenticated est exécuté avant le retour de getUser donc le User n'est pas instancié
 const isAuthenticated = rule()(async (parent, args, ctx, info) => {
 	console.log('isAuthenticated: : ', { user: ctx.user })
+	// => isAuthenticated: :  { user: Promise { <pending> } }
 
 	return ctx.user !== null && ctx.user.id
 })
