@@ -91,7 +91,6 @@ const Mutation = prismaObjectType({
 					name,
 					email,
 					password: password2,
-					test: 'test',
 					role: 'USER'
 				})
 
@@ -100,7 +99,7 @@ const Mutation = prismaObjectType({
 				// Cannot return null for non-nullable field User.password.
 				console.log({ user })
 				// peut être fix en assignant password, dans ce cas fonctionne normalement
-				user.password = password2
+				// user.password = password2
 
 				return {
 					token: jwt.sign({ userId: user.id }, 'APP_SECRET'),
@@ -117,31 +116,15 @@ const Mutation = prismaObjectType({
 			resolve: async (_, { email, password }, ctx) => {
 				const user = await ctx.prisma.user({ email })
 
-				// devrait posséder user.role et user.password
 				console.log({ user })
-				/*
-					{ user:
-						{ id: '5cdc2c0802743900072166d0',
-							email: 'test@test.com',
-							verifiedEmail: false,
-							name: 'Test' } }
-				*/
 
-				if (!user)
-					return {
-						token: null,
-						user: null,
-						error: 'User not in db.'
-					}
+				if (!user) throw new Error('User not in db.')
 
 				const valid = await bcrypt.compare(password, user.password)
 
-				if (!valid)
-					return {
-						token: null,
-						user: null,
-						error: 'Wrong password.'
-					}
+				console.log({ valid })
+
+				if (!valid) throw new Error('Wrong password.')
 
 				return {
 					token: jwt.sign({ userId: user.id }, 'APP_SECRET'),
@@ -190,11 +173,7 @@ const getUser = async (req: ContextParameters) => {
 		try {
 			const { userId } = jwt.verify(token, 'APP_SECRET')
 			// TO FIX: prisma.user ne retourne pas .role
-			const user = await prisma.user({ id: userId })
-
-			console.log('getUser: ', { user })
-
-			return user
+			return prisma.user({ id: userId })
 		} catch (error) {
 			console.log('getUser error', error)
 			return null
@@ -209,7 +188,10 @@ const getUser = async (req: ContextParameters) => {
 // TO FIX: la rule isAuthenticated est exécuté avant le retour de getUser donc le User n'est pas instancié
 const isAuthenticated = rule()(async (parent, args, ctx, info) => {
 	const user = await ctx.user
-	return user !== null && user.id
+
+	console.log('isAuth: ', { user })
+
+	return user !== null && user.id !== undefined
 })
 
 const isAdmin = rule()(async (parent, args, ctx, info) => {

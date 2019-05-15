@@ -64,7 +64,6 @@ export interface NexusGenInputs {
     password: string; // String!
     posts?: NexusGenInputs['PostCreateManyWithoutAuthorInput'] | null; // PostCreateManyWithoutAuthorInput
     role: NexusGenEnums['Role']; // Role!
-    test: string; // String!
     verifiedEmail?: boolean | null; // Boolean
   }
   UserWhereInput: { // input type
@@ -130,20 +129,6 @@ export interface NexusGenInputs {
     role_in?: NexusGenEnums['Role'][] | null; // [Role!]
     role_not?: NexusGenEnums['Role'] | null; // Role
     role_not_in?: NexusGenEnums['Role'][] | null; // [Role!]
-    test?: string | null; // String
-    test_contains?: string | null; // String
-    test_ends_with?: string | null; // String
-    test_gt?: string | null; // String
-    test_gte?: string | null; // String
-    test_in?: string[] | null; // [String!]
-    test_lt?: string | null; // String
-    test_lte?: string | null; // String
-    test_not?: string | null; // String
-    test_not_contains?: string | null; // String
-    test_not_ends_with?: string | null; // String
-    test_not_in?: string[] | null; // [String!]
-    test_not_starts_with?: string | null; // String
-    test_starts_with?: string | null; // String
     verifiedEmail?: boolean | null; // Boolean
     verifiedEmail_not?: boolean | null; // Boolean
   }
@@ -177,7 +162,6 @@ export interface NexusGenRootTypes {
     name: string; // String!
     password: string; // String!
     role: NexusGenEnums['Role']; // Role!
-    test: string; // String!
     verifiedEmail: boolean; // Boolean!
   }
   String: string;
@@ -235,7 +219,6 @@ export interface NexusGenFieldTypes {
     password: string; // String!
     posts: NexusGenRootTypes['Post'][] | null; // [Post!]
     role: NexusGenEnums['Role']; // Role!
-    test: string; // String!
     verifiedEmail: boolean; // Boolean!
   }
 }

@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn dev
+  /usr/local/bin/node /usr/local/bin/yarn prisma:deploy --force
 
 PATH: 
   /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
@@ -39,7 +39,7 @@ npm manifest:
   		"jsonwebtoken": "^8.5.1",
   		"nexus": "^0.11.7",
   		"nexus-prisma": "^0.3.7",
-  		"prisma-client-lib": "^1.30.4",
+  		"prisma-client-lib": "^1.33.0",
   		"yup": "^0.27.0"
   	},
   	"devDependencies": {
@@ -1447,13 +1447,13 @@ Lockfile:
       make-error-cause "^1.2.1"
       tough-cookie "^2.0.0"
   
-  prettier@1.14.3:
-    version "1.14.3"
-    resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.14.3.tgz#90238dd4c0684b7edce5f83b0fb7328e48bd0895"
+  prettier@1.16.4:
+    version "1.16.4"
+    resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.16.4.tgz#73e37e73e018ad2db9c76742e2647e21790c9717"
   
-  prisma-client-lib@^1.30.4:
-    version "1.30.4"
-    resolved "https://registry.yarnpkg.com/prisma-client-lib/-/prisma-client-lib-1.30.4.tgz#ac0d78a9cc14d0dcdc330a8c02427de4de8fd27b"
+  prisma-client-lib@^1.33.0:
+    version "1.33.0"
+    resolved "https://registry.yarnpkg.com/prisma-client-lib/-/prisma-client-lib-1.33.0.tgz#e446c85ffd926283230ba98d0ee8dd6ba3988782"
     dependencies:
       "@types/node" "^10.12.0"
       "@types/prettier" "^1.13.2"
@@ -1463,30 +1463,30 @@ Lockfile:
       http-link-dataloader "^0.1.6"
       jsonwebtoken "^8.3.0"
       lodash.flatten "^4.4.0"
-      prettier "1.14.3"
-      prisma-datamodel "1.30.4"
-      prisma-generate-schema "1.30.4"
+      prettier "1.16.4"
+      prisma-datamodel "1.33.0"
+      prisma-generate-schema "1.33.0"
       subscriptions-transport-ws "^0.9.15"
       uppercamelcase "^3.0.0"
       ws "^6.1.0"
       zen-observable "^0.8.10"
   
-  prisma-datamodel@1.30.4:
-    version "1.30.4"
-    resolved "https://registry.yarnpkg.com/prisma-datamodel/-/prisma-datamodel-1.30.4.tgz#fc21cb670498d634db0a63cb440ad4ab29a831a4"
+  prisma-datamodel@1.33.0:
+    version "1.33.0"
+    resolved "https://registry.yarnpkg.com/prisma-datamodel/-/prisma-datamodel-1.33.0.tgz#64d8b4cc78ada8c60cc31d7fda51d060b202886f"
     dependencies:
       graphql "^14.0.2"
       pluralize "^7.0.0"
       popsicle "10"
   
-  prisma-generate-schema@1.30.4:
-    version "1.30.4"
-    resolved "https://registry.yarnpkg.com/prisma-generate-schema/-/prisma-generate-schema-1.30.4.tgz#ee0cd9101bf90cdd594d3240aab7b5b3a3d1508e"
+  prisma-generate-schema@1.33.0:
+    version "1.33.0"
+    resolved "https://registry.yarnpkg.com/prisma-generate-schema/-/prisma-generate-schema-1.33.0.tgz#d966240de5e0c925d7e4ae7f64cb0f476115e51e"
     dependencies:
       graphql "^14.0.2"
       pluralize "^7.0.0"
       popsicle "10"
-      prisma-datamodel "1.30.4"
+      prisma-datamodel "1.33.0"
   
   process-nextick-args@~2.0.0:
     version "2.0.0"
@@ -2044,7 +2044,7 @@ Trace:
   Error: Command failed.
   Exit code: 1
   Command: sh
-  Arguments: -c ts-node-dev --no-notify --respawn --transpileOnly ./
+  Arguments: -c dotenv prisma deploy --force
   Directory: /Users/macbookpro/Documents/Projects/messenger-project/backend
   Output:
   

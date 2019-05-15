@@ -12,7 +12,6 @@ type User {
   posts: [Post!]!
   password: String!
   role: Role!
-  test: String!
 }
 
 type Post {

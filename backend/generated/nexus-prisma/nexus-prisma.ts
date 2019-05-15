@@ -323,7 +323,6 @@ type UserObject =
   | { name: 'posts', args?: UserPostsArgs[] | false, alias?: string  } 
   | { name: 'password', args?: [] | false, alias?: string  } 
   | { name: 'role', args?: [] | false, alias?: string  } 
-  | { name: 'test', args?: [] | false, alias?: string  } 
 
 type UserFields =
   | 'id'
@@ -333,7 +332,6 @@ type UserFields =
   | 'posts'
   | 'password'
   | 'role'
-  | 'test'
 
 
 type UserPostsArgs =
@@ -412,14 +410,6 @@ export interface UserFieldDetails {
       context: core.GetGen<"context">,
       info?: GraphQLResolveInfo
     ) => Promise<prisma.Role> | prisma.Role
-  }
-  test: {
-    type: 'String'
-    args: {}
-    description: string
-    list: undefined
-    nullable: false
-    resolve: undefined
   }
 }
   
@@ -1451,7 +1441,6 @@ type UserPreviousValuesObject =
   | { name: 'name', args?: [] | false, alias?: string  } 
   | { name: 'password', args?: [] | false, alias?: string  } 
   | { name: 'role', args?: [] | false, alias?: string  } 
-  | { name: 'test', args?: [] | false, alias?: string  } 
 
 type UserPreviousValuesFields =
   | 'id'
@@ -1460,7 +1449,6 @@ type UserPreviousValuesFields =
   | 'name'
   | 'password'
   | 'role'
-  | 'test'
 
 
 
@@ -1519,14 +1507,6 @@ export interface UserPreviousValuesFieldDetails {
       context: core.GetGen<"context">,
       info?: GraphQLResolveInfo
     ) => Promise<prisma.Role> | prisma.Role
-  }
-  test: {
-    type: 'String'
-    args: {}
-    description: string
-    list: undefined
-    nullable: false
-    resolve: undefined
   }
 }
   
@@ -1894,20 +1874,6 @@ export interface UserWhereInput {
   role_not?: prisma.Role | null
   role_in?: prisma.Role[]
   role_not_in?: prisma.Role[]
-  test?: string | null
-  test_not?: string | null
-  test_in?: string[]
-  test_not_in?: string[]
-  test_lt?: string | null
-  test_lte?: string | null
-  test_gt?: string | null
-  test_gte?: string | null
-  test_contains?: string | null
-  test_not_contains?: string | null
-  test_starts_with?: string | null
-  test_not_starts_with?: string | null
-  test_ends_with?: string | null
-  test_not_ends_with?: string | null
   AND?: UserWhereInput[]
 }
 export type UserWhereInputInputObject =
@@ -1975,20 +1941,6 @@ export type UserWhereInputInputObject =
   | { name: 'role_not', alias?: string  } 
   | { name: 'role_in', alias?: string  } 
   | { name: 'role_not_in', alias?: string  } 
-  | { name: 'test', alias?: string  } 
-  | { name: 'test_not', alias?: string  } 
-  | { name: 'test_in', alias?: string  } 
-  | { name: 'test_not_in', alias?: string  } 
-  | { name: 'test_lt', alias?: string  } 
-  | { name: 'test_lte', alias?: string  } 
-  | { name: 'test_gt', alias?: string  } 
-  | { name: 'test_gte', alias?: string  } 
-  | { name: 'test_contains', alias?: string  } 
-  | { name: 'test_not_contains', alias?: string  } 
-  | { name: 'test_starts_with', alias?: string  } 
-  | { name: 'test_not_starts_with', alias?: string  } 
-  | { name: 'test_ends_with', alias?: string  } 
-  | { name: 'test_not_ends_with', alias?: string  } 
   | { name: 'AND', alias?: string  } 
   
 export interface PostWhereUniqueInput {
@@ -2076,7 +2028,6 @@ export interface UserCreateInput {
   posts?: PostCreateManyWithoutAuthorInput | null
   password?: string
   role?: prisma.Role
-  test?: string
 }
 export type UserCreateInputInputObject =
   | Extract<keyof UserCreateInput, string>
@@ -2087,7 +2038,6 @@ export type UserCreateInputInputObject =
   | { name: 'posts', alias?: string  } 
   | { name: 'password', alias?: string  } 
   | { name: 'role', alias?: string  } 
-  | { name: 'test', alias?: string  } 
   
 export interface PostCreateManyWithoutAuthorInput {
   create?: PostCreateWithoutAuthorInput[]
@@ -2116,7 +2066,6 @@ export interface UserUpdateInput {
   posts?: PostUpdateManyWithoutAuthorInput | null
   password?: string | null
   role?: prisma.Role | null
-  test?: string | null
 }
 export type UserUpdateInputInputObject =
   | Extract<keyof UserUpdateInput, string>
@@ -2126,7 +2075,6 @@ export type UserUpdateInputInputObject =
   | { name: 'posts', alias?: string  } 
   | { name: 'password', alias?: string  } 
   | { name: 'role', alias?: string  } 
-  | { name: 'test', alias?: string  } 
   
 export interface PostUpdateManyWithoutAuthorInput {
   create?: PostCreateWithoutAuthorInput[]
@@ -2275,7 +2223,6 @@ export interface UserUpdateManyMutationInput {
   name?: string | null
   password?: string | null
   role?: prisma.Role | null
-  test?: string | null
 }
 export type UserUpdateManyMutationInputInputObject =
   | Extract<keyof UserUpdateManyMutationInput, string>
@@ -2284,7 +2231,6 @@ export type UserUpdateManyMutationInputInputObject =
   | { name: 'name', alias?: string  } 
   | { name: 'password', alias?: string  } 
   | { name: 'role', alias?: string  } 
-  | { name: 'test', alias?: string  } 
   
 export interface PostCreateInput {
   id?: string | null
@@ -2315,7 +2261,6 @@ export interface UserCreateWithoutPostsInput {
   name?: string
   password?: string
   role?: prisma.Role
-  test?: string
 }
 export type UserCreateWithoutPostsInputInputObject =
   | Extract<keyof UserCreateWithoutPostsInput, string>
@@ -2325,7 +2270,6 @@ export type UserCreateWithoutPostsInputInputObject =
   | { name: 'name', alias?: string  } 
   | { name: 'password', alias?: string  } 
   | { name: 'role', alias?: string  } 
-  | { name: 'test', alias?: string  } 
   
 export interface PostUpdateInput {
   title?: string | null
@@ -2361,7 +2305,6 @@ export interface UserUpdateWithoutPostsDataInput {
   name?: string | null
   password?: string | null
   role?: prisma.Role | null
-  test?: string | null
 }
 export type UserUpdateWithoutPostsDataInputInputObject =
   | Extract<keyof UserUpdateWithoutPostsDataInput, string>
@@ -2370,7 +2313,6 @@ export type UserUpdateWithoutPostsDataInputInputObject =
   | { name: 'name', alias?: string  } 
   | { name: 'password', alias?: string  } 
   | { name: 'role', alias?: string  } 
-  | { name: 'test', alias?: string  } 
   
 export interface UserUpsertWithoutPostsInput {
   update?: UserUpdateWithoutPostsDataInput
@@ -2490,8 +2432,6 @@ export type UserOrderByInputValues =
   | 'password_DESC'
   | 'role_ASC'
   | 'role_DESC'
-  | 'test_ASC'
-  | 'test_DESC'
   
 export type TestOrderByInputValues =
   | 'id_ASC'
