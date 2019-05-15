@@ -1,4 +1,4 @@
-import { arg, stringArg, idArg, enumType, objectType } from 'nexus'
+import { stringArg } from 'nexus'
 import { prismaObjectType } from 'nexus-prisma'
 
 const Query = prismaObjectType({

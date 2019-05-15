@@ -1,4 +1,4 @@
-import { arg, stringArg, idArg, enumType, objectType } from 'nexus'
+import { arg, stringArg, idArg } from 'nexus'
 import { prismaObjectType } from 'nexus-prisma'
 import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
