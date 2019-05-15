@@ -21,7 +21,7 @@ jobs:
       - persist_to_workspace:
           root: ~/project
           paths:
-            - "**/node_modules"
+            - ./**/node_modules
   test:
     docker:
       - image: circleci/node:lts
