@@ -1,4 +1,4 @@
-version: 2.0
+version: 2.1
 jobs:
   install:
     docker:
@@ -6,6 +6,12 @@ jobs:
     working_directory: ~/project
     steps:
       - checkout
+      - run:
+          name: Import Backend ENV
+          command: echo "$BACKEND_ENV_PRODUCTION" > ./backend/.env && cat -e ./backend/.env
+      - run:
+          name: Import Frontend ENV
+          command: echo "$FRONTEND_ENV_PRODUCTION" > ./frontend/.env
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
@@ -24,7 +30,47 @@ jobs:
             - node_modules
             - backend/node_modules
             - frontend/node_modules
-  test:
+            - backend/.env
+            - frontend/.env
+
+  test-frontend:
+    docker:
+      - image: circleci/node:lts
+    working_directory: ~/project
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project
+      - run:
+          name: Test Frontend
+          command: cd frontend && yarn test
+  build-frontend:
+    docker:
+      - image: circleci/node:lts
+    working_directory: ~/project
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project
+      - run:
+          name: Build Frontend
+          command: cd frontend && yarn build
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - frontend/build
+  deploy-frontend:
+    docker:
+      - image: devillex/docker-firebase
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project
+      - run:
+          name: Deploy
+          command: firebase deploy --token "$FRONTEND_FIREBASE_TOKEN"
+
+  test-backend:
     docker:
       - image: circleci/node:lts
     working_directory: ~/project
@@ -35,31 +81,43 @@ jobs:
       - run:
           name: Test Backend
           command: cd backend && yarn test
-      - run:
-          name: Test Frontend
-          command: cd frontend && yarn test
-  build:
+  deploy-backend:
     docker:
-      - image: circleci/node:lts
-    working_directory: ~/project
+      - image: google/cloud-sdk
     steps:
       - checkout
       - attach_workspace:
           at: ~/project
       - run:
-          name: Build Backend
-          command: cd backend && yarn build
+          name: Authenticate
+          command: echo $BACKEND_GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
       - run:
-          name: Build Frontend
-          command: cd frontend && yarn build
+          name: Set project ID
+          command: gcloud --quiet config set project ${BACKEND_GOOGLE_PROJECT_ID}
+      - run:
+          name: Deploy
+          command: gcloud app deploy
+
 workflows:
   version: 2
   default:
     jobs:
       - install
-      - build:
+
+      - test-frontend:
           requires:
             - install
-      - test:
+      - build-frontend:
           requires:
             - install
+      - deploy-frontend:
+          requires:
+            - test-frontend
+            - build-frontend
+
+      - test-backend:
+          requires:
+            - install
+      - deploy-backend:
+          requires:
+            - test-backend

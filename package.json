@@ -4,9 +4,11 @@
   "repository": "git@github.com:DylanMerigaud/messenger-project.git",
   "author": "DylanMerigaud <dylanmerigaud@gmail.com>",
   "license": "MIT",
-  "workspaces": [
-    "backend",
-    "frontend"
-  ],
+  "workspaces": {
+    "packages": [
+      "backend",
+      "frontend"
+    ]
+  },
   "private": true
 }
