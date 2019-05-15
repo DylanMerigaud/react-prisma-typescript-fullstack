@@ -5,6 +5,7 @@ type User {
   verifiedEmail: Boolean! @default(value: false)
   name: String!
   posts: [Post!]!
+  password: String!
   test: String!
 }
 

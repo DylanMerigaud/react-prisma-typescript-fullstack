@@ -105,7 +105,9 @@ type User {
   email: String
   id: ID!
   name: String!
+  password: String!
   posts(after: String, before: String, first: Int, last: Int, orderBy: PostOrderByInput, skip: Int, where: PostWhereInput): [Post!]
+  test: String!
   verifiedEmail: Boolean!
 }
 
@@ -113,7 +115,9 @@ input UserCreateInput {
   email: String
   id: ID
   name: String!
+  password: String!
   posts: PostCreateManyWithoutAuthorInput
+  test: String!
   verifiedEmail: Boolean
 }
 
@@ -161,7 +165,35 @@ input UserWhereInput {
   name_not_in: [String!]
   name_not_starts_with: String
   name_starts_with: String
+  password: String
+  password_contains: String
+  password_ends_with: String
+  password_gt: String
+  password_gte: String
+  password_in: [String!]
+  password_lt: String
+  password_lte: String
+  password_not: String
+  password_not_contains: String
+  password_not_ends_with: String
+  password_not_in: [String!]
+  password_not_starts_with: String
+  password_starts_with: String
   posts_some: PostWhereInput
+  test: String
+  test_contains: String
+  test_ends_with: String
+  test_gt: String
+  test_gte: String
+  test_in: [String!]
+  test_lt: String
+  test_lte: String
+  test_not: String
+  test_not_contains: String
+  test_not_ends_with: String
+  test_not_in: [String!]
+  test_not_starts_with: String
+  test_starts_with: String
   verifiedEmail: Boolean
   verifiedEmail_not: Boolean
 }

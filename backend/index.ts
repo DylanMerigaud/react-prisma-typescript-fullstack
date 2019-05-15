@@ -85,11 +85,19 @@ const Mutation = prismaObjectType({
 			resolve: async (_, { name, email, password }, ctx) => {
 				const password2 = await bcrypt.hash(password, 10)
 
+				console.log({ password, password2 })
+
 				const user = await ctx.prisma.createUser({
 					name,
 					email,
-					password: password2
+					password: password2,
+					test: 'test'
 				})
+
+				// User peut ne pas contenir .test mais doit forcement contenir .password, qui n'est pas retourné par la db et ne devrait pas l'être
+				console.log({ user })
+				// peut être fix en assignant password, dans ce cas fonctionne normalement
+				user.password = password2
 
 				return {
 					token: jwt.sign({ userId: user.id }, 'APP_SECRET'),
@@ -161,18 +169,18 @@ const schema = makePrismaSchema({
 	}
 })
 
-const getUser = (req: ContextParameters) => {
+const getUser = async (req: ContextParameters) => {
 	const auth = req.request.get('Authorization')
 
-	console.log({ req })
-
-	if (auth === 'admin') {
-		return { role: 'admin' }
-	} else if (auth) {
+	if (auth) {
 		const token = auth.replace('Bearer ', '')
-		const { userId } = jwt.verify(token, 'APP_SECRET')
-		// TODO prisma.getUser, retrouver le context
-		return { role: 'user' }
+		try {
+			const { userId } = jwt.verify(token, 'APP_SECRET')
+			return prisma.user({ id: userId })
+		} catch (error) {
+			console.log('getUser error', error)
+			return null
+		}
 	} else {
 		return null
 	}

@@ -320,6 +320,8 @@ type UserObject =
   | { name: 'verifiedEmail', args?: [] | false, alias?: string  } 
   | { name: 'name', args?: [] | false, alias?: string  } 
   | { name: 'posts', args?: UserPostsArgs[] | false, alias?: string  } 
+  | { name: 'password', args?: [] | false, alias?: string  } 
+  | { name: 'test', args?: [] | false, alias?: string  } 
 
 type UserFields =
   | 'id'
@@ -327,6 +329,8 @@ type UserFields =
   | 'verifiedEmail'
   | 'name'
   | 'posts'
+  | 'password'
+  | 'test'
 
 
 type UserPostsArgs =
@@ -384,6 +388,22 @@ export interface UserFieldDetails {
       context: core.GetGen<"context">,
       info?: GraphQLResolveInfo
     ) => Promise<prisma.Post[]> | prisma.Post[]
+  }
+  password: {
+    type: 'String'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  test: {
+    type: 'String'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
   }
 }
   
@@ -1413,12 +1433,16 @@ type UserPreviousValuesObject =
   | { name: 'email', args?: [] | false, alias?: string  } 
   | { name: 'verifiedEmail', args?: [] | false, alias?: string  } 
   | { name: 'name', args?: [] | false, alias?: string  } 
+  | { name: 'password', args?: [] | false, alias?: string  } 
+  | { name: 'test', args?: [] | false, alias?: string  } 
 
 type UserPreviousValuesFields =
   | 'id'
   | 'email'
   | 'verifiedEmail'
   | 'name'
+  | 'password'
+  | 'test'
 
 
 
@@ -1450,6 +1474,22 @@ export interface UserPreviousValuesFieldDetails {
     resolve: undefined
   }
   name: {
+    type: 'String'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  password: {
+    type: 'String'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  test: {
     type: 'String'
     args: {}
     description: string
@@ -1805,6 +1845,34 @@ export interface UserWhereInput {
   name_ends_with?: string | null
   name_not_ends_with?: string | null
   posts_some?: PostWhereInput | null
+  password?: string | null
+  password_not?: string | null
+  password_in?: string[]
+  password_not_in?: string[]
+  password_lt?: string | null
+  password_lte?: string | null
+  password_gt?: string | null
+  password_gte?: string | null
+  password_contains?: string | null
+  password_not_contains?: string | null
+  password_starts_with?: string | null
+  password_not_starts_with?: string | null
+  password_ends_with?: string | null
+  password_not_ends_with?: string | null
+  test?: string | null
+  test_not?: string | null
+  test_in?: string[]
+  test_not_in?: string[]
+  test_lt?: string | null
+  test_lte?: string | null
+  test_gt?: string | null
+  test_gte?: string | null
+  test_contains?: string | null
+  test_not_contains?: string | null
+  test_starts_with?: string | null
+  test_not_starts_with?: string | null
+  test_ends_with?: string | null
+  test_not_ends_with?: string | null
   AND?: UserWhereInput[]
 }
 export type UserWhereInputInputObject =
@@ -1854,6 +1922,34 @@ export type UserWhereInputInputObject =
   | { name: 'name_ends_with', alias?: string  } 
   | { name: 'name_not_ends_with', alias?: string  } 
   | { name: 'posts_some', alias?: string  } 
+  | { name: 'password', alias?: string  } 
+  | { name: 'password_not', alias?: string  } 
+  | { name: 'password_in', alias?: string  } 
+  | { name: 'password_not_in', alias?: string  } 
+  | { name: 'password_lt', alias?: string  } 
+  | { name: 'password_lte', alias?: string  } 
+  | { name: 'password_gt', alias?: string  } 
+  | { name: 'password_gte', alias?: string  } 
+  | { name: 'password_contains', alias?: string  } 
+  | { name: 'password_not_contains', alias?: string  } 
+  | { name: 'password_starts_with', alias?: string  } 
+  | { name: 'password_not_starts_with', alias?: string  } 
+  | { name: 'password_ends_with', alias?: string  } 
+  | { name: 'password_not_ends_with', alias?: string  } 
+  | { name: 'test', alias?: string  } 
+  | { name: 'test_not', alias?: string  } 
+  | { name: 'test_in', alias?: string  } 
+  | { name: 'test_not_in', alias?: string  } 
+  | { name: 'test_lt', alias?: string  } 
+  | { name: 'test_lte', alias?: string  } 
+  | { name: 'test_gt', alias?: string  } 
+  | { name: 'test_gte', alias?: string  } 
+  | { name: 'test_contains', alias?: string  } 
+  | { name: 'test_not_contains', alias?: string  } 
+  | { name: 'test_starts_with', alias?: string  } 
+  | { name: 'test_not_starts_with', alias?: string  } 
+  | { name: 'test_ends_with', alias?: string  } 
+  | { name: 'test_not_ends_with', alias?: string  } 
   | { name: 'AND', alias?: string  } 
   
 export interface PostWhereUniqueInput {
@@ -1939,6 +2035,8 @@ export interface UserCreateInput {
   verifiedEmail?: boolean | null
   name?: string
   posts?: PostCreateManyWithoutAuthorInput | null
+  password?: string
+  test?: string
 }
 export type UserCreateInputInputObject =
   | Extract<keyof UserCreateInput, string>
@@ -1947,6 +2045,8 @@ export type UserCreateInputInputObject =
   | { name: 'verifiedEmail', alias?: string  } 
   | { name: 'name', alias?: string  } 
   | { name: 'posts', alias?: string  } 
+  | { name: 'password', alias?: string  } 
+  | { name: 'test', alias?: string  } 
   
 export interface PostCreateManyWithoutAuthorInput {
   create?: PostCreateWithoutAuthorInput[]
@@ -1973,6 +2073,8 @@ export interface UserUpdateInput {
   verifiedEmail?: boolean | null
   name?: string | null
   posts?: PostUpdateManyWithoutAuthorInput | null
+  password?: string | null
+  test?: string | null
 }
 export type UserUpdateInputInputObject =
   | Extract<keyof UserUpdateInput, string>
@@ -1980,6 +2082,8 @@ export type UserUpdateInputInputObject =
   | { name: 'verifiedEmail', alias?: string  } 
   | { name: 'name', alias?: string  } 
   | { name: 'posts', alias?: string  } 
+  | { name: 'password', alias?: string  } 
+  | { name: 'test', alias?: string  } 
   
 export interface PostUpdateManyWithoutAuthorInput {
   create?: PostCreateWithoutAuthorInput[]
@@ -2126,12 +2230,16 @@ export interface UserUpdateManyMutationInput {
   email?: string | null
   verifiedEmail?: boolean | null
   name?: string | null
+  password?: string | null
+  test?: string | null
 }
 export type UserUpdateManyMutationInputInputObject =
   | Extract<keyof UserUpdateManyMutationInput, string>
   | { name: 'email', alias?: string  } 
   | { name: 'verifiedEmail', alias?: string  } 
   | { name: 'name', alias?: string  } 
+  | { name: 'password', alias?: string  } 
+  | { name: 'test', alias?: string  } 
   
 export interface PostCreateInput {
   id?: string | null
@@ -2160,6 +2268,8 @@ export interface UserCreateWithoutPostsInput {
   email?: string | null
   verifiedEmail?: boolean | null
   name?: string
+  password?: string
+  test?: string
 }
 export type UserCreateWithoutPostsInputInputObject =
   | Extract<keyof UserCreateWithoutPostsInput, string>
@@ -2167,6 +2277,8 @@ export type UserCreateWithoutPostsInputInputObject =
   | { name: 'email', alias?: string  } 
   | { name: 'verifiedEmail', alias?: string  } 
   | { name: 'name', alias?: string  } 
+  | { name: 'password', alias?: string  } 
+  | { name: 'test', alias?: string  } 
   
 export interface PostUpdateInput {
   title?: string | null
@@ -2200,12 +2312,16 @@ export interface UserUpdateWithoutPostsDataInput {
   email?: string | null
   verifiedEmail?: boolean | null
   name?: string | null
+  password?: string | null
+  test?: string | null
 }
 export type UserUpdateWithoutPostsDataInputInputObject =
   | Extract<keyof UserUpdateWithoutPostsDataInput, string>
   | { name: 'email', alias?: string  } 
   | { name: 'verifiedEmail', alias?: string  } 
   | { name: 'name', alias?: string  } 
+  | { name: 'password', alias?: string  } 
+  | { name: 'test', alias?: string  } 
   
 export interface UserUpsertWithoutPostsInput {
   update?: UserUpdateWithoutPostsDataInput
@@ -2317,6 +2433,10 @@ export type UserOrderByInputValues =
   | 'verifiedEmail_DESC'
   | 'name_ASC'
   | 'name_DESC'
+  | 'password_ASC'
+  | 'password_DESC'
+  | 'test_ASC'
+  | 'test_DESC'
   
 export type TestOrderByInputValues =
   | 'id_ASC'

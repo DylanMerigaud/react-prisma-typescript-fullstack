@@ -61,7 +61,9 @@ export interface NexusGenInputs {
     email?: string | null; // String
     id?: string | null; // ID
     name: string; // String!
+    password: string; // String!
     posts?: NexusGenInputs['PostCreateManyWithoutAuthorInput'] | null; // PostCreateManyWithoutAuthorInput
+    test: string; // String!
     verifiedEmail?: boolean | null; // Boolean
   }
   UserWhereInput: { // input type
@@ -108,7 +110,35 @@ export interface NexusGenInputs {
     name_not_in?: string[] | null; // [String!]
     name_not_starts_with?: string | null; // String
     name_starts_with?: string | null; // String
+    password?: string | null; // String
+    password_contains?: string | null; // String
+    password_ends_with?: string | null; // String
+    password_gt?: string | null; // String
+    password_gte?: string | null; // String
+    password_in?: string[] | null; // [String!]
+    password_lt?: string | null; // String
+    password_lte?: string | null; // String
+    password_not?: string | null; // String
+    password_not_contains?: string | null; // String
+    password_not_ends_with?: string | null; // String
+    password_not_in?: string[] | null; // [String!]
+    password_not_starts_with?: string | null; // String
+    password_starts_with?: string | null; // String
     posts_some?: NexusGenInputs['PostWhereInput'] | null; // PostWhereInput
+    test?: string | null; // String
+    test_contains?: string | null; // String
+    test_ends_with?: string | null; // String
+    test_gt?: string | null; // String
+    test_gte?: string | null; // String
+    test_in?: string[] | null; // [String!]
+    test_lt?: string | null; // String
+    test_lte?: string | null; // String
+    test_not?: string | null; // String
+    test_not_contains?: string | null; // String
+    test_not_ends_with?: string | null; // String
+    test_not_in?: string[] | null; // [String!]
+    test_not_starts_with?: string | null; // String
+    test_starts_with?: string | null; // String
     verifiedEmail?: boolean | null; // Boolean
     verifiedEmail_not?: boolean | null; // Boolean
   }
@@ -139,6 +169,8 @@ export interface NexusGenRootTypes {
     email?: string | null; // String
     id: string; // ID!
     name: string; // String!
+    password: string; // String!
+    test: string; // String!
     verifiedEmail: boolean; // Boolean!
   }
   String: string;
@@ -192,7 +224,9 @@ export interface NexusGenFieldTypes {
     email: string | null; // String
     id: string; // ID!
     name: string; // String!
+    password: string; // String!
     posts: NexusGenRootTypes['Post'][] | null; // [Post!]
+    test: string; // String!
     verifiedEmail: boolean; // Boolean!
   }
 }
