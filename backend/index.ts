@@ -1,150 +1,21 @@
 import { prisma } from './generated/prisma-client'
 import datamodelInfo from './generated/nexus-prisma'
 import * as path from 'path'
-import { arg, stringArg, idArg, enumType, objectType } from 'nexus'
-import { prismaObjectType, makePrismaSchema } from 'nexus-prisma'
+import { makePrismaSchema } from 'nexus-prisma'
 import { GraphQLServer } from 'graphql-yoga'
 import { rule, shield } from 'graphql-shield'
-import * as yup from 'yup'
 import { ContextParameters } from 'graphql-yoga/dist/types'
 // import { clearConfigCache } from 'prettier'
 // import { INSPECT_MAX_BYTES } from 'buffer'
 
-import * as bcrypt from 'bcrypt'
-import * as jwt from 'jsonwebtoken'
+import Query from './query'
+import Mutation from './mutation'
 
-const Query = prismaObjectType({
-	name: 'Query',
-	definition: (t) => {
-		t.prismaFields([ 'post' ])
-		t.list.field('feed', {
-			type: 'Post',
-			resolve: (_, args, ctx) => ctx.prisma.posts({ where: { published: true } })
-		})
-		t.list.field('postsByUser', {
-			type: 'Post',
-			args: { email: stringArg() },
-			resolve: (_, { email }, ctx) => ctx.prisma.posts({ where: { author: { email } } })
-		})
-	}
-})
+import permissions from './permissions'
 
-const Mutation = prismaObjectType({
-	name: 'Mutation',
-	definition: (t) => {
-		t.prismaFields([ 'createUser', 'deletePost' ])
-		t.field('createDraft', {
-			type: 'Post',
-			args: {
-				title: stringArg(),
-				authorId: idArg({ nullable: true })
-			},
-			resolve: (_, { title, authorId }, ctx) =>
-				ctx.prisma.createPost({
-					title,
-					author: { connect: { id: authorId } }
-				})
-		})
-		t.field('publish', {
-			type: 'Post',
-			nullable: true,
-			args: { id: idArg() },
-			resolve: (_, { id }, ctx) =>
-				ctx.prisma.updatePost({
-					where: { id },
-					data: { published: true }
-				})
-		})
-		t.field('testoss', {
-			type: 'Test',
-			args: {
-				aliment: arg({
-					type: 'Aliment'
-				})
-			},
-			resolve: (_, { aliment }, ctx) => {
-				console.log('aliment: ' + aliment)
-				// const yupVal =
-				AlimentYupSchema.validateSync(aliment)
+import { Aliment, AuthPayload } from './schemas'
 
-				// console.log({ yupVal })
-
-				return {
-					id: '',
-					lol: aliment
-				}
-			}
-		})
-		t.field('signup', {
-			type: 'AuthPayload',
-			args: {
-				name: stringArg({ nullable: false }),
-				email: stringArg({ nullable: false }),
-				password: stringArg({ nullable: false })
-			},
-			resolve: async (_, { name, email, password }, ctx) => {
-				const password2 = await bcrypt.hash(password, 10)
-
-				const user = await ctx.prisma.createUser({
-					name,
-					email,
-					password: password2,
-					role: 'USER'
-				})
-
-				console.log({ user })
-
-				return {
-					token: jwt.sign({ userId: user.id }, 'APP_SECRET'),
-					user
-				}
-			}
-		})
-		t.field('login', {
-			type: 'AuthPayload',
-			args: {
-				email: stringArg({ nullable: false }),
-				password: stringArg({ nullable: false })
-			},
-			resolve: async (_, { email, password }, ctx) => {
-				const user = await ctx.prisma.user({ email })
-				console.log({ user })
-				if (!user) throw new Error('User not in db.')
-
-				const valid = await bcrypt.compare(password, user.password)
-				console.log({ valid })
-				if (!valid) throw new Error('Wrong password.')
-
-				return {
-					token: jwt.sign({ userId: user.id }, 'APP_SECRET'),
-					user
-				}
-			}
-		})
-	}
-})
-
-const AlimentYupSchema = yup.mixed().oneOf([ 'Poulet', 'Frites' ])
-
-const EmailYupSchema = null
-
-const PasswordYupSchema = null
-
-const Aliment = enumType({
-	name: 'Aliment',
-	members: [ 'Poulet', 'Frites', 'Error' ],
-	description: 'A boufer !'
-})
-
-const AuthPayload = objectType({
-	name: 'AuthPayload',
-	definition: (t) => {
-		t.string('token')
-		t.field('user', {
-			type: 'User'
-		})
-	}
-})
+import { getUser } from './auth'
 
 const schema = makePrismaSchema({
 	types: [ Query, Mutation, Aliment, AuthPayload ],
@@ -157,62 +28,6 @@ const schema = makePrismaSchema({
 		typegen: path.join(__dirname, './generated/nexus.ts')
 	}
 })
-
-const getUser = async (req: ContextParameters) => {
-	const auth = req.request.get('Authorization')
-
-	if (auth) {
-		const token = auth.replace('Bearer ', '')
-		try {
-			const { userId } = jwt.verify(token, 'APP_SECRET')
-			// TO FIX: prisma.user ne retourne pas .role
-			return prisma.user({ id: userId })
-		} catch (error) {
-			console.log('getUser error', error)
-			return null
-		}
-	} else {
-		return null
-	}
-}
-
-// Rules
-
-// TO FIX: la rule isAuthenticated est exécuté avant le retour de getUser donc le User n'est pas instancié
-const isAuthenticated = rule()(async (parent, args, ctx, info) => {
-	const user = await ctx.user
-
-	console.log('isAuth: ', { user })
-
-	return user !== null && user.id !== undefined
-})
-
-const isAdmin = rule()(async (parent, args, ctx, info) => {
-	const user = await ctx.user
-	return user.role === 'ADMIN'
-})
-
-const isUser = rule()(async (parent, args, ctx, info) => {
-	const user = await ctx.user
-	return user.role === 'USER'
-})
-
-// Permissions
-
-const permissions = shield(
-	{
-		Query: {
-			feed: isAuthenticated
-		},
-		Mutation: {
-			testoss: isAuthenticated
-		},
-		Test: isAdmin,
-		Aliment: isAuthenticated
-		// Post: isAdmin
-	},
-	{ debug: true }
-)
 
 const server = new GraphQLServer({
 	schema,
