@@ -91,10 +91,12 @@ const Mutation = prismaObjectType({
 					name,
 					email,
 					password: password2,
-					test: 'test'
+					test: 'test',
+					role: 'USER'
 				})
 
 				// User peut ne pas contenir .test mais doit forcement contenir .password, qui n'est pas retourné par la db et ne devrait pas l'être
+				// sinon erreur de prisma
 				console.log({ user })
 				// peut être fix en assignant password, dans ce cas fonctionne normalement
 				user.password = password2
@@ -176,7 +178,12 @@ const getUser = async (req: ContextParameters) => {
 		const token = auth.replace('Bearer ', '')
 		try {
 			const { userId } = jwt.verify(token, 'APP_SECRET')
-			return prisma.user({ id: userId })
+			// TO FIX: prisma.user ne retourne pas .role
+			const user = await prisma.user({ id: userId })
+
+			console.log('getUser: ', { user })
+
+			return user
 		} catch (error) {
 			console.log('getUser error', error)
 			return null
@@ -188,16 +195,19 @@ const getUser = async (req: ContextParameters) => {
 
 // Rules
 
+// TO FIX: la rule isAuthenticated est exécuté avant le retour de getUser donc le User n'est pas instancié
 const isAuthenticated = rule()(async (parent, args, ctx, info) => {
-	return ctx.user !== null
+	console.log('isAuthenticated: : ', { user: ctx.user })
+
+	return ctx.user !== null && ctx.user.id
 })
 
 const isAdmin = rule()(async (parent, args, ctx, info) => {
-	return ctx.user.role === 'admin'
+	return ctx.user.role === 'ADMIN'
 })
 
 const isUser = rule()(async (parent, args, ctx, info) => {
-	return ctx.user.role === 'user'
+	return ctx.user.role === 'USER'
 })
 
 // Permissions

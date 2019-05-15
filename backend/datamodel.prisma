@@ -1,4 +1,9 @@
 
+enum Role {
+  ADMIN
+  USER
+}
+
 type User {
   id: ID! @id
   email: String @unique
@@ -6,6 +11,7 @@ type User {
   name: String!
   posts: [Post!]!
   password: String!
+  role: Role!
   test: String!
 }
 

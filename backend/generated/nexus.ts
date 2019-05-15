@@ -63,6 +63,7 @@ export interface NexusGenInputs {
     name: string; // String!
     password: string; // String!
     posts?: NexusGenInputs['PostCreateManyWithoutAuthorInput'] | null; // PostCreateManyWithoutAuthorInput
+    role: NexusGenEnums['Role']; // Role!
     test: string; // String!
     verifiedEmail?: boolean | null; // Boolean
   }
@@ -125,6 +126,10 @@ export interface NexusGenInputs {
     password_not_starts_with?: string | null; // String
     password_starts_with?: string | null; // String
     posts_some?: NexusGenInputs['PostWhereInput'] | null; // PostWhereInput
+    role?: NexusGenEnums['Role'] | null; // Role
+    role_in?: NexusGenEnums['Role'][] | null; // [Role!]
+    role_not?: NexusGenEnums['Role'] | null; // Role
+    role_not_in?: NexusGenEnums['Role'][] | null; // [Role!]
     test?: string | null; // String
     test_contains?: string | null; // String
     test_ends_with?: string | null; // String
@@ -147,6 +152,7 @@ export interface NexusGenInputs {
 export interface NexusGenEnums {
   Aliment: "Error" | "Frites" | "Poulet"
   PostOrderByInput: "id_ASC" | "id_DESC" | "published_ASC" | "published_DESC" | "title_ASC" | "title_DESC"
+  Role: "ADMIN" | "USER"
 }
 
 export interface NexusGenRootTypes {
@@ -170,6 +176,7 @@ export interface NexusGenRootTypes {
     id: string; // ID!
     name: string; // String!
     password: string; // String!
+    role: NexusGenEnums['Role']; // Role!
     test: string; // String!
     verifiedEmail: boolean; // Boolean!
   }
@@ -189,6 +196,7 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
   UserWhereInput: NexusGenInputs['UserWhereInput'];
   Aliment: NexusGenEnums['Aliment'];
   PostOrderByInput: NexusGenEnums['PostOrderByInput'];
+  Role: NexusGenEnums['Role'];
 }
 
 export interface NexusGenFieldTypes {
@@ -226,6 +234,7 @@ export interface NexusGenFieldTypes {
     name: string; // String!
     password: string; // String!
     posts: NexusGenRootTypes['Post'][] | null; // [Post!]
+    role: NexusGenEnums['Role']; // Role!
     test: string; // String!
     verifiedEmail: boolean; // Boolean!
   }
@@ -289,7 +298,7 @@ export type NexusGenObjectNames = "AuthPayload" | "Mutation" | "Post" | "Query" 
 
 export type NexusGenInputNames = "PostCreateManyWithoutAuthorInput" | "PostCreateWithoutAuthorInput" | "PostWhereInput" | "PostWhereUniqueInput" | "UserCreateInput" | "UserWhereInput";
 
-export type NexusGenEnumNames = "Aliment" | "PostOrderByInput";
+export type NexusGenEnumNames = "Aliment" | "PostOrderByInput" | "Role";
 
 export type NexusGenInterfaceNames = never;
 

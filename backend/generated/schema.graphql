@@ -96,6 +96,11 @@ type Query {
   postsByUser(email: String): [Post!]!
 }
 
+enum Role {
+  ADMIN
+  USER
+}
+
 type Test {
   id: ID!
   lol: String!
@@ -107,6 +112,7 @@ type User {
   name: String!
   password: String!
   posts(after: String, before: String, first: Int, last: Int, orderBy: PostOrderByInput, skip: Int, where: PostWhereInput): [Post!]
+  role: Role!
   test: String!
   verifiedEmail: Boolean!
 }
@@ -117,6 +123,7 @@ input UserCreateInput {
   name: String!
   password: String!
   posts: PostCreateManyWithoutAuthorInput
+  role: Role!
   test: String!
   verifiedEmail: Boolean
 }
@@ -180,6 +187,10 @@ input UserWhereInput {
   password_not_starts_with: String
   password_starts_with: String
   posts_some: PostWhereInput
+  role: Role
+  role_in: [Role!]
+  role_not: Role
+  role_not_in: [Role!]
   test: String
   test_contains: String
   test_ends_with: String

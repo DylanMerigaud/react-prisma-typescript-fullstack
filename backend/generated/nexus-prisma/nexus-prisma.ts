@@ -101,6 +101,7 @@ export interface NexusPrismaTypes {
     }
   }
   enumTypes: {
+    Role: RoleValues,
     PostOrderByInput: PostOrderByInputValues,
     UserOrderByInput: UserOrderByInputValues,
     TestOrderByInput: TestOrderByInputValues,
@@ -321,6 +322,7 @@ type UserObject =
   | { name: 'name', args?: [] | false, alias?: string  } 
   | { name: 'posts', args?: UserPostsArgs[] | false, alias?: string  } 
   | { name: 'password', args?: [] | false, alias?: string  } 
+  | { name: 'role', args?: [] | false, alias?: string  } 
   | { name: 'test', args?: [] | false, alias?: string  } 
 
 type UserFields =
@@ -330,6 +332,7 @@ type UserFields =
   | 'name'
   | 'posts'
   | 'password'
+  | 'role'
   | 'test'
 
 
@@ -396,6 +399,19 @@ export interface UserFieldDetails {
     list: undefined
     nullable: false
     resolve: undefined
+  }
+  role: {
+    type: 'Role'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: (
+      root: core.RootValue<"User">,
+      args: {  }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.Role> | prisma.Role
   }
   test: {
     type: 'String'
@@ -1434,6 +1450,7 @@ type UserPreviousValuesObject =
   | { name: 'verifiedEmail', args?: [] | false, alias?: string  } 
   | { name: 'name', args?: [] | false, alias?: string  } 
   | { name: 'password', args?: [] | false, alias?: string  } 
+  | { name: 'role', args?: [] | false, alias?: string  } 
   | { name: 'test', args?: [] | false, alias?: string  } 
 
 type UserPreviousValuesFields =
@@ -1442,6 +1459,7 @@ type UserPreviousValuesFields =
   | 'verifiedEmail'
   | 'name'
   | 'password'
+  | 'role'
   | 'test'
 
 
@@ -1488,6 +1506,19 @@ export interface UserPreviousValuesFieldDetails {
     list: undefined
     nullable: false
     resolve: undefined
+  }
+  role: {
+    type: 'Role'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: (
+      root: core.RootValue<"UserPreviousValues">,
+      args: {  }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.Role> | prisma.Role
   }
   test: {
     type: 'String'
@@ -1859,6 +1890,10 @@ export interface UserWhereInput {
   password_not_starts_with?: string | null
   password_ends_with?: string | null
   password_not_ends_with?: string | null
+  role?: prisma.Role | null
+  role_not?: prisma.Role | null
+  role_in?: prisma.Role[]
+  role_not_in?: prisma.Role[]
   test?: string | null
   test_not?: string | null
   test_in?: string[]
@@ -1936,6 +1971,10 @@ export type UserWhereInputInputObject =
   | { name: 'password_not_starts_with', alias?: string  } 
   | { name: 'password_ends_with', alias?: string  } 
   | { name: 'password_not_ends_with', alias?: string  } 
+  | { name: 'role', alias?: string  } 
+  | { name: 'role_not', alias?: string  } 
+  | { name: 'role_in', alias?: string  } 
+  | { name: 'role_not_in', alias?: string  } 
   | { name: 'test', alias?: string  } 
   | { name: 'test_not', alias?: string  } 
   | { name: 'test_in', alias?: string  } 
@@ -2036,6 +2075,7 @@ export interface UserCreateInput {
   name?: string
   posts?: PostCreateManyWithoutAuthorInput | null
   password?: string
+  role?: prisma.Role
   test?: string
 }
 export type UserCreateInputInputObject =
@@ -2046,6 +2086,7 @@ export type UserCreateInputInputObject =
   | { name: 'name', alias?: string  } 
   | { name: 'posts', alias?: string  } 
   | { name: 'password', alias?: string  } 
+  | { name: 'role', alias?: string  } 
   | { name: 'test', alias?: string  } 
   
 export interface PostCreateManyWithoutAuthorInput {
@@ -2074,6 +2115,7 @@ export interface UserUpdateInput {
   name?: string | null
   posts?: PostUpdateManyWithoutAuthorInput | null
   password?: string | null
+  role?: prisma.Role | null
   test?: string | null
 }
 export type UserUpdateInputInputObject =
@@ -2083,6 +2125,7 @@ export type UserUpdateInputInputObject =
   | { name: 'name', alias?: string  } 
   | { name: 'posts', alias?: string  } 
   | { name: 'password', alias?: string  } 
+  | { name: 'role', alias?: string  } 
   | { name: 'test', alias?: string  } 
   
 export interface PostUpdateManyWithoutAuthorInput {
@@ -2231,6 +2274,7 @@ export interface UserUpdateManyMutationInput {
   verifiedEmail?: boolean | null
   name?: string | null
   password?: string | null
+  role?: prisma.Role | null
   test?: string | null
 }
 export type UserUpdateManyMutationInputInputObject =
@@ -2239,6 +2283,7 @@ export type UserUpdateManyMutationInputInputObject =
   | { name: 'verifiedEmail', alias?: string  } 
   | { name: 'name', alias?: string  } 
   | { name: 'password', alias?: string  } 
+  | { name: 'role', alias?: string  } 
   | { name: 'test', alias?: string  } 
   
 export interface PostCreateInput {
@@ -2269,6 +2314,7 @@ export interface UserCreateWithoutPostsInput {
   verifiedEmail?: boolean | null
   name?: string
   password?: string
+  role?: prisma.Role
   test?: string
 }
 export type UserCreateWithoutPostsInputInputObject =
@@ -2278,6 +2324,7 @@ export type UserCreateWithoutPostsInputInputObject =
   | { name: 'verifiedEmail', alias?: string  } 
   | { name: 'name', alias?: string  } 
   | { name: 'password', alias?: string  } 
+  | { name: 'role', alias?: string  } 
   | { name: 'test', alias?: string  } 
   
 export interface PostUpdateInput {
@@ -2313,6 +2360,7 @@ export interface UserUpdateWithoutPostsDataInput {
   verifiedEmail?: boolean | null
   name?: string | null
   password?: string | null
+  role?: prisma.Role | null
   test?: string | null
 }
 export type UserUpdateWithoutPostsDataInputInputObject =
@@ -2321,6 +2369,7 @@ export type UserUpdateWithoutPostsDataInputInputObject =
   | { name: 'verifiedEmail', alias?: string  } 
   | { name: 'name', alias?: string  } 
   | { name: 'password', alias?: string  } 
+  | { name: 'role', alias?: string  } 
   | { name: 'test', alias?: string  } 
   
 export interface UserUpsertWithoutPostsInput {
@@ -2416,6 +2465,10 @@ export type TestSubscriptionWhereInputInputObject =
   | { name: 'AND', alias?: string  } 
   
 
+export type RoleValues =
+  | 'ADMIN'
+  | 'USER'
+  
 export type PostOrderByInputValues =
   | 'id_ASC'
   | 'id_DESC'
@@ -2435,6 +2488,8 @@ export type UserOrderByInputValues =
   | 'name_DESC'
   | 'password_ASC'
   | 'password_DESC'
+  | 'role_ASC'
+  | 'role_DESC'
   | 'test_ASC'
   | 'test_DESC'
   
