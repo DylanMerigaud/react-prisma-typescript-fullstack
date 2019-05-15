@@ -90,7 +90,8 @@ jobs:
       - run: |
           echo $BACKEND_GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
           gcloud --quiet config set project ${BACKEND_GOOGLE_PROJECT_ID}
-          cd backend && gcloud app deploy  
+          gcloud --quiet config set compute/zone ${BACKEND_GOOGLE_COMPUTE_ZONE}
+          cd backend && gcloud app deploy
 
 workflows:
   version: 2
