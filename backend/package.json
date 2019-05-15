@@ -4,9 +4,10 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
+		"test": "echo \"Error: no test specified\" && exit 0",
 		"start": "ts-node index.ts",
 		"dev": "ts-node-dev --no-notify --respawn --transpileOnly ./",
+		"build": "yarn run prisma:generate",
 		"prisma:generate": "dotenv prisma generate",
 		"prisma:deploy": "dotenv prisma deploy",
 		"docker:up": "docker-compose up"
@@ -16,6 +17,7 @@
 	"license": "ISC",
 	"dependencies": {
 		"bcrypt": "^3.0.6",
+		"ts-node": "^8.1.0",
 		"graphql": "^14.3.0",
 		"graphql-shield": "^5.3.5",
 		"graphql-yoga": "^1.17.4",
@@ -27,12 +29,9 @@
 		"yup": "^0.27.0"
 	},
 	"devDependencies": {
-		"@types/bcrypt": "^3.0.0",
 		"@types/graphql": "^14.2.0",
-		"@types/jsonwebtoken": "^8.3.2",
 		"@types/yup": "^0.26.13",
 		"dotenv-cli": "^2.0.0",
-		"ts-node": "^8.1.0",
 		"ts-node-dev": "^1.0.0-pre.38",
 		"typescript": "^3.4.5"
 	}

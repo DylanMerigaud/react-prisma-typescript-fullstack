@@ -1,0 +1,117 @@
+version: 2.1
+jobs:
+  install:
+    docker:
+      - image: circleci/node:lts
+    working_directory: ~/project
+    steps:
+      - checkout
+      - run:
+          name: Import Backend ENV
+          command: echo "$BACKEND_ENV_PRODUCTION" > ./backend/.env && cat -e ./backend/.env
+      - run:
+          name: Import Frontend ENV
+          command: echo "$FRONTEND_ENV_PRODUCTION" > ./frontend/.env
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - ${CACHE_VERSION}-yarn-packages-{{ checksum "yarn.lock" }}-{{ checksum "./frontend/yarn.lock" }}-{{ checksum "./backend/yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: ${CACHE_VERSION}-yarn-packages-{{ checksum "yarn.lock" }}-{{ checksum "./frontend/yarn.lock" }}-{{ checksum "./backend/yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - node_modules
+            - backend/node_modules
+            - frontend/node_modules
+            - backend/.env
+            - frontend/.env
+
+  test-frontend:
+    docker:
+      - image: circleci/node:lts
+    working_directory: ~/project
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project
+      - run:
+          name: Test Frontend
+          command: cd frontend && yarn test
+  build-frontend:
+    docker:
+      - image: circleci/node:lts
+    working_directory: ~/project
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project
+      - run:
+          name: Build Frontend
+          command: cd frontend && yarn build
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - frontend/build
+  deploy-frontend:
+    docker:
+      - image: devillex/docker-firebase
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project
+      - run: |
+          cd frontend && firebase deploy --token "$FRONTEND_FIREBASE_TOKEN"
+
+  test-backend:
+    docker:
+      - image: circleci/node:lts
+    working_directory: ~/project
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project
+      - run:
+          name: Test Backend
+          command: cd backend && yarn test
+  deploy-backend:
+    docker:
+      - image: google/cloud-sdk
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project
+      - run: |
+          echo $BACKEND_GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
+          gcloud --quiet config set project ${BACKEND_GOOGLE_PROJECT_ID}
+          cd backend && gcloud app deploy  
+
+workflows:
+  version: 2
+  default:
+    jobs:
+      - install
+
+      - test-frontend:
+          requires:
+            - install
+      - build-frontend:
+          requires:
+            - install
+      - deploy-frontend:
+          requires:
+            - test-frontend
+            - build-frontend
+
+      - test-backend:
+          requires:
+            - install
+      - deploy-backend:
+          requires:
+            - test-backend
