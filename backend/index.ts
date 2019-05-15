@@ -85,8 +85,6 @@ const Mutation = prismaObjectType({
 			resolve: async (_, { name, email, password }, ctx) => {
 				const password2 = await bcrypt.hash(password, 10)
 
-				console.log({ password, password2 })
-
 				const user = await ctx.prisma.createUser({
 					name,
 					email,
@@ -94,12 +92,7 @@ const Mutation = prismaObjectType({
 					role: 'USER'
 				})
 
-				// User peut ne pas contenir .test mais doit forcement contenir .password, qui n'est pas retourné par la db et ne devrait pas l'être
-				// sinon erreur de prisma :
-				// Cannot return null for non-nullable field User.password.
 				console.log({ user })
-				// peut être fix en assignant password, dans ce cas fonctionne normalement
-				// user.password = password2
 
 				return {
 					token: jwt.sign({ userId: user.id }, 'APP_SECRET'),
@@ -115,15 +108,11 @@ const Mutation = prismaObjectType({
 			},
 			resolve: async (_, { email, password }, ctx) => {
 				const user = await ctx.prisma.user({ email })
-
 				console.log({ user })
-
 				if (!user) throw new Error('User not in db.')
 
 				const valid = await bcrypt.compare(password, user.password)
-
 				console.log({ valid })
-
 				if (!valid) throw new Error('Wrong password.')
 
 				return {
@@ -136,6 +125,10 @@ const Mutation = prismaObjectType({
 })
 
 const AlimentYupSchema = yup.mixed().oneOf([ 'Poulet', 'Frites' ])
+
+const EmailYupSchema = null
+
+const PasswordYupSchema = null
 
 const Aliment = enumType({
 	name: 'Aliment',
