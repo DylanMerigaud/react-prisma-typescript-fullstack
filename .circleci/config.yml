@@ -66,9 +66,8 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/project
-      - run:
-          name: Deploy
-          command: cd frontend && firebase deploy --token "$FRONTEND_FIREBASE_TOKEN"
+      - run: |
+          cd frontend && firebase deploy --token "$FRONTEND_FIREBASE_TOKEN"
 
   test-backend:
     docker:
@@ -88,15 +87,10 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/project
-      - run:
-          name: Authenticate
-          command: echo $BACKEND_GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
-      - run:
-          name: Set project ID
-          command: gcloud --quiet config set project ${BACKEND_GOOGLE_PROJECT_ID}
-      - run:
-          name: Deploy
-          command: cd backend && gcloud app deploy
+      - run: |
+          echo $BACKEND_GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
+          gcloud --quiet config set project ${BACKEND_GOOGLE_PROJECT_ID}
+          cd backend && gcloud app deploy  
 
 workflows:
   version: 2
