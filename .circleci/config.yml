@@ -8,10 +8,10 @@ jobs:
       - checkout
       - run:
           name: Import Backend ENV
-          command: echo "$BACKEND_ENV_PRODUCTION" > ./backend/.env && cat -e ./backend/.env
+          command: echo "$BACKEND_ENV_PRODUCTION" | base64 --decode > ./backend/.env && cat -e ./backend/.env
       - run:
           name: Import Frontend ENV
-          command: echo "$FRONTEND_ENV_PRODUCTION" > ./frontend/.env
+          command: echo "$FRONTEND_ENV_PRODUCTION" | base64 --decode > ./frontend/.env
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
