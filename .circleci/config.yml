@@ -97,7 +97,7 @@ jobs:
             gcloud --quiet config set compute/zone ${BACKEND_GOOGLE_COMPUTE_ZONE}
       - run:
           name: Deploy backend
-          command: cd backend && gcloud app deploy && yarn prisma:deploy
+          command: cd backend && gcloud app deploy
 
   deploy-prisma:
     docker:
@@ -106,6 +106,9 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/project
+      - run:
+          name: Install prisma
+          command: yarn global add prisma
       - run:
           name: Deploy prisma
           command: cd backend && yarn prisma:deploy
