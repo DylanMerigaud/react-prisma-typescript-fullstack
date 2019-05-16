@@ -46,6 +46,10 @@ const options = {
   playground: '/playground',
 }
 
+server.express.get('/', (req, res) => {
+  res.send('Hello world!')
+})
+
 server.start(options, ({ port, playground, }) =>
   console.log(
     `Server started, listening on port ${port} for incoming requests.\nYou can test the playground at http://localhost:4000${playground}`
