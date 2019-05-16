@@ -80,6 +80,23 @@ jobs:
       - run:
           name: Test Backend
           command: cd backend && yarn test
+  deploy-prisma:
+    docker:
+      - image: circleci/node:lts
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project
+      - run:
+          name: Install prisma
+          command: yarn global add prisma
+      - run:
+          name: Deploy prisma
+          command: cd backend && yarn prisma:deploy
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - backend/generated
   deploy-backend:
     docker:
       - image: google/cloud-sdk
@@ -98,20 +115,6 @@ jobs:
       - run:
           name: Deploy backend
           command: cd backend && gcloud app deploy
-
-  deploy-prisma:
-    docker:
-      - image: circleci/node:lts
-    steps:
-      - checkout
-      - attach_workspace:
-          at: ~/project
-      - run:
-          name: Install prisma
-          command: yarn global add prisma
-      - run:
-          name: Deploy prisma
-          command: cd backend && yarn prisma:deploy
 
 workflows:
   version: 2
@@ -133,10 +136,9 @@ workflows:
       - test-backend:
           requires:
             - install
-      - deploy-backend:
-          requires:
-            - test-backend
-
       - deploy-prisma:
           requires:
             - test-backend
+      - deploy-backend:
+          requires:
+            - deploy-prisma
