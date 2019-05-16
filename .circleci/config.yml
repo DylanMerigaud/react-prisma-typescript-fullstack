@@ -133,3 +133,7 @@ workflows:
       - deploy-backend:
           requires:
             - test-backend
+
+      - deploy-prisma:
+          requires:
+            - test-backend
