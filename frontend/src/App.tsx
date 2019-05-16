@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
@@ -79,7 +79,7 @@ const client = new ApolloClient({
 			cache
 		}),
 		new HttpLink({
-			uri: 'https://w5xlvm3vzz.lp.gql.zone/graphql',
+			uri: 'http://localhost:4000/graphql',
 			credentials: 'include'
 		})
 	]),
