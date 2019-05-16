@@ -39,7 +39,7 @@ const Layout: React.FC = () => {
 				onCloseSideBar={() => setState({ ...state, isSideBarOpen: false })}
 				onToggleSideBar={() => setState({ ...state, isSideBarOpen: state.isSideBarOpen })}
 				isSideBarOpen={state.isSideBarOpen}
-				isMobile={isMobile}
+				isMobile={isMobile()}
 			/>
 		</Router>
 	)

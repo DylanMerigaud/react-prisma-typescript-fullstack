@@ -15,7 +15,7 @@ const initialState = {
 	isMobile: false
 }
 
-const GlobalRoutes: React.FC = ({ onCloseSideBar, onToggleSideBar, isSideBarOpen, isMobile }) => {
+const GlobalRoutes: React.FC<Props> = ({ onCloseSideBar, onToggleSideBar, isSideBarOpen, isMobile }) => {
 	return (
 		<Switch>
 			<Route path="/login" component={Login} />
@@ -33,6 +33,13 @@ const GlobalRoutes: React.FC = ({ onCloseSideBar, onToggleSideBar, isSideBarOpen
 			</div>
 		</Switch>
 	)
+}
+
+interface Props {
+	onCloseSideBar: () => void
+	onToggleSideBar: () => void
+	isSideBarOpen: boolean
+	isMobile: boolean
 }
 
 export default GlobalRoutes

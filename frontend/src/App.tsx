@@ -37,11 +37,13 @@ const requestLink = new ApolloLink(
 			Promise.resolve(operation)
 				.then((oper) => request(oper))
 				.then(() => {
-					handle = forward(operation).subscribe({
-						next: observer.next.bind(observer),
-						error: observer.error.bind(observer),
-						complete: observer.complete.bind(observer)
-					})
+					handle =
+						forward &&
+						forward(operation).subscribe({
+							next: observer.next.bind(observer),
+							error: observer.error.bind(observer),
+							complete: observer.complete.bind(observer)
+						})
 				})
 				.catch(observer.error.bind(observer))
 
@@ -68,7 +70,7 @@ const client = new ApolloClient({
 			},
 			resolvers: {
 				Mutation: {
-					updateNetworkStatus: (_, { isConnected }, { cache }) => {
+					updateNetworkStatus: (_: any, { isConnected }: any, { cache }: any) => {
 						cache.writeData({ data: { isConnected } })
 						return null
 					}
