@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Route, Switch } from 'react-router-dom'
 
+import Container from '@material-ui/core/Container'
+
 import RoutesAuth from './RoutesAuth'
 
 import Login from './../components/auth/Login'
@@ -17,21 +19,23 @@ const initialState = {
 
 const GlobalRoutes: React.FC<Props> = ({ onCloseSideBar, onToggleSideBar, isSideBarOpen, isMobile }) => {
 	return (
-		<Switch>
-			<Route path="/login" component={Login} />
-			<Route path="/signup" component={Signup} />
-			<div>
-				<Drawer open={isSideBarOpen} onCloseSideBar={onCloseSideBar} isMobile={isMobile} />
-				<div
-					style={{
-						marginLeft: !isMobile && isSideBarOpen ? 165 : 0,
-						transition: 'margin-left 0.25s ease'
-					}}>
-					<Header onToggleSideBar={onToggleSideBar} />
-					<RoutesAuth />
+		<Container>
+			<Switch>
+				<Route path="/login" component={Login} />
+				<Route path="/signup" component={Signup} />
+				<div>
+					<Drawer open={isSideBarOpen} onCloseSideBar={onCloseSideBar} isMobile={isMobile} />
+					<div
+						style={{
+							marginLeft: !isMobile && isSideBarOpen ? 165 : 0,
+							transition: 'margin-left 0.25s ease'
+						}}>
+						<Header onToggleSideBar={onToggleSideBar} />
+						<RoutesAuth />
+					</div>
 				</div>
-			</div>
-		</Switch>
+			</Switch>
+		</Container>
 	)
 }
 
