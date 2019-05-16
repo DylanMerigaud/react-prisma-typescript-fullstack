@@ -59,3 +59,8 @@ server.start(options, ({ port, playground }) =>
 		`Server started, listening on port ${port} for incoming requests.\nYou can test the playground at http://localhost:4000${playground}`
 	)
 )
+
+server.express.use((req, res) => {
+  res.status(404)
+  res.send('404 not found')
+})
