@@ -22,18 +22,9 @@ const Login: React.FC = ({}) => {
 	return (
 		<Box p={1} clone>
 			<Paper>
-				<h1>Anywhere in your app!</h1>
+				<h1>Login</h1>
 				<Formik
 					initialValues={{ email: '', password: '' }}
-					// validate={(values) => {
-					// 	let errors: Record<string, string> = {}
-					// 	if (!values.email) {
-					// 		errors.email = 'Required'
-					// 	} else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-					// 		errors.email = 'Invalid email address'
-					// 	}
-					// 	return errors
-					// }}
 					validationSchema={LoginSchema}
 					onSubmit={(values, { setSubmitting }) => {
 						loginMutation({
@@ -44,9 +35,6 @@ const Login: React.FC = ({}) => {
 						}).then(() => {
 							setSubmitting(false)
 						})
-						// setTimeout(() => {
-						// 	alert(JSON.stringify(values, null, 2))
-						// }, 400)
 					}}>
 					{({
 						values,
@@ -63,6 +51,7 @@ const Login: React.FC = ({}) => {
 								<TextField
 									type="email"
 									name="email"
+									placeholder="email"
 									onChange={handleChange}
 									onBlur={handleBlur}
 									value={values.email}
