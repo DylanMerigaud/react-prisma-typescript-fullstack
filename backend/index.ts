@@ -1,3 +1,4 @@
+require('dotenv').config()
 import { prisma, } from './generated/prisma-client'
 import datamodelInfo from './generated/nexus-prisma'
 import * as path from 'path'

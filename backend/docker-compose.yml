@@ -7,8 +7,8 @@ services:
       - "4466:4466"
     environment:
       PRISMA_CONFIG: |
-        managementApiSecret: "${PRISMA_MANAGEMENT_API_SECRET}"
         port: 4466
+        managementApiSecret: "${PRISMA_MANAGEMENT_API_SECRET}"
         databases:
           default:
             connector: postgres
