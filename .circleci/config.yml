@@ -107,6 +107,9 @@ jobs:
       - attach_workspace:
           at: ~/project
       - run:
+          name: Install prisma
+          command: yarn global add prisma
+      - run:
           name: Deploy prisma
           command: cd backend && yarn prisma:deploy
 
