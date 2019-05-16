@@ -87,11 +87,28 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/project
-      - run: |
-          echo $BACKEND_GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
-          gcloud --quiet config set project ${BACKEND_GOOGLE_PROJECT_ID}
-          gcloud --quiet config set compute/zone ${BACKEND_GOOGLE_COMPUTE_ZONE}
-          cd backend && gcloud app deploy && yarn prisma:deploy
+      - run:
+          name: Gcloud authenticate
+          command: echo $BACKEND_GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
+      - run:
+          name: Gcloud configuration
+          command: |
+            gcloud --quiet config set project ${BACKEND_GOOGLE_PROJECT_ID}
+            gcloud --quiet config set compute/zone ${BACKEND_GOOGLE_COMPUTE_ZONE}
+      - run:
+          name: Deploy backend
+          command: cd backend && gcloud app deploy && yarn prisma:deploy
+
+  deploy-prisma:
+    docker:
+      - image: circleci/node:lts
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project
+      - run:
+          name: Deploy prisma
+          command: cd backend && yarn prisma:deploy
 
 workflows:
   version: 2
