@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run:
           name: Import Backend ENV
-          command: echo "$BACKEND_ENV_PRODUCTION" | base64 --decode > ./backend/.env && cat -e ./backend/.env
+          command: echo "$BACKEND_ENV_PRODUCTION" | base64 --decode > ./backend/.env
       - run:
           name: Import Frontend ENV
           command: echo "$FRONTEND_ENV_PRODUCTION" | base64 --decode > ./frontend/.env
@@ -91,7 +91,7 @@ jobs:
           echo $BACKEND_GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
           gcloud --quiet config set project ${BACKEND_GOOGLE_PROJECT_ID}
           gcloud --quiet config set compute/zone ${BACKEND_GOOGLE_COMPUTE_ZONE}
-          cd backend && gcloud app deploy
+          cd backend && gcloud app deploy && yarn prisma:deploy
 
 workflows:
   version: 2
