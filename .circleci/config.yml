@@ -8,10 +8,10 @@ jobs:
       - checkout
       - run:
           name: Import Backend ENV
-          command: echo "$BACKEND_ENV_PRODUCTION" > ./backend/.env && cat -e ./backend/.env
+          command: echo "$BACKEND_ENV_PRODUCTION" | base64 --decode > ./backend/.env
       - run:
           name: Import Frontend ENV
-          command: echo "$FRONTEND_ENV_PRODUCTION" > ./frontend/.env
+          command: echo "$FRONTEND_ENV_PRODUCTION" | base64 --decode > ./frontend/.env
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
@@ -87,11 +87,28 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/project
-      - run: |
-          echo $BACKEND_GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
-          gcloud --quiet config set project ${BACKEND_GOOGLE_PROJECT_ID}
-          gcloud --quiet config set compute/zone ${BACKEND_GOOGLE_COMPUTE_ZONE}
-          cd backend && gcloud app deploy
+      - run:
+          name: Gcloud authenticate
+          command: echo $BACKEND_GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
+      - run:
+          name: Gcloud configuration
+          command: |
+            gcloud --quiet config set project ${BACKEND_GOOGLE_PROJECT_ID}
+            gcloud --quiet config set compute/zone ${BACKEND_GOOGLE_COMPUTE_ZONE}
+      - run:
+          name: Deploy backend
+          command: cd backend && gcloud app deploy && yarn prisma:deploy
+
+  deploy-prisma:
+    docker:
+      - image: circleci/node:lts
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project
+      - run:
+          name: Deploy prisma
+          command: cd backend && yarn prisma:deploy
 
 workflows:
   version: 2
@@ -114,5 +131,9 @@ workflows:
           requires:
             - install
       - deploy-backend:
+          requires:
+            - test-backend
+
+      - deploy-prisma:
           requires:
             - test-backend
