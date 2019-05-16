@@ -56,7 +56,6 @@ export const login = {
 	},
 	resolve: async (_, { email, password }, ctx) => {
 		const user = await ctx.prisma.user({ email })
-		console.log({ user })
 		if (!user) throw new Error('User not in db.')
 
 		const valid = await bcrypt.compare(password, user.password)
