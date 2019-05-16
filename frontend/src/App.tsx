@@ -79,8 +79,8 @@ const client = new ApolloClient({
 			cache
 		}),
 		new HttpLink({
-			uri: 'http://localhost:4000/graphql',
-			credentials: 'include'
+			uri: 'http://localhost:4000/graphql'
+			// credentials: 'include' TODO: what is include
 		})
 	]),
 	cache

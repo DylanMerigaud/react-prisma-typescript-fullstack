@@ -92,6 +92,7 @@ input PostWhereUniqueInput {
 
 type Query {
   feed: [Post!]!
+  me: [User!]!
   post(where: PostWhereUniqueInput!): Post
   postsByUser(email: String): [Post!]!
 }
