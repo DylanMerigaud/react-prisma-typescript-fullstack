@@ -86,7 +86,7 @@ jobs:
           name: Export .env vars
           command: |
             cd frontend
-            export $(grep -v '^#' .env | xargs)
+            export "$(grep -v '^#' .env | xargs)"
       - run:
           name: DEBUG
           command: pwd && echo $FIREBASE_TOKEN
@@ -129,7 +129,7 @@ jobs:
           name: Export .env vars
           command: |
             cd backend
-            export $(grep -v '^#' .env | xargs)
+            export "$(grep -v '^#' .env | xargs)"
       - run:
           name: DEBUG
           command: pwd && echo $GCLOUD_SERVICE_KEY
@@ -143,7 +143,7 @@ jobs:
             gcloud --quiet config set compute/zone ${GCLOUD_COMPUTE_ZONE}
       - run:
           name: Deploy backend
-          command: gcloud app deploy
+          command: gcloud app deploy -v $CIRCLE_SHA1
 
 onlyEnvBranches: &onlyEnvBranches
   filters:
