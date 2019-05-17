@@ -17,26 +17,22 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Export Environement variables
-          command: |-
+          name: Import Backend ENV
+          command: |
             export BRANCH_NAME_UPPERCASE=$(echo "${CIRCLE_BRANCH}" | tr a-z A-Z)
             export BACKEND_ENV=$(if [ "$BRANCH_NAME_UPPERCASE" != "PREPROD" ]; then echo "$(eval echo \"\$BACKEND_ENV_${BRANCH_NAME_UPPERCASE}\")"; else echo "${BACKEND_ENV_PROD}"; fi)
-            export FRONTEND_ENV=$(if [ "$BRANCH_NAME_UPPERCASE" != "PREPROD" ]; then echo "$(eval echo \"\$FRONTEND_ENV_${BRANCH_NAME_UPPERCASE}\")"; else echo "${FRONTEND_ENV_PROD}"; fi)
-            echo "$BRANCH_NAME_UPPERCASE"
-            echo "$BACKEND_ENV"
-      - run:
-          name: Import Backend ENV
-          command: echo "$BACKEND_ENV" | base64 --decode > ./backend/.env
+            echo "$BACKEND_ENV" | base64 --decode > ./backend/.env
       - run:
           name: Import Frontend ENV
-          command: echo "$FRONTEND_ENV" | base64 --decode > ./frontend/.env
+          command: |
+            export BRANCH_NAME_UPPERCASE=$(echo "${CIRCLE_BRANCH}" | tr a-z A-Z)
+            export FRONTEND_ENV=$(if [ "$BRANCH_NAME_UPPERCASE" != "PREPROD" ]; then echo "$(eval echo \"\$FRONTEND_ENV_${BRANCH_NAME_UPPERCASE}\")"; else echo "${FRONTEND_ENV_PROD}"; fi)
+            echo "$FRONTEND_ENV" | base64 --decode > ./frontend/.env
       - run:
           name: DEBUG
           command: |
             cat ./backend/.env
             cat ./frontend/.env
-            echo "$BRANCH_NAME_UPPERCASE"
-            echo "$BACKEND_ENV"
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
@@ -93,7 +89,7 @@ jobs:
             export $(grep -v '^#' .env | xargs)
       - run:
           name: DEBUG
-          command: pwd
+          command: pwd && echo $FIREBASE_TOKEN
       - run:
           name: Deploy Frontend
           command: firebase deploy --token "$FIREBASE_TOKEN"
