@@ -23,14 +23,14 @@ jobs:
             export BACKEND_ENV=$(
               if [ "$BRANCH_NAME_UPPERCASE" != "PREPROD" ];
                 then
-                  echo "$(eval echo \"\$BACKEND_ENV_${BRANCH_NAME_UPPERCASE}\")";
+                  printf '%s' "$(eval echo \"\$BACKEND_ENV_${BRANCH_NAME_UPPERCASE}\")";
                 else 
-                  echo "${BACKEND_ENV_PROD}";
+                  printf '%s'  "${BACKEND_ENV_PROD}";
               fi
             )
             if [ "$BACKEND_ENV" != "" ];
               then
-                echo "$(echo "$BACKEND_ENV" | base64 --decode)" > ./backend/.env;
+                printf '%s'  "$(echo "$BACKEND_ENV" | base64 --decode)" > ./backend/.env;
             fi
       - run:
           name: Import Frontend ENV
@@ -39,14 +39,14 @@ jobs:
             export FRONTEND_ENV=$(
               if [ "$BRANCH_NAME_UPPERCASE" != "PREPROD" ];
                 then
-                  echo "$(eval echo \"\$FRONTEND_ENV_${BRANCH_NAME_UPPERCASE}\")";
+                  printf '%s' "$(eval echo \"\$FRONTEND_ENV_${BRANCH_NAME_UPPERCASE}\")";
                 else
-                  echo "${FRONTEND_ENV_PROD}";
+                  printf '%s' "${FRONTEND_ENV_PROD}";
               fi
             )
             if [ "$FRONTEND_ENV" != "" ];
               then
-                echo "$(echo "$FRONTEND_ENV" | base64 --decode)" > ./frontend/.env;
+                printf '%s' "$(echo "$FRONTEND_ENV" | base64 --decode)" > ./frontend/.env;
             fi
       - run:
           name: DEBUG
@@ -145,7 +145,7 @@ jobs:
           set -a                  
           . ./.env
           set +a
-          echo $GCLOUD_SERVICE_KEY
+          printf '%s' "$GCLOUD_SERVICE_KEY"
           printf '%s' "$GCLOUD_SERVICE_KEY" | gcloud auth activate-service-account --key-file=-
           gcloud --quiet config set project ${GCLOUD_PROJECT_ID}
           gcloud --quiet config set compute/zone ${GCLOUD_COMPUTE_ZONE}
