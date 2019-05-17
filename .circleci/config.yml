@@ -31,6 +31,8 @@ jobs:
             if [ -z "$BACKEND_ENV" ];
               then
                 echo "$BACKEND_ENV" | base64 --decode > ./backend/.env;
+              else
+                echo $BACKEND_ENV
             fi
       - run:
           name: Import Frontend ENV
