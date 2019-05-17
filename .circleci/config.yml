@@ -59,7 +59,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: "$CIRCLE_WORKING_DIRECTORY"
+          at: .
       - run:
           name: Test Frontend
           command: cd frontend && yarn test
@@ -68,7 +68,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: "$CIRCLE_WORKING_DIRECTORY"
+          at: .
       - run:
           name: Build Frontend
           command: cd frontend && yarn build
@@ -81,7 +81,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: "$CIRCLE_WORKING_DIRECTORY"
+          at: .
       - run:
           name: Export .env vars
           command: |
@@ -99,7 +99,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: "$CIRCLE_WORKING_DIRECTORY"
+          at: .
       - run:
           name: Test Backend
           command: cd backend && yarn test
@@ -108,7 +108,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: "$CIRCLE_WORKING_DIRECTORY"
+          at: .
       - run:
           name: Install prisma
           command: yarn global add prisma
@@ -124,7 +124,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: "$CIRCLE_WORKING_DIRECTORY"
+          at: .
       - run:
           name: Export .env vars
           command: |
