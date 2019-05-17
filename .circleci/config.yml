@@ -19,7 +19,7 @@ jobs:
       - run:
           name: Export Environement variables
           command: |-
-            export BRANCH_NAME_UPPERCASE=$(echo "${CIRCLE_WORKING_DIRECTORY}" | tr a-z A-Z)
+            export BRANCH_NAME_UPPERCASE=$(echo "${CIRCLE_BRANCH}" | tr a-z A-Z)
             export BACKEND_ENV=$(if [ "$BRANCH_NAME_UPPERCASE" != "PREPROD" ]; then echo "$(eval echo \"\$BACKEND_ENV_${BRANCH_NAME_UPPERCASE}\")"; else echo "${BACKEND_ENV_PROD}"; fi)
             export FRONTEND_ENV=$(if [ "$BRANCH_NAME_UPPERCASE" != "PREPROD" ]; then echo "$(eval echo \"\$FRONTEND_ENV_${BRANCH_NAME_UPPERCASE}\")"; else echo "${FRONTEND_ENV_PROD}"; fi)
             echo "$BRANCH_NAME_UPPERCASE"
