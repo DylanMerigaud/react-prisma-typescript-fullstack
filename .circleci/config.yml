@@ -22,6 +22,8 @@ jobs:
             export BRANCH_NAME_UPPERCASE=$(echo "${CI_COMMIT_REF_NAME}" | tr a-z A-Z)
             export BACKEND_ENV=$(if [ "$BRANCH_NAME_UPPERCASE" != "PREPROD" ]; then echo "$(eval echo \"\$BACKEND_ENV_${BRANCH_NAME_UPPERCASE}\")"; else echo "${BACKEND_ENV_PROD}"; fi)
             export FRONTEND_ENV=$(if [ "$BRANCH_NAME_UPPERCASE" != "PREPROD" ]; then echo "$(eval echo \"\$FRONTEND_ENV_${BRANCH_NAME_UPPERCASE}\")"; else echo "${FRONTEND_ENV_PROD}"; fi)
+            echo "$BRANCH_NAME_UPPERCASE"
+            echo "$BACKEND_ENV"
       - run:
           name: Import Backend ENV
           command: echo "$BACKEND_ENV" | base64 --decode > ./backend/.env
@@ -48,7 +50,7 @@ jobs:
           paths:
             - ~/.cache/yarn
       - persist_to_workspace:
-          root: "$CIRCLE_WORKING_DIRECTORY"
+          root: .
           paths:
             - node_modules
             - backend/node_modules
@@ -75,7 +77,7 @@ jobs:
           name: Build Frontend
           command: cd frontend && yarn build
       - persist_to_workspace:
-          root: "$CIRCLE_WORKING_DIRECTORY"
+          root: .
           paths:
             - frontend/build
   deploy-frontend:
@@ -118,7 +120,7 @@ jobs:
           name: Deploy prisma
           command: cd backend && yarn prisma:deploy
       - persist_to_workspace:
-          root: "$CIRCLE_WORKING_DIRECTORY"
+          root: .
           paths:
             - backend/generated
   deploy-backend:
