@@ -104,7 +104,9 @@ jobs:
           at: .
       - run: |
           cd frontend
-          export "$(grep -v '^#' .env | xargs -0)"
+          set -a                  
+          . ./.env
+          set +a
           firebase deploy --token "$FIREBASE_TOKEN"
 
   test-backend:
@@ -140,7 +142,9 @@ jobs:
           at: .
       - run: |
           cd backend
-          export "$(grep -v '^#' .env | xargs -0)"
+          set -a                  
+          . ./.env
+          set +a
           echo $GCLOUD_SERVICE_KEY
           echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
           gcloud --quiet config set project ${GCLOUD_PROJECT_ID}
