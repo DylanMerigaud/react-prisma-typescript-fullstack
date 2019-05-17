@@ -28,7 +28,7 @@ jobs:
                   echo "${BACKEND_ENV_PROD}";
               fi
             )
-            if [ -z "$(eval echo "$BACKEND_ENV")" ];
+            if [ -z "$BACKEND_ENV" ];
               then
                 echo "$BACKEND_ENV" | base64 --decode > ./backend/.env;
             fi
@@ -44,7 +44,7 @@ jobs:
                   echo "${FRONTEND_ENV_PROD}";
               fi
             )
-            if [ -z "$(eval echo "$FRONTEND_ENV")" ];
+            if [ -z "$FRONTEND_ENV" ];
               then
                 echo "$FRONTEND_ENV" | base64 --decode > ./frontend/.env;
             fi
