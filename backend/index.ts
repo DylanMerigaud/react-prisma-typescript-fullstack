@@ -1,4 +1,3 @@
-require('dotenv').config()
 import { prisma, } from './generated/prisma-client'
 import datamodelInfo from './generated/nexus-prisma'
 import * as path from 'path'
@@ -6,8 +5,6 @@ import { makePrismaSchema, } from 'nexus-prisma'
 import { GraphQLServer, } from 'graphql-yoga'
 import { rule, shield, } from 'graphql-shield'
 import { ContextParameters, } from 'graphql-yoga/dist/types'
-// import { clearConfigCache } from 'prettier'
-// import { INSPECT_MAX_BYTES } from 'buffer'
 
 import Query from './query'
 import Mutation from './mutation'
