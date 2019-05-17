@@ -30,7 +30,7 @@ jobs:
             )
             if [ "$BACKEND_ENV" != "" ];
               then
-                echo "$BACKEND_ENV" | base64 --decode > ./backend/.env;
+                echo "$(echo "$BACKEND_ENV" | base64 --decode)" > ./backend/.env;
             fi
       - run:
           name: Import Frontend ENV
@@ -46,7 +46,7 @@ jobs:
             )
             if [ "$FRONTEND_ENV" != "" ];
               then
-                echo "$FRONTEND_ENV" | base64 --decode > ./frontend/.env;
+                echo "$(echo "$FRONTEND_ENV" | base64 --decode)" > ./frontend/.env;
             fi
       - run:
           name: DEBUG
