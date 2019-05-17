@@ -21,13 +21,13 @@ jobs:
           command: |
             export BRANCH_NAME_UPPERCASE=$(echo "${CIRCLE_BRANCH}" | tr a-z A-Z)
             export BACKEND_ENV=$(if [ "$BRANCH_NAME_UPPERCASE" != "PREPROD" ]; then echo "$(eval echo \"\$BACKEND_ENV_${BRANCH_NAME_UPPERCASE}\")"; else echo "${BACKEND_ENV_PROD}"; fi)
-            echo '$BACKEND_ENV' | base64 --decode > ./backend/.env
+            if [ $(eval echo "$BACKEND_ENV") '==' ""];then echo "$BACKEND_ENV" | base64 --decode > ./backend/.env"; fi
       - run:
           name: Import Frontend ENV
           command: |
             export BRANCH_NAME_UPPERCASE=$(echo "${CIRCLE_BRANCH}" | tr a-z A-Z)
             export FRONTEND_ENV=$(if [ "$BRANCH_NAME_UPPERCASE" != "PREPROD" ]; then echo "$(eval echo \"\$FRONTEND_ENV_${BRANCH_NAME_UPPERCASE}\")"; else echo "${FRONTEND_ENV_PROD}"; fi)
-            echo '$FRONTEND_ENV' | base64 --decode > ./frontend/.env
+            if [ $(eval echo "$FRONTEND_ENV") '==' ""];then echo "$FRONTEND_ENV" | base64 --decode > ./frontend/.env"; fi
       - run:
           name: DEBUG
           command: |
