@@ -141,6 +141,7 @@ jobs:
       - run: |
           cd backend
           export "$(grep -v '^#' .env | xargs -0)"
+          echo $GCLOUD_SERVICE_KEY
           echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
           gcloud --quiet config set project ${GCLOUD_PROJECT_ID}
           gcloud --quiet config set compute/zone ${GCLOUD_COMPUTE_ZONE}
