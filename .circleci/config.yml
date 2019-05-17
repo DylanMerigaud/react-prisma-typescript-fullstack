@@ -131,6 +131,9 @@ jobs:
             cd backend
             export $(grep -v '^#' .env | xargs)
       - run:
+          name: DEBUG
+          command: pwd && echo $GCLOUD_SERVICE_KEY
+      - run:
           name: Gcloud authenticate
           command: echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
       - run:
