@@ -1,17 +1,58 @@
+useNode: &useNode
+  docker:
+    - image: circleci/node:lts
+
+useGcloud: &useGcloud
+  docker:
+    - image: google/cloud-sdk
+
+useFirebase: &useFirebase
+  docker:
+    - image: devillex/docker-firebase
+
 version: 2.1
 jobs:
   install:
-    docker:
-      - image: circleci/node:lts
-    working_directory: ~/project
+    <<: *useNode
     steps:
       - checkout
       - run:
           name: Import Backend ENV
-          command: echo "$BACKEND_ENV_PRODUCTION" | base64 --decode > ./backend/.env
+          command: |
+            export BRANCH_NAME_UPPERCASE=$(echo "${CIRCLE_BRANCH}" | tr a-z A-Z)
+            export BACKEND_ENV=$(
+              if [ "$BRANCH_NAME_UPPERCASE" != "PREPROD" ];
+                then
+                  printf '%s' "$(eval echo \"\$BACKEND_ENV_${BRANCH_NAME_UPPERCASE}\")";
+                else 
+                  printf '%s'  "${BACKEND_ENV_PROD}";
+              fi
+            )
+            if [ "$BACKEND_ENV" != "" ];
+              then
+                printf '%s'  "$(echo "$BACKEND_ENV" | base64 --decode)" > ./backend/.env;
+            fi
       - run:
           name: Import Frontend ENV
-          command: echo "$FRONTEND_ENV_PRODUCTION" | base64 --decode > ./frontend/.env
+          command: |
+            export BRANCH_NAME_UPPERCASE=$(echo "${CIRCLE_BRANCH}" | tr a-z A-Z)
+            export FRONTEND_ENV=$(
+              if [ "$BRANCH_NAME_UPPERCASE" != "PREPROD" ];
+                then
+                  printf '%s' "$(eval echo \"\$FRONTEND_ENV_${BRANCH_NAME_UPPERCASE}\")";
+                else
+                  printf '%s' "${FRONTEND_ENV_PROD}";
+              fi
+            )
+            if [ "$FRONTEND_ENV" != "" ];
+              then
+                printf '%s' "$(echo "$FRONTEND_ENV" | base64 --decode)" > ./frontend/.env;
+            fi
+      - run:
+          name: DEBUG
+          command: |
+            cat ./backend/.env
+            cat ./frontend/.env
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
@@ -25,7 +66,7 @@ jobs:
           paths:
             - ~/.cache/yarn
       - persist_to_workspace:
-          root: ~/project
+          root: .
           paths:
             - node_modules
             - backend/node_modules
@@ -34,59 +75,53 @@ jobs:
             - frontend/.env
 
   test-frontend:
-    docker:
-      - image: circleci/node:lts
-    working_directory: ~/project
+    <<: *useNode
     steps:
       - checkout
       - attach_workspace:
-          at: ~/project
+          at: .
       - run:
           name: Test Frontend
           command: cd frontend && yarn test
   build-frontend:
-    docker:
-      - image: circleci/node:lts
-    working_directory: ~/project
+    <<: *useNode
     steps:
       - checkout
       - attach_workspace:
-          at: ~/project
+          at: .
       - run:
           name: Build Frontend
           command: cd frontend && yarn build
       - persist_to_workspace:
-          root: ~/project
+          root: .
           paths:
             - frontend/build
   deploy-frontend:
-    docker:
-      - image: devillex/docker-firebase
+    <<: *useFirebase
     steps:
       - checkout
       - attach_workspace:
-          at: ~/project
+          at: .
       - run: |
-          cd frontend && firebase deploy --token "$FRONTEND_FIREBASE_TOKEN"
+          cd frontend
+          eval $(cat .env | sed 's/^/export /')
+          firebase deploy --token "$FIREBASE_TOKEN"
 
   test-backend:
-    docker:
-      - image: circleci/node:lts
-    working_directory: ~/project
+    <<: *useNode
     steps:
       - checkout
       - attach_workspace:
-          at: ~/project
+          at: .
       - run:
           name: Test Backend
           command: cd backend && yarn test
   deploy-prisma:
-    docker:
-      - image: circleci/node:lts
+    <<: *useNode
     steps:
       - checkout
       - attach_workspace:
-          at: ~/project
+          at: .
       - run:
           name: Install prisma
           command: yarn global add prisma
@@ -94,27 +129,31 @@ jobs:
           name: Deploy prisma
           command: cd backend && yarn prisma:deploy
       - persist_to_workspace:
-          root: ~/project
+          root: .
           paths:
             - backend/generated
   deploy-backend:
-    docker:
-      - image: google/cloud-sdk
+    <<: *useGcloud
     steps:
       - checkout
       - attach_workspace:
-          at: ~/project
-      - run:
-          name: Gcloud authenticate
-          command: echo $BACKEND_GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
-      - run:
-          name: Gcloud configuration
-          command: |
-            gcloud --quiet config set project ${BACKEND_GOOGLE_PROJECT_ID}
-            gcloud --quiet config set compute/zone ${BACKEND_GOOGLE_COMPUTE_ZONE}
-      - run:
-          name: Deploy backend
-          command: cd backend && gcloud app deploy
+          at: .
+      - run: |
+          cd backend
+          eval $(cat .env | sed 's/^/export /')
+          printf '%s' "$GCLOUD_SERVICE_KEY"
+          printf '%s' "$GCLOUD_SERVICE_KEY" | gcloud auth activate-service-account --key-file=-
+          gcloud --quiet config set project ${GCLOUD_PROJECT_ID}
+          gcloud --quiet config set compute/zone ${GCLOUD_COMPUTE_ZONE}
+          gcloud app deploy -v $CIRCLE_SHA1
+
+onlyEnvBranches: &onlyEnvBranches
+  filters:
+    branches:
+      only:
+        - dev
+        - preprod
+        - prod
 
 workflows:
   version: 2
@@ -129,6 +168,7 @@ workflows:
           requires:
             - install
       - deploy-frontend:
+          <<: *onlyEnvBranches
           requires:
             - test-frontend
             - build-frontend
@@ -137,8 +177,10 @@ workflows:
           requires:
             - install
       - deploy-prisma:
+          <<: *onlyEnvBranches
           requires:
             - test-backend
       - deploy-backend:
+          <<: *onlyEnvBranches
           requires:
             - deploy-prisma
