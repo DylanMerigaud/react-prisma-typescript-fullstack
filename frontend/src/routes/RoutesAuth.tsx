@@ -8,6 +8,8 @@ import { useQuery } from 'react-apollo-hooks'
 
 import gql from 'graphql-tag'
 
+import AuthRoute from './../components/AuthRoute'
+
 import MeContext from './../context/MeContext'
 
 const RoutesAuth: React.FC = () => {
@@ -18,7 +20,7 @@ const RoutesAuth: React.FC = () => {
 	return (
 		<MeContext.Provider value={me}>
 			<Switch>
-				<Route exact path="/" component={Feed} />
+				<AuthRoute exact path="/" component={Feed} />
 				<Route component={NotFound} />
 			</Switch>
 		</MeContext.Provider>

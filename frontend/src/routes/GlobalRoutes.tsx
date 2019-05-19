@@ -11,6 +11,8 @@ import Signup from './../components/auth/Signup'
 import Header from './../components/layout/Header'
 import Drawer from './../components/layout/Drawer'
 
+import NoAuthRoute from './../components/NoAuthRoute'
+
 const initialState = {
 	isSideBarOpen: false,
 	variant: 'permanent',
@@ -21,8 +23,8 @@ const GlobalRoutes: React.FC<Props> = ({ onCloseSideBar, onToggleSideBar, isSide
 	return (
 		<Container>
 			<Switch>
-				<Route path="/login" component={Login} />
-				<Route path="/signup" component={Signup} />
+				<NoAuthRoute path="/login" component={Login} />
+				<NoAuthRoute path="/signup" component={Signup} />
 				<div>
 					<Drawer open={isSideBarOpen} onCloseSideBar={onCloseSideBar} isMobile={isMobile} />
 					<div

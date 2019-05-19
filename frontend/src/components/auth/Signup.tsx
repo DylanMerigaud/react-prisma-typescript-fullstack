@@ -1,5 +1,5 @@
-import React from 'react'
-import { Formik } from 'formik'
+import React, { useState } from 'react'
+import { Formik, FormikActions } from 'formik'
 
 import TextField from '@material-ui/core/TextField'
 import Box from '@material-ui/core/Box'
@@ -9,7 +9,13 @@ import Button from '@material-ui/core/Button'
 import gql from 'graphql-tag'
 import { useMutation } from 'react-apollo-hooks'
 
+import { withRouter } from 'react-router'
+
+import UserType from './../../types/User'
+
 import * as Yup from 'yup'
+
+import useReactRouter from 'use-react-router'
 
 const SignupSchema = Yup.object().shape({
 	name: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Required'),
@@ -17,8 +23,49 @@ const SignupSchema = Yup.object().shape({
 	password: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Required')
 })
 
-const Signup: React.FC = ({}) => {
-	const signupMutation = useMutation(SIGNUP_MUTATION)
+interface Props {}
+
+interface Form {
+	name: string
+	email: string
+	password: string
+}
+type FormValues = Record<keyof Form, string>
+
+interface SignupMutationResponse {
+	signup: {
+		token: string
+		user: UserType
+	}
+}
+
+const Signup: React.FC<Props> = () => {
+	const signupMutation = useMutation<SignupMutationResponse>(SIGNUP_MUTATION)
+	const { history } = useReactRouter()
+	const [ error, setError ] = useState<string>()
+
+	const handleSubmit = (values: FormValues, { setSubmitting }: FormikActions<FormValues>) => {
+		signupMutation({
+			variables: {
+				name: values.name,
+				email: values.email,
+				password: values.password
+			}
+		})
+			.then((res) => {
+				if (!res.data) throw Error()
+				// console.log('signup success: ', res.data.login)
+
+				localStorage.setItem('token', res.data.signup.token)
+				history.push('/')
+				setSubmitting(false)
+			})
+			.catch((e) => {
+				console.error(e)
+				setError(e.message)
+				setSubmitting(false)
+			})
+	}
 
 	return (
 		<Box p={1} clone>
@@ -27,23 +74,7 @@ const Signup: React.FC = ({}) => {
 				<Formik
 					initialValues={{ name: '', email: '', password: '' }}
 					validationSchema={SignupSchema}
-					onSubmit={(values, { setSubmitting }) => {
-						signupMutation({
-							variables: {
-								name: values.name,
-								email: values.email,
-								password: values.password
-							}
-						})
-							.then((data) => {
-								console.log('signup success: ', data)
-								setSubmitting(false)
-							})
-							.catch((e) => {
-								console.error(e)
-								setSubmitting(false)
-							})
-					}}>
+					onSubmit={handleSubmit}>
 					{({
 						values,
 						errors,
@@ -107,4 +138,4 @@ const SIGNUP_MUTATION = gql`
 	}
 `
 
-export default Signup
+export default withRouter(Signup)
