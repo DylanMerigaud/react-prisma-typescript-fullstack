@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn de
+  /usr/local/bin/node /usr/local/bin/yarn dev
 
 PATH: 
   /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
@@ -15,44 +15,45 @@ Platform:
 
 npm manifest: 
   {
-  	"name": "backend",
-  	"version": "1.0.0",
-  	"description": "",
-  	"main": "index.js",
-  	"scripts": {
-  		"test": "echo \"Error: no test specified\" && exit 0",
-  		"start": "ts-node index.ts",
-  		"dev": "ts-node-dev --no-notify --respawn --transpileOnly ./",
-  		"build": "yarn run prisma:generate",
-  		"prisma:generate": "dotenv prisma generate",
-  		"prisma:deploy": "dotenv prisma deploy",
-  		"docker:up": "docker-compose up"
-  	},
-  	"keywords": [],
-  	"author": "",
-  	"license": "ISC",
-  	"dependencies": {
-  		"bcrypt": "^3.0.6",
-  		"cors": "^2.8.5",
-  		"graphql": "^14.3.0",
-  		"graphql-shield": "^5.3.5",
-  		"graphql-yoga": "^1.17.4",
-  		"graphql-yup-middleware": "^0.0.1",
-  		"jsonwebtoken": "^8.5.1",
-  		"nexus": "^0.11.7",
-  		"nexus-prisma": "^0.3.7",
-  		"prisma-client-lib": "^1.33.0",
-  		"ts-node": "^8.1.0",
-  		"yup": "^0.27.0"
-  	},
-  	"devDependencies": {
-  		"@types/cors": "^2.8.5",
-  		"@types/graphql": "^14.2.0",
-  		"@types/yup": "^0.26.13",
-  		"dotenv-cli": "^2.0.0",
-  		"ts-node-dev": "^1.0.0-pre.38",
-  		"typescript": "^3.4.5"
-  	}
+    "name": "backend",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 0",
+      "start": "dotenv ts-node index.ts",
+      "dev": "dotenv ts-node-dev --no-notify --respawn --transpileOnly ./",
+      "build": "yarn run prisma:generate",
+      "prisma:generate": "dotenv prisma generate",
+      "prisma:deploy": "dotenv prisma deploy",
+      "docker:up": "docker-compose up"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "bcrypt": "^3.0.6",
+      "cors": "^2.8.5",
+      "dotenv-cli": "^2.0.0",
+      "graphql": "^14.3.0",
+      "graphql-shield": "^5.3.5",
+      "graphql-yoga": "^1.17.4",
+      "graphql-yup-middleware": "^0.0.1",
+      "jsonwebtoken": "^8.5.1",
+      "nexus": "^0.11.7",
+      "nexus-prisma": "^0.3.7",
+      "prisma-client-lib": "^1.33.0",
+      "ts-node": "^8.1.0",
+      "yup": "^0.27.0"
+    },
+    "devDependencies": {
+      "@types/cors": "^2.8.5",
+      "@types/dotenv": "^6.1.1",
+      "@types/graphql": "^14.2.0",
+      "@types/yup": "^0.26.13",
+      "ts-node-dev": "^1.0.0-pre.38",
+      "typescript": "^3.4.5"
+    }
   }
 
 yarn manifest: 
@@ -1257,6 +1258,13 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/@types/cors/-/cors-2.8.5.tgz#c0c54c4e643e1d943d447292f2baf9dc82cfc8ec"
     dependencies:
       "@types/express" "*"
+  
+  "@types/dotenv@^6.1.1":
+    version "6.1.1"
+    resolved "https://registry.yarnpkg.com/@types/dotenv/-/dotenv-6.1.1.tgz#f7ce1cc4fe34f0a4373ba99fefa437b0bec54b46"
+    integrity sha512-ftQl3DtBvqHl9L16tpqqzA4YzCSXZfi7g8cQceTz5rOlYtk/IZbFjAv3mLOQlNIgOaylCQWQoBdDQHPgEBJPHg==
+    dependencies:
+      "@types/node" "*"
   
   "@types/express-serve-static-core@*":
     version "4.16.4"
@@ -10300,14 +10308,17 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/zen-observable/-/zen-observable-0.8.14.tgz#d33058359d335bc0db1f0af66158b32872af3bf7"
 
 Trace: 
-  Error: Command "de" not found. Did you mean "dev"?
-      at new MessageError (/usr/local/lib/node_modules/yarn/lib/cli.js:186:110)
-      at /usr/local/lib/node_modules/yarn/lib/cli.js:87307:17
-      at Generator.next (<anonymous>)
-      at step (/usr/local/lib/node_modules/yarn/lib/cli.js:98:30)
-      at /usr/local/lib/node_modules/yarn/lib/cli.js:116:14
-      at new Promise (<anonymous>)
-      at new F (/usr/local/lib/node_modules/yarn/lib/cli.js:23451:28)
-      at /usr/local/lib/node_modules/yarn/lib/cli.js:95:12
-      at runCommand (/usr/local/lib/node_modules/yarn/lib/cli.js:87312:22)
-      at Object.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:87412:14)
+  Error: Command failed.
+  Exit code: 1
+  Command: sh
+  Arguments: -c dotenv ts-node-dev --no-notify --respawn --transpileOnly ./
+  Directory: /Users/macbookpro/Documents/Projects/messenger-project/backend
+  Output:
+  
+      at ProcessTermError.MessageError (/usr/local/lib/node_modules/yarn/lib/cli.js:186:110)
+      at new ProcessTermError (/usr/local/lib/node_modules/yarn/lib/cli.js:226:113)
+      at ChildProcess.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:30281:17)
+      at emitTwo (events.js:126:13)
+      at ChildProcess.emit (events.js:214:7)
+      at maybeClose (internal/child_process.js:925:16)
+      at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)

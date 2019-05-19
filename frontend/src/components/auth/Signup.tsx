@@ -30,12 +30,19 @@ const Signup: React.FC = ({}) => {
 					onSubmit={(values, { setSubmitting }) => {
 						signupMutation({
 							variables: {
+								name: values.name,
 								email: values.email,
 								password: values.password
 							}
-						}).then(() => {
-							setSubmitting(false)
 						})
+							.then((data) => {
+								console.log('signup success: ', data)
+								setSubmitting(false)
+							})
+							.catch((e) => {
+								console.error(e)
+								setSubmitting(false)
+							})
 					}}>
 					{({
 						values,

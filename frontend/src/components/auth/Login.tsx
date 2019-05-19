@@ -32,9 +32,15 @@ const Login: React.FC = ({}) => {
 								email: values.email,
 								password: values.password
 							}
-						}).then(() => {
-							setSubmitting(false)
 						})
+							.then((data) => {
+								console.log('login success: ', data)
+								setSubmitting(false)
+							})
+							.catch((e) => {
+								console.error(e)
+								setSubmitting(false)
+							})
 					}}>
 					{({
 						values,
