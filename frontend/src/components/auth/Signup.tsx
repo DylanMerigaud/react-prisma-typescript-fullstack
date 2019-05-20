@@ -9,8 +9,6 @@ import Button from '@material-ui/core/Button'
 import gql from 'graphql-tag'
 import { useMutation } from 'react-apollo-hooks'
 
-import { withRouter } from 'react-router'
-
 import UserType from './../../types/User'
 
 import * as Yup from 'yup'
@@ -138,4 +136,4 @@ const SIGNUP_MUTATION = gql`
 	}
 `
 
-export default withRouter(Signup)
+export default Signup
