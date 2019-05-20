@@ -24,7 +24,7 @@ const Query = prismaObjectType({
 			args: { email: stringArg() },
 			resolve: (_, { email }, ctx) => ctx.prisma.posts({ where: { author: { email } } })
 		})
-		t.list.field('me', me)
+		t.field('me', me)
 	}
 })
 

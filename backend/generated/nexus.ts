@@ -249,7 +249,7 @@ export interface NexusGenFieldTypes {
   Query: { // field return type
     drafts: NexusGenRootTypes['Post'][]; // [Post!]!
     feed: NexusGenRootTypes['Post'][]; // [Post!]!
-    me: NexusGenRootTypes['User'][]; // [User!]!
+    me: NexusGenRootTypes['User']; // User!
     post: NexusGenRootTypes['Post'] | null; // Post
     postsByUser: NexusGenRootTypes['Post'][]; // [Post!]!
   }

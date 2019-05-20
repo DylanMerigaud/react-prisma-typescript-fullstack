@@ -100,7 +100,7 @@ input PostWhereUniqueInput {
 type Query {
   drafts: [Post!]!
   feed: [Post!]!
-  me: [User!]!
+  me: User!
   post(where: PostWhereUniqueInput!): Post
   postsByUser(email: String): [Post!]!
 }

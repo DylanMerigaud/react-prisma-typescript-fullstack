@@ -77,6 +77,6 @@ export const me = {
 		const user = await ctx.user
 		console.log('/me: ', { user })
 		if (!user) throw new Error('Not auth.')
-		return { user }
+		return user
 	}
 }
