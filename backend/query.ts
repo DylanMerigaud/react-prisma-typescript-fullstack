@@ -1,6 +1,8 @@
 import { stringArg } from 'nexus'
 import { prismaObjectType } from 'nexus-prisma'
 
+import { me } from './auth'
+
 const Query = prismaObjectType({
 	name: 'Query',
 	definition: (t) => {
@@ -14,16 +16,7 @@ const Query = prismaObjectType({
 			args: { email: stringArg() },
 			resolve: (_, { email }, ctx) => ctx.prisma.posts({ where: { author: { email } } })
 		})
-		t.list.field('me', {
-			type: 'User',
-			args: {},
-			resolve: async (_, { email }, ctx) => {
-				const user = await ctx.user
-				console.log('/me: ', { user })
-				if (!user) throw new Error('Not auth.')
-				return user
-			}
-		})
+		t.list.field('me', me)
 	}
 })
 

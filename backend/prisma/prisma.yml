@@ -4,7 +4,7 @@ databaseType: document
 
 generate:
   - generator: typescript-client
-    output: ../src/generated/prisma-  client/
+    output: ../src/generated/prisma-client/
 
 hooks:
   post-deploy:
