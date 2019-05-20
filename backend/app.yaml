@@ -1,5 +1,5 @@
 runtime: nodejs10
-instance_class: F3
+instance_class: F4
 
 handlers:
   - url: /.*
