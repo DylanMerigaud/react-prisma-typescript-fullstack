@@ -51,7 +51,7 @@ const Login: React.FC<Props> = ({}) => {
 			.then((res) => {
 				if (!res.data) return
 				client.resetStore()
-				history.push('/')
+				history.push('/drafts')
 			})
 			.catch((e) => {
 				console.error(e)

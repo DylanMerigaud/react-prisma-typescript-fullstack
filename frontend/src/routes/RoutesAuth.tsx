@@ -13,6 +13,8 @@ import AuthLayout from './../components/layout/AuthLayout'
 import Feed from './../components/post/Feed'
 import Drafts from './../components/post/Drafts'
 import PostCreate from './../components/post/PostCreate'
+import PostDetail from './../components/post/PostDetail'
+import PostEdit from './../components/post/PostEdit'
 
 import MeContext from './../context/MeContext'
 
@@ -28,6 +30,8 @@ const RoutesAuth: React.FC = () => {
 					<AuthRoute exact path="/" component={Feed} />
 					<AuthRoute exact path="/drafts" component={Drafts} />
 					<AuthRoute exact path="/create" component={PostCreate} />
+					<AuthRoute path="/post/:id/edit" component={PostEdit} />
+					<AuthRoute path="/post/:id" component={PostDetail} />
 					<Route component={NotFound} />
 				</Switch>
 			</AuthLayout>

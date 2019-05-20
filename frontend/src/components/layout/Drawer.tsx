@@ -11,6 +11,7 @@ import MailIcon from '@material-ui/icons/Mail'
 import Divider from '@material-ui/core/Divider'
 import List from '@material-ui/core/List'
 import { Link } from 'react-router-dom'
+import useReactRouter from 'use-react-router'
 
 const drawerWidth = 240
 
@@ -39,11 +40,17 @@ const items = [
 	{
 		name: 'Drafts',
 		href: '/drafts'
+	},
+	{
+		name: 'Create Draft',
+		href: '/create'
 	}
 ]
 
 const MyDrawer: React.FC<Props> = ({ open, onDrawerClose }) => {
 	const classes = useStyles()
+
+	const { history } = useReactRouter()
 
 	return (
 		<Drawer
@@ -62,7 +69,12 @@ const MyDrawer: React.FC<Props> = ({ open, onDrawerClose }) => {
 			<Divider />
 			<List>
 				{items.map((item, index) => (
-					<ListItem button component={Link} to={item.href} key={item.name}>
+					<ListItem
+						button
+						component={Link}
+						to={item.href}
+						key={item.name}
+						selected={history.location.pathname === item.href}>
 						{/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
 						<ListItemText primary={item.name} />
 					</ListItem>

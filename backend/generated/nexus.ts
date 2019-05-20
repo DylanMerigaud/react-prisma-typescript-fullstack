@@ -20,6 +20,11 @@ export interface NexusGenInputs {
     published?: boolean | null; // Boolean
     title: string; // String!
   }
+  PostUpdateInput: { // input type
+    author?: NexusGenInputs['UserUpdateOneWithoutPostsInput'] | null; // UserUpdateOneWithoutPostsInput
+    published?: boolean | null; // Boolean
+    title?: string | null; // String
+  }
   PostWhereInput: { // input type
     AND?: NexusGenInputs['PostWhereInput'][] | null; // [PostWhereInput!]
     author?: NexusGenInputs['UserWhereInput'] | null; // UserWhereInput
@@ -65,6 +70,33 @@ export interface NexusGenInputs {
     posts?: NexusGenInputs['PostCreateManyWithoutAuthorInput'] | null; // PostCreateManyWithoutAuthorInput
     role: NexusGenEnums['Role']; // Role!
     verifiedEmail?: boolean | null; // Boolean
+  }
+  UserCreateWithoutPostsInput: { // input type
+    email?: string | null; // String
+    id?: string | null; // ID
+    name: string; // String!
+    password: string; // String!
+    role: NexusGenEnums['Role']; // Role!
+    verifiedEmail?: boolean | null; // Boolean
+  }
+  UserUpdateOneWithoutPostsInput: { // input type
+    connect?: NexusGenInputs['UserWhereUniqueInput'] | null; // UserWhereUniqueInput
+    create?: NexusGenInputs['UserCreateWithoutPostsInput'] | null; // UserCreateWithoutPostsInput
+    delete?: boolean | null; // Boolean
+    disconnect?: boolean | null; // Boolean
+    update?: NexusGenInputs['UserUpdateWithoutPostsDataInput'] | null; // UserUpdateWithoutPostsDataInput
+    upsert?: NexusGenInputs['UserUpsertWithoutPostsInput'] | null; // UserUpsertWithoutPostsInput
+  }
+  UserUpdateWithoutPostsDataInput: { // input type
+    email?: string | null; // String
+    name?: string | null; // String
+    password?: string | null; // String
+    role?: NexusGenEnums['Role'] | null; // Role
+    verifiedEmail?: boolean | null; // Boolean
+  }
+  UserUpsertWithoutPostsInput: { // input type
+    create: NexusGenInputs['UserCreateWithoutPostsInput']; // UserCreateWithoutPostsInput!
+    update: NexusGenInputs['UserUpdateWithoutPostsDataInput']; // UserUpdateWithoutPostsDataInput!
   }
   UserWhereInput: { // input type
     AND?: NexusGenInputs['UserWhereInput'][] | null; // [UserWhereInput!]
@@ -132,6 +164,10 @@ export interface NexusGenInputs {
     verifiedEmail?: boolean | null; // Boolean
     verifiedEmail_not?: boolean | null; // Boolean
   }
+  UserWhereUniqueInput: { // input type
+    email?: string | null; // String
+    id?: string | null; // ID
+  }
 }
 
 export interface NexusGenEnums {
@@ -174,10 +210,16 @@ export interface NexusGenRootTypes {
 export interface NexusGenAllTypes extends NexusGenRootTypes {
   PostCreateManyWithoutAuthorInput: NexusGenInputs['PostCreateManyWithoutAuthorInput'];
   PostCreateWithoutAuthorInput: NexusGenInputs['PostCreateWithoutAuthorInput'];
+  PostUpdateInput: NexusGenInputs['PostUpdateInput'];
   PostWhereInput: NexusGenInputs['PostWhereInput'];
   PostWhereUniqueInput: NexusGenInputs['PostWhereUniqueInput'];
   UserCreateInput: NexusGenInputs['UserCreateInput'];
+  UserCreateWithoutPostsInput: NexusGenInputs['UserCreateWithoutPostsInput'];
+  UserUpdateOneWithoutPostsInput: NexusGenInputs['UserUpdateOneWithoutPostsInput'];
+  UserUpdateWithoutPostsDataInput: NexusGenInputs['UserUpdateWithoutPostsDataInput'];
+  UserUpsertWithoutPostsInput: NexusGenInputs['UserUpsertWithoutPostsInput'];
   UserWhereInput: NexusGenInputs['UserWhereInput'];
+  UserWhereUniqueInput: NexusGenInputs['UserWhereUniqueInput'];
   Aliment: NexusGenEnums['Aliment'];
   PostOrderByInput: NexusGenEnums['PostOrderByInput'];
   Role: NexusGenEnums['Role'];
@@ -196,6 +238,7 @@ export interface NexusGenFieldTypes {
     publish: NexusGenRootTypes['Post'] | null; // Post
     signup: NexusGenRootTypes['AuthPayload']; // AuthPayload!
     testoss: NexusGenRootTypes['Test']; // Test!
+    updatePost: NexusGenRootTypes['Post'] | null; // Post
   }
   Post: { // field return type
     author: NexusGenRootTypes['User'] | null; // User
@@ -252,6 +295,10 @@ export interface NexusGenArgTypes {
     testoss: { // args
       aliment?: NexusGenEnums['Aliment'] | null; // Aliment
     }
+    updatePost: { // args
+      data: NexusGenInputs['PostUpdateInput']; // PostUpdateInput!
+      where: NexusGenInputs['PostWhereUniqueInput']; // PostWhereUniqueInput!
+    }
   }
   Query: {
     post: { // args
@@ -281,7 +328,7 @@ export interface NexusGenInheritedFields {}
 
 export type NexusGenObjectNames = "AuthPayload" | "Mutation" | "Post" | "Query" | "Test" | "User";
 
-export type NexusGenInputNames = "PostCreateManyWithoutAuthorInput" | "PostCreateWithoutAuthorInput" | "PostWhereInput" | "PostWhereUniqueInput" | "UserCreateInput" | "UserWhereInput";
+export type NexusGenInputNames = "PostCreateManyWithoutAuthorInput" | "PostCreateWithoutAuthorInput" | "PostUpdateInput" | "PostWhereInput" | "PostWhereUniqueInput" | "UserCreateInput" | "UserCreateWithoutPostsInput" | "UserUpdateOneWithoutPostsInput" | "UserUpdateWithoutPostsDataInput" | "UserUpsertWithoutPostsInput" | "UserWhereInput" | "UserWhereUniqueInput";
 
 export type NexusGenEnumNames = "Aliment" | "PostOrderByInput" | "Role";
 

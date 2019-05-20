@@ -22,6 +22,7 @@ type Mutation {
   publish(id: ID): Post
   signup(email: String!, name: String!, password: String!): AuthPayload!
   testoss(aliment: Aliment): Test!
+  updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
 }
 
 type Post {
@@ -49,6 +50,12 @@ enum PostOrderByInput {
   published_DESC
   title_ASC
   title_DESC
+}
+
+input PostUpdateInput {
+  author: UserUpdateOneWithoutPostsInput
+  published: Boolean
+  title: String
 }
 
 input PostWhereInput {
@@ -128,6 +135,37 @@ input UserCreateInput {
   verifiedEmail: Boolean
 }
 
+input UserCreateWithoutPostsInput {
+  email: String
+  id: ID
+  name: String!
+  password: String!
+  role: Role!
+  verifiedEmail: Boolean
+}
+
+input UserUpdateOneWithoutPostsInput {
+  connect: UserWhereUniqueInput
+  create: UserCreateWithoutPostsInput
+  delete: Boolean
+  disconnect: Boolean
+  update: UserUpdateWithoutPostsDataInput
+  upsert: UserUpsertWithoutPostsInput
+}
+
+input UserUpdateWithoutPostsDataInput {
+  email: String
+  name: String
+  password: String
+  role: Role
+  verifiedEmail: Boolean
+}
+
+input UserUpsertWithoutPostsInput {
+  create: UserCreateWithoutPostsInput!
+  update: UserUpdateWithoutPostsDataInput!
+}
+
 input UserWhereInput {
   AND: [UserWhereInput!]
   email: String
@@ -193,4 +231,9 @@ input UserWhereInput {
   role_not_in: [Role!]
   verifiedEmail: Boolean
   verifiedEmail_not: Boolean
+}
+
+input UserWhereUniqueInput {
+  email: String
+  id: ID
 }

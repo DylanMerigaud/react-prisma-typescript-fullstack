@@ -8,20 +8,14 @@ import ListItemText from '@material-ui/core/ListItemText'
 
 import { Link } from 'react-router-dom'
 
+import Post from './Post'
+
 interface Props {
 	posts: [PostType]
 }
 
 const PostList: React.FC<Props> = ({ posts }) => {
-	return (
-		<List component="nav">
-			{posts.map((post) => (
-				<ListItem button component={Link} to={'/post/' + post.id} key={post.id}>
-					<ListItemText primary={post.title} secondary={post.author.name} />
-				</ListItem>
-			))}
-		</List>
-	)
+	return <List>{posts.map((post) => <Post key={post.id} post={post} />)}</List>
 }
 
 export default PostList

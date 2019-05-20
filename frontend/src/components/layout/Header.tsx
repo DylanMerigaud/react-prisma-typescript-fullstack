@@ -37,14 +37,14 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const historyPathToTitle: Record<string, string> = {
 	'/': 'Feed',
-	'/drafts': 'Draft'
+	'/drafts': 'Drafts'
 }
 
 const Header: React.FC<Props> = ({ isDrawerOpen, onDrawerOpen }) => {
 	const classes = useStyles()
 
 	const { history } = useReactRouter()
-	console.log('history: ', history)
+
 	return (
 		<AppBar
 			position="fixed"
