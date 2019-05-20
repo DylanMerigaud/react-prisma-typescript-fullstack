@@ -1,5 +1,4 @@
 import React from 'react'
-import Feed from './../components/post/Feed'
 
 import { Route, Switch } from 'react-router-dom'
 import NotFound from './../components/NotFound'
@@ -10,6 +9,10 @@ import gql from 'graphql-tag'
 
 import AuthRoute from './../components/AuthRoute'
 import AuthLayout from './../components/layout/AuthLayout'
+
+import Feed from './../components/post/Feed'
+import Drafts from './../components/post/Drafts'
+import PostCreate from './../components/post/PostCreate'
 
 import MeContext from './../context/MeContext'
 
@@ -23,6 +26,8 @@ const RoutesAuth: React.FC = () => {
 			<AuthLayout>
 				<Switch>
 					<AuthRoute exact path="/" component={Feed} />
+					<AuthRoute exact path="/drafts" component={Drafts} />
+					<AuthRoute exact path="/create" component={PostCreate} />
 					<Route component={NotFound} />
 				</Switch>
 			</AuthLayout>

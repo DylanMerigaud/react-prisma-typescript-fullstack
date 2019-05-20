@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn start
+  /usr/local/bin/node /usr/local/bin/yarn dev
 
 PATH: 
   /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
@@ -11859,7 +11859,7 @@ Trace:
   Error: Command failed.
   Exit code: 1
   Command: sh
-  Arguments: -c dotenv ts-node index.ts
+  Arguments: -c dotenv ts-node-dev --no-notify --respawn --transpileOnly ./
   Directory: /Users/macbookpro/Documents/Projects/messenger-project/backend
   Output:
   

@@ -57,7 +57,6 @@ const Signup: React.FC<Props> = () => {
 
 				localStorage.setItem('token', res.data.signup.token)
 				history.push('/')
-				setSubmitting(false)
 			})
 			.catch((e) => {
 				console.error(e)

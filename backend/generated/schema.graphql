@@ -91,6 +91,7 @@ input PostWhereUniqueInput {
 }
 
 type Query {
+  drafts: [Post!]!
   feed: [Post!]!
   me: [User!]!
   post(where: PostWhereUniqueInput!): Post

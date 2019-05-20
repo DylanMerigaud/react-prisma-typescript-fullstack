@@ -9,15 +9,15 @@ import PostType from './../../types/Post'
 import PostList from './PostList'
 
 interface FeedQueryResponse {
-	feed: [PostType]
+	drafts: [PostType]
 }
 
-const Feed: React.FC = () => {
+const Drafts: React.FC = () => {
 	const { history } = useReactRouter()
 
-	const feedQuery = useQuery(FEED_QUERY)
+	const draftsQuery = useQuery(DRAFTS_QUERY)
 
-	console.log('feedQuery: ', feedQuery)
+	console.log('draftsQuery: ', draftsQuery)
 
 	return (
 		<div>
@@ -28,14 +28,14 @@ const Feed: React.FC = () => {
 				}}>
 				logout
 			</button>
-			{feedQuery.data && feedQuery.data.feed && <PostList posts={feedQuery.data.feed} />}
+			{draftsQuery.data && draftsQuery.data.drafts && <PostList posts={draftsQuery.data.drafts} />}
 		</div>
 	)
 }
 
-const FEED_QUERY = gql`
-	query Feed {
-		feed {
+const DRAFTS_QUERY = gql`
+	query Drafts {
+		drafts {
 			id
 			title
 			author {
@@ -46,4 +46,4 @@ const FEED_QUERY = gql`
 	}
 `
 
-export default Feed
+export default Drafts

@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { makeStyles, Theme } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
 import AppBar from '@material-ui/core/AppBar'
@@ -7,6 +8,7 @@ import MenuIcon from '@material-ui/icons/Menu'
 import Typography from '@material-ui/core/Typography'
 
 import clsx from 'clsx'
+import useReactRouter from 'use-react-router'
 
 const drawerWidth = 240
 
@@ -33,9 +35,16 @@ const useStyles = makeStyles((theme: Theme) => ({
 	}
 }))
 
+const historyPathToTitle: Record<string, string> = {
+	'/': 'Feed',
+	'/drafts': 'Draft'
+}
+
 const Header: React.FC<Props> = ({ isDrawerOpen, onDrawerOpen }) => {
 	const classes = useStyles()
 
+	const { history } = useReactRouter()
+	console.log('history: ', history)
 	return (
 		<AppBar
 			position="fixed"
@@ -52,7 +61,7 @@ const Header: React.FC<Props> = ({ isDrawerOpen, onDrawerOpen }) => {
 					<MenuIcon />
 				</IconButton>
 				<Typography variant="h6" noWrap>
-					Persistent drawer
+					{historyPathToTitle[history.location.pathname] || 'Persistent drawer'}
 				</Typography>
 			</Toolbar>
 		</AppBar>
