@@ -43,6 +43,7 @@ const Signup: React.FC<Props> = () => {
 	const [ error, setError ] = useState<string>()
 
 	const handleSubmit = (values: FormValues, { setSubmitting }: FormikActions<FormValues>) => {
+		setError(undefined)
 		signupMutation({
 			variables: {
 				name: values.name,
@@ -118,6 +119,7 @@ const Signup: React.FC<Props> = () => {
 						</Box>
 					)}
 				</Formik>
+				{error}
 			</Paper>
 		</Box>
 	)
