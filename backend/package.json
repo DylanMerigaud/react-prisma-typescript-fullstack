@@ -8,8 +8,9 @@
     "start": "dotenv ts-node index.ts",
     "dev": "dotenv ts-node-dev --no-notify --respawn --transpileOnly ./",
     "build": "yarn run prisma:generate",
-    "prisma:generate": "dotenv prisma generate",
-    "prisma:deploy": "dotenv prisma deploy",
+    "prisma:generate": "prisma generate --env-file .env",
+    "prisma:deploy": "prisma deploy --env-file .env",
+    "prisma:seed": "prisma seed --env-file .env",
     "docker:up": "docker-compose up"
   },
   "keywords": [],
