@@ -41,17 +41,18 @@ const Login: React.FC<Props> = ({}) => {
 	const client = useApolloClient()
 
 	const handleSubmit = (values: FormValues, { setSubmitting }: FormikActions<FormValues>) => {
+		if (!me) return
+
 		setError(undefined)
 		createDraftMutation({
 			variables: {
 				title: values.title,
-				authorId: 'cjvqy17xp000g0797xy9g5vw6' // TODO add me.data.id
+				authorId: me.id
 			}
 		})
 			.then((res) => {
 				if (!res.data) return
-				client.resetStore()
-				history.push('/drafts')
+				client.resetStore().then(() => history.push('/drafts'))
 			})
 			.catch((e) => {
 				console.error(e)

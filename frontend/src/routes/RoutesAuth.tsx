@@ -18,13 +18,21 @@ import PostEdit from './../components/post/PostEdit'
 
 import MeContext from './../context/MeContext'
 
-const RoutesAuth: React.FC = () => {
-	const me = useQuery(ME_QUERY)
+import UserType from './../types/User'
 
-	console.log({ me })
+import get from 'lodash.get'
+
+interface MeQueryResponse {
+	me: UserType
+}
+
+const RoutesAuth: React.FC = () => {
+	const meQuery = useQuery<MeQueryResponse>(ME_QUERY)
+
+	console.log({ meQuery })
 
 	return (
-		<MeContext.Provider value={me}>
+		<MeContext.Provider value={get(meQuery, 'data.me', null)}>
 			<AuthLayout>
 				<Switch>
 					<AuthRoute exact path="/" component={Feed} />

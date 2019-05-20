@@ -20,14 +20,18 @@ interface PublishMutationResponse {
 	publish: PostType
 }
 
+interface MatchParam {
+	id: string
+}
+
 const PostDetail: React.FC = () => {
 	const [ error, setError ] = useState()
-	const { match, history } = useReactRouter()
+	const { match, history } = useReactRouter<MatchParam>()
 	const client = useApolloClient()
 
 	const postQuery = useQuery<PostQueryResponse>(POST_QUERY, {
 		variables: {
-			where: { id: 'cjvwknd5x00610730zecrja36' } // TODO match.params.id }
+			where: { id: match.params.id }
 		}
 	})
 
@@ -65,7 +69,7 @@ const PostDetail: React.FC = () => {
 			<Button component={Link} to={'/post/' + postQuery.data.post.id + '/edit'}>
 				Edit
 			</Button>
-			<Button onClick={handlePublish}>Publish</Button>
+			{!postQuery.data.post.published && <Button onClick={handlePublish}>Publish</Button>}
 			{error}
 		</div>
 	)
@@ -85,6 +89,7 @@ const POST_QUERY = gql`
 		post(where: $where) {
 			id
 			title
+			published
 			author {
 				id
 				name

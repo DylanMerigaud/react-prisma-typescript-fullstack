@@ -35,13 +35,14 @@ const useStyles = makeStyles((theme: Theme) => ({
 	}
 }))
 
-const historyPathToTitle: Record<string, string> = {
+const historyPathToTitle = {
 	'/': 'Feed',
-	'/drafts': 'Drafts'
+	'/drafts': 'Drafts',
+	'/create': 'Create Draft'
 }
 
 const Header: React.FC<Props> = ({ isDrawerOpen, onDrawerOpen }) => {
-	const classes = useStyles()
+	const classes = useStyles({})
 
 	const { history } = useReactRouter()
 

@@ -36,15 +36,21 @@ interface updatePostMutationResponse {
 	updatePost: PostType
 }
 
+interface MatchParam {
+	id: string
+}
+
 const PostEdit: React.FC<Props> = ({}) => {
 	const createDraftMutation = useMutation<updatePostMutationResponse>(UPDATE_POST_MUTATION)
-	const { history, match } = useReactRouter()
+	const { history, match } = useReactRouter<MatchParam>()
 	const [ error, setError ] = useState<string>()
 
 	const client = useApolloClient()
 	const postQuery = useQuery<PostQueryResponse>(POST_QUERY, {
 		variables: {
-			id: 'cjvwknd5x00610730zecrja36' // TODO match.params.id
+			where: {
+				id: match.params.id
+			}
 		}
 	})
 
@@ -64,8 +70,9 @@ const PostEdit: React.FC<Props> = ({}) => {
 		})
 			.then((res) => {
 				if (!res.data) return
-				client.resetStore()
-				history.push(postQuery.data.post.published ? '/' : '/drafts')
+				client
+					.resetStore()
+					.then(() => history.push(postQuery.data && postQuery.data.post.published ? '/' : '/drafts')) // TODO wtf typescript
 			})
 			.catch((e) => {
 				console.error(e)

@@ -20,6 +20,7 @@
     "apollo-utilities": "^1.2.1",
     "clsx": "^1.0.4",
     "formik": "^1.5.4",
+    "lodash.get": "^4.4.2",
     "react": "^16.8.6",
     "react-apollo": "^2.5.5",
     "react-apollo-hooks": "^0.4.5",
@@ -50,5 +51,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/lodash.get": "^4.4.6"
   }
 }
