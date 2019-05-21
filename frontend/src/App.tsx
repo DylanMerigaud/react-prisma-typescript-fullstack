@@ -33,10 +33,10 @@ const request = async (operation: Operation) => {
 
 const requestLink = new ApolloLink(
   (operation, forward) =>
-    new Observable(observer => {
+    new Observable((observer) => {
       let handle: ZenObservable.Subscription | undefined
       Promise.resolve(operation)
-        .then(oper => request(oper))
+        .then((oper) => request(oper))
         .then(() => {
           handle = !!forward
             ? forward(operation).subscribe({

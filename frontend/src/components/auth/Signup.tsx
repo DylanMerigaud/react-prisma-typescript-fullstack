@@ -64,14 +64,14 @@ const Signup: React.FC<Props> = () => {
         password: values.password,
       },
     })
-      .then(res => {
+      .then((res) => {
         if (!res.data) throw Error()
         // console.log('signup success: ', res.data.login)
 
         localStorage.setItem('token', res.data.signup.token)
         history.push('/')
       })
-      .catch(e => {
+      .catch((e) => {
         console.error(e)
         setError(e.message)
         setSubmitting(false)

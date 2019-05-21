@@ -58,14 +58,14 @@ const Login: React.FC<Props> = () => {
         password: values.password,
       },
     })
-      .then(res => {
+      .then((res) => {
         if (!res.data) return
         // console.log('login success: ', res.data.login)
 
         localStorage.setItem('token', res.data.login.token)
         history.push('/')
       })
-      .catch(e => {
+      .catch((e) => {
         console.error(e)
         setError(e.message)
         setSubmitting(false)

@@ -5,7 +5,7 @@ import { me } from './auth'
 
 const Query = prismaObjectType({
   name: 'Query',
-  definition: t => {
+  definition: (t) => {
     t.prismaFields(['post'])
     t.list.field('feed', {
       type: 'Post',

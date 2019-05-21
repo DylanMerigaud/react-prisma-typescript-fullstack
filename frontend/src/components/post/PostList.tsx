@@ -13,7 +13,7 @@ interface Props {
 const PostList: React.FC<Props> = ({ posts }) => {
   return (
     <List>
-      {posts.map(post => (
+      {posts.map((post) => (
         <Post key={post.id} post={post} />
       ))}
     </List>

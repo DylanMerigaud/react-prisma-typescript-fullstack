@@ -58,11 +58,11 @@ const Login: React.FC = () => {
         authorId: me.id,
       },
     })
-      .then(res => {
+      .then((res) => {
         if (!res.data) return
         client.resetStore().then(() => history.push('/drafts'))
       })
-      .catch(e => {
+      .catch((e) => {
         console.error(e)
         setError(e.message)
         setSubmitting(false)

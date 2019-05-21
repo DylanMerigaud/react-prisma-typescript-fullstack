@@ -7,7 +7,7 @@ import { signup, login } from './auth'
 
 const Mutation = prismaObjectType({
   name: 'Mutation',
-  definition: t => {
+  definition: (t) => {
     t.prismaFields(['createUser', 'deletePost', 'updatePost'])
     t.field('createDraft', {
       type: 'Post',

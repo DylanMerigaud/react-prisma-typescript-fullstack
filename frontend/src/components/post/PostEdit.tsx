@@ -74,7 +74,7 @@ const PostEdit: React.FC = () => {
         },
       },
     })
-      .then(res => {
+      .then((res) => {
         if (!res.data) return
         client
           .resetStore()
@@ -84,7 +84,7 @@ const PostEdit: React.FC = () => {
             ),
           ) // TODO wtf typescript
       })
-      .catch(e => {
+      .catch((e) => {
         console.error(e)
         setError(e.message)
         setSubmitting(false)

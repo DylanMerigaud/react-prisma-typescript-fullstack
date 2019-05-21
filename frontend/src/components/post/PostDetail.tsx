@@ -47,7 +47,7 @@ const PostDetail: React.FC = () => {
       .then(() => {
         client.resetStore().then(() => history.push('/'))
       })
-      .catch(e => {
+      .catch((e) => {
         setError(e.message)
       })
   }
