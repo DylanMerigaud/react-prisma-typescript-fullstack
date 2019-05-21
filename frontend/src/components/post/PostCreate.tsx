@@ -15,7 +15,7 @@ import useReactRouter from 'use-react-router'
 
 import PostType from './../../types/Post'
 
-import MeContext from './../../context/MeContext'
+import MeQueryContext from './../../context/MeQueryContext'
 
 const PostCreateSchema = Yup.object().shape({
   title: Yup.string()
@@ -42,20 +42,20 @@ const Login: React.FC = () => {
   const { history } = useReactRouter()
   const [error, setError] = useState<string>()
 
-  const me = useContext(MeContext)
+  const meQuery = useContext(MeQueryContext)
   const client = useApolloClient()
 
   const handleSubmit = (
     values: FormValues,
     { setSubmitting }: FormikActions<FormValues>,
   ) => {
-    if (!me) return
+    if (!meQuery) return
 
     setError(undefined)
     createDraftMutation({
       variables: {
         title: values.title,
-        authorId: me.id,
+        authorId: meQuery.data.me.id,
       },
     })
       .then((res) => {

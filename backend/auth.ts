@@ -3,6 +3,8 @@ import { ContextParameters } from 'graphql-yoga/dist/types'
 import * as jwt from 'jsonwebtoken'
 import { stringArg } from 'nexus'
 import * as bcrypt from 'bcrypt'
+import { NexusOutputFieldConfig } from 'nexus/dist/core'
+import { PrismaObjectDefinitionBlock } from 'nexus-prisma/dist/blocks/objectType'
 
 export const getUser = async (req: ContextParameters) => {
   const auth = req.request.get('Authorization')
@@ -22,61 +24,64 @@ export const getUser = async (req: ContextParameters) => {
   }
 }
 
-export const signup = {
-  type: 'AuthPayload',
-  args: {
-    name: stringArg({ nullable: false }),
-    email: stringArg({ nullable: false }),
-    password: stringArg({ nullable: false }),
-  },
-  resolve: async (_, { name, email, password }, ctx) => {
-    const password2 = await bcrypt.hash(password, 10)
-
-    const user = await ctx.prisma.createUser({
-      name,
-      email,
-      password: password2,
-      role: 'USER',
-    })
-
-    console.log({ user })
-
-    return {
-      token: jwt.sign({ userId: user.id }, 'APP_SECRET'),
-      user,
-    }
-  },
+export const query = (t: PrismaObjectDefinitionBlock<'Query'>) => {
+  t.field('me', {
+    type: 'User',
+    args: {},
+    resolve: async (_, { email }, ctx) => {
+      const user = await ctx.user
+      console.log('/me: ', { user })
+      if (!user) throw new Error('Not auth.')
+      return user
+    },
+  })
 }
 
-export const login = {
-  type: 'AuthPayload',
-  args: {
-    email: stringArg({ nullable: false }),
-    password: stringArg({ nullable: false }),
-  },
-  resolve: async (_, { email, password }, ctx) => {
-    const user = await ctx.prisma.user({ email })
-    console.log({ user })
-    if (!user) throw new Error('User not in db.')
+export const mutation = (t: PrismaObjectDefinitionBlock<'Mutation'>) => {
+  t.field('login', {
+    type: 'AuthPayload',
+    args: {
+      email: stringArg({ nullable: false }),
+      password: stringArg({ nullable: false }),
+    },
+    resolve: async (_, { email, password }, ctx) => {
+      const user = await ctx.prisma.user({ email })
+      console.log({ user })
+      if (!user) throw new Error('User not in db.')
 
-    const valid = await bcrypt.compare(password, user.password)
-    console.log({ valid })
-    if (!valid) throw new Error('Wrong password.')
+      const valid = await bcrypt.compare(password, user.password)
+      console.log({ valid })
+      if (!valid) throw new Error('Wrong password.')
 
-    return {
-      token: jwt.sign({ userId: user.id }, 'APP_SECRET'),
-      user,
-    }
-  },
-}
+      return {
+        token: jwt.sign({ userId: user.id }, 'APP_SECRET'),
+        user,
+      }
+    },
+  })
+  t.field('signup', {
+    type: 'AuthPayload',
+    args: {
+      name: stringArg({ nullable: false }),
+      email: stringArg({ nullable: false }),
+      password: stringArg({ nullable: false }),
+    },
+    resolve: async (_, { name, email, password }, ctx) => {
+      const password2 = await bcrypt.hash(password, 10)
 
-export const me = {
-  type: 'User',
-  args: {},
-  resolve: async (_, { email }, ctx) => {
-    const user = await ctx.user
-    console.log('/me: ', { user })
-    if (!user) throw new Error('Not auth.')
-    return user
-  },
+      const user = await ctx.prisma.createUser({
+        name,
+        email,
+        password: password2,
+        role: 'USER',
+      })
+
+      console.log({ user })
+
+      return {
+        token: jwt.sign({ userId: user.id }, 'APP_SECRET'),
+        user,
+      }
+    },
+  })
 }

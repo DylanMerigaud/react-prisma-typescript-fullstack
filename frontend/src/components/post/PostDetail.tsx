@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 
 import PostType from './../../types/Post'
 
@@ -10,6 +10,7 @@ import { useMutation, useApolloClient, useQuery } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
 
 import useReactRouter from 'use-react-router'
+import MeQueryContext from '../../context/MeQueryContext'
 
 interface PostQueryResponse {
   post: PostType
@@ -27,6 +28,7 @@ const PostDetail: React.FC = () => {
   const [error, setError] = useState()
   const { match, history } = useReactRouter<MatchParam>()
   const client = useApolloClient()
+  const meQuery = useContext(MeQueryContext)
 
   const postQuery = useQuery<PostQueryResponse>(POST_QUERY, {
     variables: {
@@ -54,22 +56,27 @@ const PostDetail: React.FC = () => {
 
   console.log('PostDetail: ', postQuery)
 
-  if (!postQuery || !postQuery.data) return <div>ERROR</div>
-
-  if (postQuery.loading) return <div>Loading</div>
-
+  if (!meQuery || !postQuery || !postQuery.data) return <div>ERROR</div>
+  if (meQuery.loading || postQuery.loading) return <div>Loading</div>
   if (postQuery.error)
     return <div>Post query error: {postQuery.error.message}</div> // TODO Error || Loading
-
+  if (meQuery.error) return <div>Me query error: {meQuery.error.message}</div>
   if (!postQuery.data.post) return <div>Post not found</div>
+
+  const isOwner = postQuery.data.post.author.id === meQuery.data.me.id
 
   return (
     <div>
       <h3>{postQuery.data.post.title}</h3>
-      <Button component={Link} to={'/post/' + postQuery.data.post.id + '/edit'}>
-        Edit
-      </Button>
-      {!postQuery.data.post.published && (
+      {isOwner && (
+        <Button
+          component={Link}
+          to={'/post/' + postQuery.data.post.id + '/edit'}
+        >
+          Edit
+        </Button>
+      )}
+      {isOwner && !postQuery.data.post.published && (
         <Button onClick={handlePublish}>Publish</Button>
       )}
       {error}

@@ -92,12 +92,9 @@ const PostEdit: React.FC = () => {
   }
 
   if (!postQuery || !postQuery.data) return <div>ERROR</div>
-
   if (postQuery.loading) return <div>Loading</div>
-
   if (postQuery.error)
     return <div>Post query error: {postQuery.error.message}</div> // TODO Error || Loading
-
   if (!postQuery.data.post) return <div>Post not found</div>
 
   return (

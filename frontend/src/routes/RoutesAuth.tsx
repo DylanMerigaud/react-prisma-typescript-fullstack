@@ -16,14 +16,14 @@ import PostCreate from './../components/post/PostCreate'
 import PostDetail from './../components/post/PostDetail'
 import PostEdit from './../components/post/PostEdit'
 
-import MeContext from './../context/MeContext'
+import MeQueryContext from './../context/MeQueryContext'
 
 import UserType from './../types/User'
 
-import get from 'lodash.get'
-
 interface MeQueryResponse {
-  me: UserType
+  data: {
+    me: UserType
+  }
 }
 
 const RoutesAuth: React.FC = () => {
@@ -32,7 +32,7 @@ const RoutesAuth: React.FC = () => {
   console.log({ meQuery })
 
   return (
-    <MeContext.Provider value={get(meQuery, 'data.me', null)}>
+    <MeQueryContext.Provider value={meQuery}>
       <AuthLayout>
         <Switch>
           <AuthRoute exact path="/" component={Feed} />
@@ -43,7 +43,7 @@ const RoutesAuth: React.FC = () => {
           <Route component={NotFound} />
         </Switch>
       </AuthLayout>
-    </MeContext.Provider>
+    </MeQueryContext.Provider>
   )
 }
 

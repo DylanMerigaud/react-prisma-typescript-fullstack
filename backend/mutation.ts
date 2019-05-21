@@ -3,7 +3,7 @@ import { prismaObjectType } from 'nexus-prisma'
 
 import { AlimentYupSchema } from './yupSchemas'
 
-import { signup, login } from './auth'
+import { mutation as authMutation } from './auth'
 
 const Mutation = prismaObjectType({
   name: 'Mutation',
@@ -51,8 +51,7 @@ const Mutation = prismaObjectType({
         }
       },
     })
-    t.field('signup', signup)
-    t.field('login', login)
+    authMutation(t)
   },
 })
 

@@ -1,7 +1,7 @@
 import { stringArg } from 'nexus'
 import { prismaObjectType } from 'nexus-prisma'
 
-import { me } from './auth'
+import { query as authQuery } from './auth'
 
 const Query = prismaObjectType({
   name: 'Query',
@@ -28,7 +28,7 @@ const Query = prismaObjectType({
       resolve: (_, { email }, ctx) =>
         ctx.prisma.posts({ where: { author: { email } } }),
     })
-    t.field('me', me)
+    authQuery(t)
   },
 })
 
