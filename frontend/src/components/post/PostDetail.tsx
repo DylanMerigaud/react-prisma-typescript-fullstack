@@ -84,7 +84,8 @@ const PostDetail: React.FC = () => {
 
   console.log('PostDetail: ', postQuery)
 
-  if (!meQuery || !postQuery || !postQuery.data) return <div>ERROR</div>
+  if (!meQuery || !meQuery.data || !postQuery || !postQuery.data)
+    return <div>ERROR</div>
   if (meQuery.loading || postQuery.loading) return <div>Loading</div>
   if (postQuery.error)
     return <div>Post query error: {postQuery.error.message}</div> // TODO Error || Loading

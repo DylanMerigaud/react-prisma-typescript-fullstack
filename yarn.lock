@@ -974,15 +974,16 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^12.0.9"
 
-"@material-ui/core@^4.0.0-beta.2":
-  version "4.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@material-ui/core/-/core-4.0.0-beta.2.tgz#5efc6f697c6a9c570ca55c6e30a38bef10f27bee"
+"@material-ui/core@^4.0.0-rc.0":
+  version "4.0.0-rc.0"
+  resolved "https://registry.yarnpkg.com/@material-ui/core/-/core-4.0.0-rc.0.tgz#313ba18cdf4baeaa6c2efb1e38a88ac5b064dce4"
+  integrity sha512-DRaCGcXd+aQs98lLvmVBAAFxqsB6UEdGw5GLBTZlKKCpAXF2UuwWxqXfJiBIJXkT0aX9rMq9EgUfaq5vRIW+iA==
   dependencies:
     "@babel/runtime" "^7.2.0"
-    "@material-ui/styles" "^4.0.0-beta.2"
-    "@material-ui/system" "^4.0.0-beta.2"
-    "@material-ui/types" "^4.0.0-beta.2"
-    "@material-ui/utils" "^4.0.0-beta.1"
+    "@material-ui/styles" "^4.0.0-rc.0"
+    "@material-ui/system" "^4.0.0-rc.0"
+    "@material-ui/types" "^4.0.0-rc.0"
+    "@material-ui/utils" "^4.0.0-rc.0"
     "@types/react-transition-group" "^2.0.16"
     clsx "^1.0.2"
     convert-css-length "^1.0.2"
@@ -998,20 +999,22 @@
     react-transition-group "^4.0.0"
     warning "^4.0.1"
 
-"@material-ui/icons@^4.0.0-beta.0":
-  version "4.0.0-beta.0"
-  resolved "https://registry.yarnpkg.com/@material-ui/icons/-/icons-4.0.0-beta.0.tgz#9d117e72d7d690f6e212e02dcf491898145c5660"
+"@material-ui/icons@^4.0.0-rc.0":
+  version "4.0.0-rc.0"
+  resolved "https://registry.yarnpkg.com/@material-ui/icons/-/icons-4.0.0-rc.0.tgz#c7895049ffcf452d74327cc096da7b80d1352d6f"
+  integrity sha512-n1kZUXwpFgcighnMGGf6H87uS5HXAT3wg2sga54/4Azv2Qu1Z0bE8UgdZOHvTV0TgDU9wFCJk5IpEeSwSEqnAA==
   dependencies:
     "@babel/runtime" "^7.2.0"
 
-"@material-ui/styles@^4.0.0-beta.2":
-  version "4.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@material-ui/styles/-/styles-4.0.0-beta.2.tgz#a2bb580590f9a41cb98e8b76f4a6382703aba790"
+"@material-ui/styles@^4.0.0-rc.0":
+  version "4.0.0-rc.0"
+  resolved "https://registry.yarnpkg.com/@material-ui/styles/-/styles-4.0.0-rc.0.tgz#c805bdd2439bee0259a2b2d24fc7fc4fce4a1cd3"
+  integrity sha512-TUb0j9gIZDPoIzEr4TEOVCWo3EeDW4J61B3CR2VVgXiaLneU/l0wzRg1KzalVBjw6Bq/97D+wPBTL+uE4wD3xg==
   dependencies:
     "@babel/runtime" "^7.2.0"
     "@emotion/hash" "^0.7.1"
-    "@material-ui/types" "^4.0.0-beta.2"
-    "@material-ui/utils" "^4.0.0-beta.1"
+    "@material-ui/types" "^4.0.0-rc.0"
+    "@material-ui/utils" "^4.0.0-rc.0"
     clsx "^1.0.2"
     deepmerge "^3.0.0"
     hoist-non-react-statics "^3.2.1"
@@ -1026,22 +1029,25 @@
     prop-types "^15.7.2"
     warning "^4.0.1"
 
-"@material-ui/system@^4.0.0-beta.2":
-  version "4.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@material-ui/system/-/system-4.0.0-beta.2.tgz#b4a3d418d9f19537384234041aab3a1a789e7efe"
+"@material-ui/system@^4.0.0-rc.0":
+  version "4.0.0-rc.0"
+  resolved "https://registry.yarnpkg.com/@material-ui/system/-/system-4.0.0-rc.0.tgz#3379fa73bcb2b93f8d032a32f80b25330e7e00e4"
+  integrity sha512-ONhUaCvnHe0Ucy+hks2qNdz16BCY6mgrxDDseyvh0pdktZYppM/Z8WKHP84zhVvdvvD72IoF0MdX90r08+UpiA==
   dependencies:
     "@babel/runtime" "^7.2.0"
     deepmerge "^3.0.0"
     prop-types "^15.7.2"
     warning "^4.0.1"
 
-"@material-ui/types@^4.0.0-beta.2":
-  version "4.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@material-ui/types/-/types-4.0.0-beta.2.tgz#aa686548f6eca0b055249cdeb089973f33ab6976"
+"@material-ui/types@^4.0.0-rc.0":
+  version "4.0.0-rc.0"
+  resolved "https://registry.yarnpkg.com/@material-ui/types/-/types-4.0.0-rc.0.tgz#a50a021ea636fc4ed39e8d1fd311fe0fc299e8e3"
+  integrity sha512-HPABgVuPLMqOxPym5wBdYE89V7QL+TjQ29QEAapZPcg/3j1C+SMZC9kq7YKLw2Mh9Nwx+gfc4N3eBe95+SDYOA==
 
-"@material-ui/utils@^4.0.0-beta.1":
-  version "4.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@material-ui/utils/-/utils-4.0.0-beta.1.tgz#d5d566e38e21287a095e030d0bf465ea4f195633"
+"@material-ui/utils@^4.0.0-rc.0":
+  version "4.0.0-rc.0"
+  resolved "https://registry.yarnpkg.com/@material-ui/utils/-/utils-4.0.0-rc.0.tgz#c147d3c74aa1d540fa9bc3e6ab2dd08cc2380f22"
+  integrity sha512-nSCkPDJ1LFeX2L4ZQu0eLB7pV6ZGrmZPpnsd8HjcmuE32fuG/7sLymIVqSh/CARZS2j/N9lV0/6Km8q0/93Lug==
   dependencies:
     "@babel/runtime" "^7.2.0"
     prop-types "^15.7.2"
@@ -1358,9 +1364,17 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@16.8.17":
+"@types/react@*":
   version "16.8.17"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.8.17.tgz#f287b76a5badb93bc9aa3f54521a3eb53d6c2374"
+  dependencies:
+    "@types/prop-types" "*"
+    csstype "^2.2.0"
+
+"@types/react@16.8.18":
+  version "16.8.18"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.8.18.tgz#fe66fb748b0b6ca9709d38b87b2d1356d960a511"
+  integrity sha512-lUXdKzRqWR4FebR5tGHkLCqnvQJS4fdXKCBrNGGbglqZg2gpU+J82pMONevQODUotATs9fc9k66bx3/St8vReg==
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
@@ -1617,6 +1631,13 @@
     "@webassemblyjs/wast-parser" "1.8.5"
     "@xtuc/long" "4.2.2"
 
+"@wry/context@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@wry/context/-/context-0.4.0.tgz#8a8718408e4dd0514a0f8f4231bb4b87130b34e3"
+  integrity sha512-rVjwzFjVYXJ8pWJ8ZRCHv6meOebQvfTlvnUYUNX93Ce0KNeMTqCkf0GiOJc6BNVB96s7qfvwoLN3nUgDnSFOOg==
+  dependencies:
+    tslib "^1.9.3"
+
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@xtuc/ieee754/-/ieee754-1.2.0.tgz#eef014a3145ae477a1cbc00cd1e552336dceb790"
@@ -1747,43 +1768,38 @@ apollo-cache-control@^0.1.0:
   dependencies:
     graphql-extensions "^0.0.x"
 
-apollo-cache-inmemory@^1.5.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/apollo-cache-inmemory/-/apollo-cache-inmemory-1.5.1.tgz#265d1ee67b0bf0aca9c37629d410bfae44e62953"
+apollo-cache-inmemory@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/apollo-cache-inmemory/-/apollo-cache-inmemory-1.6.0.tgz#a106cdc520f0a043be2575372d5dbb7e4790254c"
+  integrity sha512-Mr86ucMsXnRH9YRvcuuy6kc3dtyRBuVSo8gdxp2sJVuUAtvQ6r/8E+ok2qX84em9ZBAYxoyvPnKeShhvcKiiDw==
   dependencies:
-    apollo-cache "^1.2.1"
-    apollo-utilities "^1.2.1"
-    optimism "^0.6.9"
-    ts-invariant "^0.2.1"
+    apollo-cache "^1.3.0"
+    apollo-utilities "^1.3.0"
+    optimism "^0.9.0"
+    ts-invariant "^0.4.0"
     tslib "^1.9.3"
 
-apollo-cache@1.2.1, apollo-cache@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/apollo-cache/-/apollo-cache-1.2.1.tgz#aae71eb4a11f1f7322adc343f84b1a39b0693644"
+apollo-cache@1.3.0, apollo-cache@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/apollo-cache/-/apollo-cache-1.3.0.tgz#de5c907cbd329440c9b0aafcbe8436391b9e6142"
+  integrity sha512-voPlvSIDA2pY3+7QwtXPs7o5uSNAVjUKwimyHWoiW0MIZtPxawtOV/Y+BL85R227JqcjPic1El+QToVR8l4ytQ==
   dependencies:
-    apollo-utilities "^1.2.1"
+    apollo-utilities "^1.3.0"
     tslib "^1.9.3"
 
-apollo-client@^2.5.1:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/apollo-client/-/apollo-client-2.5.1.tgz#36126ed1d32edd79c3713c6684546a3bea80e6d1"
+apollo-client@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/apollo-client/-/apollo-client-2.6.0.tgz#9b66c04cd96d622cd72f92e584e7403c17532831"
+  integrity sha512-Z6oSD45vyw6maktMABXTaJliWdFJy4ihZGxbRh7rY65RWNz0HSm3IX66shLavdNqd4lpOcVuAufJl+w8u6RhLQ==
   dependencies:
     "@types/zen-observable" "^0.8.0"
-    apollo-cache "1.2.1"
+    apollo-cache "1.3.0"
     apollo-link "^1.0.0"
-    apollo-link-dedup "^1.0.0"
-    apollo-utilities "1.2.1"
+    apollo-utilities "1.3.0"
     symbol-observable "^1.0.2"
-    ts-invariant "^0.2.1"
+    ts-invariant "^0.4.0"
     tslib "^1.9.3"
     zen-observable "^0.8.0"
-
-apollo-link-dedup@^1.0.0:
-  version "1.0.18"
-  resolved "https://registry.yarnpkg.com/apollo-link-dedup/-/apollo-link-dedup-1.0.18.tgz#635cb5659b082e7f270f7649c4b0f71021f7bb4b"
-  dependencies:
-    apollo-link "^1.2.11"
-    tslib "^1.9.3"
 
 apollo-link-error@^1.1.10:
   version "1.1.10"
@@ -1873,7 +1889,16 @@ apollo-upload-server@^7.0.0:
     http-errors "^1.7.0"
     object-path "^0.11.4"
 
-apollo-utilities@1.2.1, apollo-utilities@^1.0.1, apollo-utilities@^1.0.8, apollo-utilities@^1.2.1:
+apollo-utilities@1.3.0, apollo-utilities@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/apollo-utilities/-/apollo-utilities-1.3.0.tgz#9803724c07ac94ca11dc26397edb58735d2b0211"
+  integrity sha512-wQjV+FdWcTWmWUFlChG5rS0vHKy5OsXC6XlV9STRstQq6VbXANwHy6DHnTEQAfLXWAbNcPgBu+nBUpR3dFhwrA==
+  dependencies:
+    fast-json-stable-stringify "^2.0.0"
+    ts-invariant "^0.4.0"
+    tslib "^1.9.3"
+
+apollo-utilities@^1.0.1, apollo-utilities@^1.0.8, apollo-utilities@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/apollo-utilities/-/apollo-utilities-1.2.1.tgz#1c3a1ebf5607d7c8efe7636daaf58e7463b41b3c"
   dependencies:
@@ -2090,7 +2115,7 @@ babel-code-frame@^6.22.0:
     esutils "^2.0.2"
     js-tokens "^3.0.2"
 
-babel-eslint@10.0.1, babel-eslint@10.x:
+babel-eslint@10.0.1, babel-eslint@^10.0.1:
   version "10.0.1"
   resolved "https://registry.yarnpkg.com/babel-eslint/-/babel-eslint-10.0.1.tgz#919681dc099614cd7d31d45c8908695092a1faed"
   integrity sha512-z7OT1iNV+TjOwHNLLyJk+HN+YVWX+CLE6fPD2SymJZOZQBs+QIexFjhm4keGTm8MW9xr4EC9Q0PbaLB24V5GoQ==
@@ -3883,7 +3908,7 @@ eslint-visitor-keys@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-1.0.0.tgz#3f3180fb2e291017716acb4c9d6d5b5c34a6a81d"
 
-eslint@5.x, eslint@^5.16.0:
+eslint@^5.16.0:
   version "5.16.0"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-5.16.0.tgz#a1e3ac1aae4a3fbd8296fcf8f7ab7314cbb6abea"
   integrity sha512-S3Rz11i7c8AA5JPv7xAH+dOyq/Cu/VXHiHXBPOU1k/JAM5dXqQPt3qcrhpHSorXmrpu2g0gkIBVXAqCpzfoZIg==
@@ -4354,13 +4379,14 @@ form-data@^2.0.0, form-data@~2.3.2:
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
 
-formik@^1.5.4:
-  version "1.5.4"
-  resolved "https://registry.yarnpkg.com/formik/-/formik-1.5.4.tgz#e2e3182d030134a1bf7fddfb394290660212475c"
+formik@^1.5.7:
+  version "1.5.7"
+  resolved "https://registry.yarnpkg.com/formik/-/formik-1.5.7.tgz#2fc5fc2f0c693cdc4e8c9dad3a10eb4c4e131ff5"
+  integrity sha512-kZo8lS4WzfC2uivnSkE9DOuX9x+jVjCtIZOlb1A4lHGeURyuLt6eDfwGJzNlcP0lXIwmpANKzegiB8j60B54TA==
   dependencies:
     create-react-context "^0.2.2"
     deepmerge "^2.1.1"
-    hoist-non-react-statics "^2.5.5"
+    hoist-non-react-statics "^3.3.0"
     lodash "^4.17.11"
     lodash-es "^4.17.11"
     prop-types "^15.6.1"
@@ -4847,10 +4873,6 @@ hmac-drbg@^1.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.1"
 
-hoist-non-react-statics@^2.5.5:
-  version "2.5.5"
-  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
-
 hoist-non-react-statics@^3.1.0, hoist-non-react-statics@^3.2.1, hoist-non-react-statics@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.0.tgz#b09178f0122184fb95acf525daaecb4d8f45958b"
@@ -5060,10 +5082,6 @@ ignore@^4.0.6:
 immer@1.10.0:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/immer/-/immer-1.10.0.tgz#bad67605ba9c810275d91e1c2a47d4582e98286d"
-
-immutable-tuple@^0.4.9:
-  version "0.4.10"
-  resolved "https://registry.yarnpkg.com/immutable-tuple/-/immutable-tuple-0.4.10.tgz#e0b1625384f514084a7a84b749a3bb26e9179929"
 
 import-cwd@^2.0.0:
   version "2.1.0"
@@ -7127,11 +7145,12 @@ opn@^5.1.0:
   dependencies:
     is-wsl "^1.1.0"
 
-optimism@^0.6.9:
-  version "0.6.9"
-  resolved "https://registry.yarnpkg.com/optimism/-/optimism-0.6.9.tgz#19258ff8b3be0cea29ac35f06bff818e026e30bb"
+optimism@^0.9.0:
+  version "0.9.5"
+  resolved "https://registry.yarnpkg.com/optimism/-/optimism-0.9.5.tgz#b8b5dc9150e97b79ddbf2d2c6c0e44de4d255527"
+  integrity sha512-lNvmuBgONAGrUbj/xpH69FjMOz1d0jvMNoOCKyVynUPzq2jgVlGL4jFYJqrUHzUfBv+jAFSCP61x5UkfbduYJA==
   dependencies:
-    immutable-tuple "^0.4.9"
+    "@wry/context" "^0.4.0"
 
 optimist@^0.6.1:
   version "0.6.1"

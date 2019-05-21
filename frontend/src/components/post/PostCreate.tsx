@@ -49,7 +49,7 @@ const Login: React.FC = () => {
     values: FormValues,
     { setSubmitting }: FormikActions<FormValues>,
   ) => {
-    if (!meQuery) return
+    if (!meQuery || !meQuery.data) return
 
     setError(undefined)
     createDraftMutation({
