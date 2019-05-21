@@ -7,10 +7,12 @@ const Query = prismaObjectType({
   name: 'Query',
   definition: (t) => {
     t.prismaFields(['post'])
-    t.list.field('feed', {
-      type: 'Post',
-      resolve: (_, args, ctx) =>
-        ctx.prisma.posts({ where: { published: true } }),
+    t.field('feed', {
+      type: 'PostConnection',
+      args: {},
+      resolve: (_, args, ctx) => {
+        return ctx.prisma.postsConnection({ where: { published: true } })
+      },
     })
     t.list.field('drafts', {
       type: 'Post',
