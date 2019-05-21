@@ -21,13 +21,7 @@ import MeQueryContext from './../context/MeQueryContext'
 import UserType from './../types/User'
 
 interface MeQueryResponse {
-  data: {
-    me: UserType
-  }
-  error: {
-    message: string
-  }
-  loading: boolean
+  me: UserType
 }
 
 const RoutesAuth: React.FC = () => {

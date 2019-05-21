@@ -12,4 +12,4 @@ interface MeQueryType {
   loading: boolean
 }
 
-export default React.createContext<MeQueryType | null>(null)
+export default React.createContext<MeQueryType | undefined>(undefined)

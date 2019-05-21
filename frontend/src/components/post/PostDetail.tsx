@@ -72,7 +72,9 @@ const PostDetail: React.FC = () => {
         client
           .resetStore()
           .then(() =>
-            history.push(postQuery.data.post.published ? '/' : '/drafts'),
+            history.push(
+              postQuery.data && postQuery.data.post.published ? '/' : '/drafts',
+            ),
           )
       })
       .catch((e) => {
