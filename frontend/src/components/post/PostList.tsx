@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react'
 
-import PostType from "./../../types/Post";
+import PostType from './../../types/Post'
 
-import List from "@material-ui/core/List";
+import List from '@material-ui/core/List'
 
-import Post from "./Post";
+import Post from './Post'
 
 interface Props {
-  posts: [PostType];
+  posts: [PostType]
 }
 
 const PostList: React.FC<Props> = ({ posts }) => {
@@ -17,7 +17,7 @@ const PostList: React.FC<Props> = ({ posts }) => {
         <Post key={post.id} post={post} />
       ))}
     </List>
-  );
-};
+  )
+}
 
-export default PostList;
+export default PostList

@@ -9,41 +9,44 @@ import PostType from './../../types/Post'
 import PostList from './PostList'
 
 interface FeedQueryResponse {
-	drafts: [PostType]
+  drafts: [PostType]
 }
 
 const Drafts: React.FC = () => {
-	const { history } = useReactRouter()
+  const { history } = useReactRouter()
 
-	const draftsQuery = useQuery(DRAFTS_QUERY)
+  const draftsQuery = useQuery(DRAFTS_QUERY)
 
-	console.log('draftsQuery: ', draftsQuery)
+  console.log('draftsQuery: ', draftsQuery)
 
-	return (
-		<div>
-			<button
-				onClick={() => {
-					localStorage.removeItem('token')
-					history.push('/login')
-				}}>
-				logout
-			</button>
-			{draftsQuery.data && draftsQuery.data.drafts && <PostList posts={draftsQuery.data.drafts} />}
-		</div>
-	)
+  return (
+    <div>
+      <button
+        onClick={() => {
+          localStorage.removeItem('token')
+          history.push('/login')
+        }}
+      >
+        logout
+      </button>
+      {draftsQuery.data && draftsQuery.data.drafts && (
+        <PostList posts={draftsQuery.data.drafts} />
+      )}
+    </div>
+  )
 }
 
 const DRAFTS_QUERY = gql`
-	query Drafts {
-		drafts {
-			id
-			title
-			author {
-				id
-				name
-			}
-		}
-	}
+  query Drafts {
+    drafts {
+      id
+      title
+      author {
+        id
+        name
+      }
+    }
+  }
 `
 
 export default Drafts

@@ -1,53 +1,53 @@
-import React from "react";
-import { makeStyles, Theme } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import IconButton from "@material-ui/core/IconButton";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import Divider from "@material-ui/core/Divider";
-import List from "@material-ui/core/List";
-import { Link } from "react-router-dom";
-import useReactRouter from "use-react-router";
+import React from 'react'
+import { makeStyles, Theme } from '@material-ui/core/styles'
+import Drawer from '@material-ui/core/Drawer'
+import IconButton from '@material-ui/core/IconButton'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
+import Divider from '@material-ui/core/Divider'
+import List from '@material-ui/core/List'
+import { Link } from 'react-router-dom'
+import useReactRouter from 'use-react-router'
 
-const drawerWidth = 240;
+const drawerWidth = 240
 
 const useStyles = makeStyles((theme: Theme) => ({
   drawer: {
     width: drawerWidth,
-    flexShrink: 0
+    flexShrink: 0,
   },
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
   },
   drawerHeader: {
-    display: "flex",
-    alignItems: "center",
-    padding: "0 8px",
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0 8px',
     ...theme.mixins.toolbar,
-    justifyContent: "flex-end"
-  }
-}));
+    justifyContent: 'flex-end',
+  },
+}))
 
 const items = [
   {
-    name: "Feed",
-    href: "/"
+    name: 'Feed',
+    href: '/',
   },
   {
-    name: "Drafts",
-    href: "/drafts"
+    name: 'Drafts',
+    href: '/drafts',
   },
   {
-    name: "Create Draft",
-    href: "/create"
-  }
-];
+    name: 'Create Draft',
+    href: '/create',
+  },
+]
 
 const MyDrawer: React.FC<Props> = ({ open, onDrawerClose }) => {
-  const classes = useStyles({});
+  const classes = useStyles({})
 
-  const { history } = useReactRouter();
+  const { history } = useReactRouter()
 
   return (
     <Drawer
@@ -56,7 +56,7 @@ const MyDrawer: React.FC<Props> = ({ open, onDrawerClose }) => {
       anchor="left"
       open={open}
       classes={{
-        paper: classes.drawerPaper
+        paper: classes.drawerPaper,
       }}
     >
       <div className={classes.drawerHeader}>
@@ -81,12 +81,12 @@ const MyDrawer: React.FC<Props> = ({ open, onDrawerClose }) => {
       </List>
       <Divider />
     </Drawer>
-  );
-};
-
-interface Props {
-  open: boolean;
-  onDrawerClose: () => void;
+  )
 }
 
-export default MyDrawer;
+interface Props {
+  open: boolean
+  onDrawerClose: () => void
+}
+
+export default MyDrawer

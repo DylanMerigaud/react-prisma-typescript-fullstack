@@ -1,109 +1,109 @@
-import React, { useState } from "react";
-import { Formik, FormikActions } from "formik";
+import React, { useState } from 'react'
+import { Formik, FormikActions } from 'formik'
 
-import TextField from "@material-ui/core/TextField";
-import Box from "@material-ui/core/Box";
-import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
+import TextField from '@material-ui/core/TextField'
+import Box from '@material-ui/core/Box'
+import Paper from '@material-ui/core/Paper'
+import Button from '@material-ui/core/Button'
 
-import gql from "graphql-tag";
-import { useMutation, useApolloClient, useQuery } from "react-apollo-hooks";
+import gql from 'graphql-tag'
+import { useMutation, useApolloClient, useQuery } from 'react-apollo-hooks'
 
-import * as Yup from "yup";
+import * as Yup from 'yup'
 
-import useReactRouter from "use-react-router";
+import useReactRouter from 'use-react-router'
 
-import PostType from "./../../types/Post";
+import PostType from './../../types/Post'
 
 const PostCreateSchema = Yup.object().shape({
   title: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required")
-});
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required'),
+})
 
 interface Props {}
 
 interface Form {
-  title: string;
+  title: string
 }
-type FormValues = Record<keyof Form, string>;
+type FormValues = Record<keyof Form, string>
 
 interface PostQueryResponse {
-  post: PostType;
+  post: PostType
 }
 
-interface updatePostMutationResponse {
-  updatePost: PostType;
+interface UpdatePostMutationResponse {
+  updatePost: PostType
 }
 
 interface MatchParam {
-  id: string;
+  id: string
 }
 
-const PostEdit: React.FC<Props> = () => {
-  const createDraftMutation = useMutation<updatePostMutationResponse>(
-    UPDATE_POST_MUTATION
-  );
-  const { history, match } = useReactRouter<MatchParam>();
-  const [error, setError] = useState<string>();
+const PostEdit: React.FC = () => {
+  const createDraftMutation = useMutation<UpdatePostMutationResponse>(
+    UPDATE_POST_MUTATION,
+  )
+  const { history, match } = useReactRouter<MatchParam>()
+  const [error, setError] = useState<string>()
 
-  const client = useApolloClient();
+  const client = useApolloClient()
   const postQuery = useQuery<PostQueryResponse>(POST_QUERY, {
     variables: {
       where: {
-        id: match.params.id
-      }
-    }
-  });
+        id: match.params.id,
+      },
+    },
+  })
 
   const handleSubmit = (
     values: FormValues,
-    { setSubmitting }: FormikActions<FormValues>
+    { setSubmitting }: FormikActions<FormValues>,
   ) => {
-    if (!postQuery || !postQuery.data || !postQuery.data.post) return;
+    if (!postQuery || !postQuery.data || !postQuery.data.post) return
 
-    setError(undefined);
+    setError(undefined)
     createDraftMutation({
       variables: {
         data: {
-          title: values.title
+          title: values.title,
         },
         where: {
-          id: postQuery.data.post.id
-        }
-      }
+          id: postQuery.data.post.id,
+        },
+      },
     })
       .then(res => {
-        if (!res.data) return;
+        if (!res.data) return
         client
           .resetStore()
           .then(() =>
             history.push(
-              postQuery.data && postQuery.data.post.published ? "/" : "/drafts"
-            )
-          ); // TODO wtf typescript
+              postQuery.data && postQuery.data.post.published ? '/' : '/drafts',
+            ),
+          ) // TODO wtf typescript
       })
       .catch(e => {
-        console.error(e);
-        setError(e.message);
-        setSubmitting(false);
-      });
-  };
+        console.error(e)
+        setError(e.message)
+        setSubmitting(false)
+      })
+  }
 
-  if (!postQuery || !postQuery.data) return <div>ERROR</div>;
+  if (!postQuery || !postQuery.data) return <div>ERROR</div>
 
-  if (postQuery.loading) return <div>Loading</div>;
+  if (postQuery.loading) return <div>Loading</div>
 
   if (postQuery.error)
-    return <div>Post query error: {postQuery.error.message}</div>; // TODO Error || Loading
+    return <div>Post query error: {postQuery.error.message}</div> // TODO Error || Loading
 
-  if (!postQuery.data.post) return <div>Post not found</div>;
+  if (!postQuery.data.post) return <div>Post not found</div>
 
   return (
     <Box p={1} clone>
       <Paper>
-        <h1>Update {postQuery.data.post.published ? "Post" : "Draft"}</h1>
+        <h1>Update {postQuery.data.post.published ? 'Post' : 'Draft'}</h1>
         <Formik
           initialValues={{ title: postQuery.data.post.title }}
           validationSchema={PostCreateSchema}
@@ -116,7 +116,7 @@ const PostEdit: React.FC<Props> = () => {
             handleChange,
             handleBlur,
             handleSubmit,
-            isSubmitting
+            isSubmitting,
             /* and other goodies */
           }) => (
             <Box display="flex" flexDirection="column" clone>
@@ -140,8 +140,8 @@ const PostEdit: React.FC<Props> = () => {
         {error}
       </Paper>
     </Box>
-  );
-};
+  )
+}
 
 const POST_QUERY = gql`
   query Post($where: PostWhereUniqueInput!) {
@@ -155,7 +155,7 @@ const POST_QUERY = gql`
       published
     }
   }
-`;
+`
 
 const UPDATE_POST_MUTATION = gql`
   mutation UpdatePost($data: PostUpdateInput!, $where: PostWhereUniqueInput!) {
@@ -168,6 +168,6 @@ const UPDATE_POST_MUTATION = gql`
       }
     }
   }
-`;
+`
 
-export default PostEdit;
+export default PostEdit

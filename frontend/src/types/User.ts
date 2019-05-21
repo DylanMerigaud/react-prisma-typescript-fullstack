@@ -1,12 +1,12 @@
 interface User {
-	name: string
-	id: string
-	role: Role
+  name: string
+  id: string
+  role: Role
 }
 
 enum Role {
-	USER,
-	ADMIN
+  USER,
+  ADMIN,
 }
 
 export default User

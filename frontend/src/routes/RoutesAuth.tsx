@@ -23,38 +23,38 @@ import UserType from './../types/User'
 import get from 'lodash.get'
 
 interface MeQueryResponse {
-	me: UserType
+  me: UserType
 }
 
 const RoutesAuth: React.FC = () => {
-	const meQuery = useQuery<MeQueryResponse>(ME_QUERY)
+  const meQuery = useQuery<MeQueryResponse>(ME_QUERY)
 
-	console.log({ meQuery })
+  console.log({ meQuery })
 
-	return (
-		<MeContext.Provider value={get(meQuery, 'data.me', null)}>
-			<AuthLayout>
-				<Switch>
-					<AuthRoute exact path="/" component={Feed} />
-					<AuthRoute exact path="/drafts" component={Drafts} />
-					<AuthRoute exact path="/create" component={PostCreate} />
-					<AuthRoute path="/post/:id/edit" component={PostEdit} />
-					<AuthRoute path="/post/:id" component={PostDetail} />
-					<Route component={NotFound} />
-				</Switch>
-			</AuthLayout>
-		</MeContext.Provider>
-	)
+  return (
+    <MeContext.Provider value={get(meQuery, 'data.me', null)}>
+      <AuthLayout>
+        <Switch>
+          <AuthRoute exact path="/" component={Feed} />
+          <AuthRoute exact path="/drafts" component={Drafts} />
+          <AuthRoute exact path="/create" component={PostCreate} />
+          <AuthRoute path="/post/:id/edit" component={PostEdit} />
+          <AuthRoute path="/post/:id" component={PostDetail} />
+          <Route component={NotFound} />
+        </Switch>
+      </AuthLayout>
+    </MeContext.Provider>
+  )
 }
 
 const ME_QUERY = gql`
-	query Me {
-		me {
-			id
-			name
-			role
-		}
-	}
+  query Me {
+    me {
+      id
+      name
+      role
+    }
+  }
 `
 
 export default RoutesAuth

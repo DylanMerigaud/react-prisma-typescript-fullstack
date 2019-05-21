@@ -1,12 +1,12 @@
-import React from "react";
-import { Switch } from "react-router-dom";
+import React from 'react'
+import { Switch } from 'react-router-dom'
 
-import RoutesAuth from "./RoutesAuth";
+import RoutesAuth from './RoutesAuth'
 
-import Login from "./../components/auth/Login";
-import Signup from "./../components/auth/Signup";
+import Login from './../components/auth/Login'
+import Signup from './../components/auth/Signup'
 
-import NoAuthRoute from "./../components/NoAuthRoute";
+import NoAuthRoute from './../components/NoAuthRoute'
 
 // const initialState = {
 // 	isSideBarOpen: false,
@@ -14,16 +14,14 @@ import NoAuthRoute from "./../components/NoAuthRoute";
 // 	isMobile: false
 // }
 
-const GlobalRoutes: React.FC<Props> = () => {
+const GlobalRoutes: React.FC = () => {
   return (
     <Switch>
       <NoAuthRoute path="/login" component={Login} />
       <NoAuthRoute path="/signup" component={Signup} />
       <RoutesAuth />
     </Switch>
-  );
-};
+  )
+}
 
-interface Props {}
-
-export default GlobalRoutes;
+export default GlobalRoutes

@@ -1,74 +1,72 @@
-import React, { useState } from "react";
+import React, { useState } from 'react'
 
-import PostType from "./../../types/Post";
+import PostType from './../../types/Post'
 
-import Button from "@material-ui/core/Button";
+import Button from '@material-ui/core/Button'
 
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom'
 
-import { useMutation, useApolloClient, useQuery } from "react-apollo-hooks";
-import gql from "graphql-tag";
+import { useMutation, useApolloClient, useQuery } from 'react-apollo-hooks'
+import gql from 'graphql-tag'
 
-import useReactRouter from "use-react-router";
+import useReactRouter from 'use-react-router'
 
 interface PostQueryResponse {
-  post: PostType;
+  post: PostType
 }
 
 interface PublishMutationResponse {
-  publish: PostType;
+  publish: PostType
 }
 
 interface MatchParam {
-  id: string;
+  id: string
 }
 
 const PostDetail: React.FC = () => {
-  const [error, setError] = useState();
-  const { match, history } = useReactRouter<MatchParam>();
-  const client = useApolloClient();
+  const [error, setError] = useState()
+  const { match, history } = useReactRouter<MatchParam>()
+  const client = useApolloClient()
 
   const postQuery = useQuery<PostQueryResponse>(POST_QUERY, {
     variables: {
-      where: { id: match.params.id }
-    }
-  });
+      where: { id: match.params.id },
+    },
+  })
 
-  const publishMutation = useMutation<PublishMutationResponse>(
-    PUBLISH_MUTATION
-  );
+  const publishMutation = useMutation<PublishMutationResponse>(PUBLISH_MUTATION)
 
   const handlePublish = () => {
-    if (!postQuery.data) return;
+    if (!postQuery.data) return
 
     publishMutation({
       variables: {
-        id: postQuery.data.post.id
-      }
+        id: postQuery.data.post.id,
+      },
     })
       .then(() => {
-        client.resetStore().then(() => history.push("/"));
+        client.resetStore().then(() => history.push('/'))
       })
       .catch(e => {
-        setError(e.message);
-      });
-  };
+        setError(e.message)
+      })
+  }
 
-  console.log("PostDetail: ", postQuery);
+  console.log('PostDetail: ', postQuery)
 
-  if (!postQuery || !postQuery.data) return <div>ERROR</div>;
+  if (!postQuery || !postQuery.data) return <div>ERROR</div>
 
-  if (postQuery.loading) return <div>Loading</div>;
+  if (postQuery.loading) return <div>Loading</div>
 
   if (postQuery.error)
-    return <div>Post query error: {postQuery.error.message}</div>; // TODO Error || Loading
+    return <div>Post query error: {postQuery.error.message}</div> // TODO Error || Loading
 
-  if (!postQuery.data.post) return <div>Post not found</div>;
+  if (!postQuery.data.post) return <div>Post not found</div>
 
   return (
     <div>
       <h3>{postQuery.data.post.title}</h3>
-      <Button component={Link} to={"/post/" + postQuery.data.post.id + "/edit"}>
+      <Button component={Link} to={'/post/' + postQuery.data.post.id + '/edit'}>
         Edit
       </Button>
       {!postQuery.data.post.published && (
@@ -76,8 +74,8 @@ const PostDetail: React.FC = () => {
       )}
       {error}
     </div>
-  );
-};
+  )
+}
 
 const PUBLISH_MUTATION = gql`
   mutation Publish($id: ID!) {
@@ -86,7 +84,7 @@ const PUBLISH_MUTATION = gql`
       title
     }
   }
-`;
+`
 
 const POST_QUERY = gql`
   query Post($where: PostWhereUniqueInput!) {
@@ -100,6 +98,6 @@ const POST_QUERY = gql`
       }
     }
   }
-`;
+`
 
-export default PostDetail;
+export default PostDetail
