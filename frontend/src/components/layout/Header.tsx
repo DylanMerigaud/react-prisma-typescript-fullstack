@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 	}
 }))
 
-const historyPathToTitle = {
+const historyPathToTitle: { [key: string]: string }  = {
 	'/': 'Feed',
 	'/drafts': 'Drafts',
 	'/create': 'Create Draft'
