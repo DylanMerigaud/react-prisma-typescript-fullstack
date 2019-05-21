@@ -24,6 +24,10 @@ interface MeQueryResponse {
   data: {
     me: UserType
   }
+  error: {
+    message: string
+  }
+  loading: boolean
 }
 
 const RoutesAuth: React.FC = () => {

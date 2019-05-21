@@ -20,6 +20,10 @@ interface PublishMutationResponse {
   publish: PostType
 }
 
+interface DeleteMutationResponse {
+  deletePost: PostType
+}
+
 interface MatchParam {
   id: string
 }
@@ -38,6 +42,8 @@ const PostDetail: React.FC = () => {
 
   const publishMutation = useMutation<PublishMutationResponse>(PUBLISH_MUTATION)
 
+  const deleteMutation = useMutation<DeleteMutationResponse>(DELETE_MUTATION)
+
   const handlePublish = () => {
     if (!postQuery.data) return
 
@@ -48,6 +54,26 @@ const PostDetail: React.FC = () => {
     })
       .then(() => {
         client.resetStore().then(() => history.push('/'))
+      })
+      .catch((e) => {
+        setError(e.message)
+      })
+  }
+
+  const handleDelete = () => {
+    if (!postQuery.data) return
+
+    deleteMutation({
+      variables: {
+        where: { id: postQuery.data.post.id },
+      },
+    })
+      .then(() => {
+        client
+          .resetStore()
+          .then(() =>
+            history.push(postQuery.data.post.published ? '/' : '/drafts'),
+          )
       })
       .catch((e) => {
         setError(e.message)
@@ -79,6 +105,7 @@ const PostDetail: React.FC = () => {
       {isOwner && !postQuery.data.post.published && (
         <Button onClick={handlePublish}>Publish</Button>
       )}
+      {isOwner && <Button onClick={handleDelete}>Delete</Button>}
       {error}
     </div>
   )
@@ -89,6 +116,14 @@ const PUBLISH_MUTATION = gql`
     publish(id: $id) {
       id
       title
+    }
+  }
+`
+
+const DELETE_MUTATION = gql`
+  mutation DeletePost($where: PostWhereUniqueInput!) {
+    deletePost(where: $where) {
+      id
     }
   }
 `
