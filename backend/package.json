@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 0",
     "start": "dotenv ts-node index.ts",
-    "dev": "dotenv ts-node-dev --no-notify --respawn --transpileOnly ./",
+    "dev": "dotenv ts-node-dev index.ts",
     "build": "yarn run prisma:generate",
     "prisma:generate": "prisma generate --env-file .env",
     "prisma:deploy": "prisma deploy --env-file .env",
