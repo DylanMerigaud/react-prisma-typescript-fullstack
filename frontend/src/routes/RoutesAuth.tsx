@@ -16,19 +16,7 @@ import PostCreate from './../components/post/PostCreate'
 import PostDetail from './../components/post/PostDetail'
 import PostEdit from './../components/post/PostEdit'
 
-import MeQueryContext from './../context/MeQueryContext'
-
-import UserType from './../types/User'
-
-interface MeQueryResponse {
-  data: {
-    me: UserType
-  }
-  error: {
-    message: string
-  }
-  loading: boolean
-}
+import MeQueryContext, { MeQueryResponse } from './../context/MeQueryContext'
 
 const RoutesAuth: React.FC = () => {
   const meQuery = useQuery<MeQueryResponse>(ME_QUERY)

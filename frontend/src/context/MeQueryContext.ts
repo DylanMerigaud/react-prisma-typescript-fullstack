@@ -1,15 +1,13 @@
 import React from 'react'
+import { QueryHookResult } from 'react-apollo-hooks'
+import { OperationVariables } from 'apollo-client'
 
 import UserType from './../types/User'
 
-interface MeQueryType {
-  data: {
-    me: UserType
-  }
-  error: {
-    message: string
-  }
-  loading: boolean
+export interface MeQueryResponse {
+  me: UserType
 }
 
-export default React.createContext<MeQueryType | null>(null)
+export default React.createContext<
+  QueryHookResult<MeQueryResponse, OperationVariables> | undefined
+>(undefined)
