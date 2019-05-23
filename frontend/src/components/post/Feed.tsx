@@ -66,7 +66,6 @@ const Feed: React.FC = () => {
       >
         logout
       </button>
-      // @ts-ignore
       {feedQuery.data && feedQuery.data.feed && (
         <PostList posts={feedQuery.data.feed.edges.map((e) => e.node)} />
       )}

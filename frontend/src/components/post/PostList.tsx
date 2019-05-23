@@ -7,7 +7,7 @@ import List from '@material-ui/core/List'
 import Post from './Post'
 
 interface Props {
-  posts: [PostType]
+  posts: PostType[]
 }
 
 const PostList: React.FC<Props> = ({ posts }) => {

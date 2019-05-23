@@ -6,7 +6,7 @@ const PostsConnection = prismaObjectType({
     t.prismaFields(['*'])
     t.field('aggregate', {
       ...t.prismaType.aggregate,
-      async resolve(root, args, ctx) {
+      resolve: async (_, args, ctx) => {
         const posts = await ctx.prisma.posts()
         const count = posts.length
         return { count }

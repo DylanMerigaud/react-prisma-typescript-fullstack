@@ -66,11 +66,11 @@ const Drafts: React.FC = () => {
       >
         logout
       </button>
-      {draftsQuery.data &&
-        // @ts-ignore
-        draftsQuery.data.drafts && (
-          <PostList posts={draftsQuery.data.drafts.edges.map((e) => e.node)} />
-        )}
+      {get(draftsQuery, 'data.drafts.edges') && (
+        <PostList
+          posts={draftsQuery.data.drafts.edges.map((e: any) => e.node)}
+        />
+      )}
       {get(draftsQuery, 'data.drafts.pageInfo.hasNextPage') && (
         <button onClick={handleLoadMore}>loadMore</button>
       )}
