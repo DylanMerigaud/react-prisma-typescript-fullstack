@@ -1,5 +1,5 @@
-import { prisma } from './src/generated/prisma-client'
-import datamodelInfo from './src/generated/nexus-prisma'
+import { prisma, User } from './generated/prisma-client'
+import datamodelInfo from './generated/nexus-prisma'
 import * as path from 'path'
 import { makePrismaSchema } from 'nexus-prisma'
 import { GraphQLServer } from 'graphql-yoga'
@@ -15,6 +15,8 @@ import { Aliment, AuthPayload } from './schemas'
 import { getUser } from './auth'
 
 import * as cors from 'cors'
+import { any } from 'prop-types'
+import { PrismaClient } from 'nexus-prisma/dist/types'
 
 const schema = makePrismaSchema({
   types: [Query, Mutation, Aliment, AuthPayload],

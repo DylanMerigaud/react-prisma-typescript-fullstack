@@ -4,7 +4,7 @@ import { isAuthenticated, isAdmin } from './rules'
 const permissions = shield(
   {
     Query: {
-      feed: isAuthenticated,
+      // feed: isAuthenticated,
     },
     Mutation: {
       testoss: isAuthenticated,

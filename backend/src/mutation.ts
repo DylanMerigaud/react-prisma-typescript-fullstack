@@ -4,6 +4,7 @@ import { prismaObjectType } from 'nexus-prisma'
 import { AlimentYupSchema } from './yupSchemas'
 
 import { mutation as authMutation } from './auth'
+import GraphQLServerContext from './types/GraphQLServerContext'
 
 const Mutation = prismaObjectType({
   name: 'Mutation',
@@ -15,7 +16,7 @@ const Mutation = prismaObjectType({
         title: stringArg(),
         authorId: idArg({ nullable: true }),
       },
-      resolve: (_, { title, authorId }, ctx) =>
+      resolve: (_, { title, authorId }, ctx: GraphQLServerContext) =>
         ctx.prisma.createPost({
           title,
           author: { connect: { id: authorId } },
@@ -25,7 +26,7 @@ const Mutation = prismaObjectType({
       type: 'Post',
       nullable: true,
       args: { id: idArg() },
-      resolve: (_, { id }, ctx) =>
+      resolve: (_, { id }, ctx: GraphQLServerContext) =>
         ctx.prisma.updatePost({
           where: { id },
           data: { published: true },

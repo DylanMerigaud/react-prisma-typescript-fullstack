@@ -1,10 +1,10 @@
-import { prisma } from './src/generated/prisma-client'
+import { prisma } from './generated/prisma-client'
 import { ContextParameters } from 'graphql-yoga/dist/types'
 import * as jwt from 'jsonwebtoken'
 import { stringArg } from 'nexus'
 import * as bcrypt from 'bcrypt'
-import { NexusOutputFieldConfig } from 'nexus/dist/core'
 import { PrismaObjectDefinitionBlock } from 'nexus-prisma/dist/blocks/objectType'
+import GraphQLServerContext from './types/GraphQLServerContext'
 
 export const getUser = async (req: ContextParameters) => {
   const auth = req.request.get('Authorization')
@@ -28,7 +28,7 @@ export const query = (t: PrismaObjectDefinitionBlock<'Query'>) => {
   t.field('me', {
     type: 'User',
     args: {},
-    resolve: async (_, { email }, ctx) => {
+    resolve: async (_, { email }, ctx: GraphQLServerContext) => {
       const user = await ctx.user
       console.log('/me: ', { user })
       if (!user) throw new Error('Not auth.')
@@ -44,7 +44,7 @@ export const mutation = (t: PrismaObjectDefinitionBlock<'Mutation'>) => {
       email: stringArg({ nullable: false }),
       password: stringArg({ nullable: false }),
     },
-    resolve: async (_, { email, password }, ctx) => {
+    resolve: async (_, { email, password }, ctx: GraphQLServerContext) => {
       const user = await ctx.prisma.user({ email })
       console.log({ user })
       if (!user) throw new Error('User not in db.')
@@ -66,7 +66,11 @@ export const mutation = (t: PrismaObjectDefinitionBlock<'Mutation'>) => {
       email: stringArg({ nullable: false }),
       password: stringArg({ nullable: false }),
     },
-    resolve: async (_, { name, email, password }, ctx) => {
+    resolve: async (
+      _,
+      { name, email, password },
+      ctx: GraphQLServerContext,
+    ) => {
       const password2 = await bcrypt.hash(password, 10)
 
       const user = await ctx.prisma.createUser({
