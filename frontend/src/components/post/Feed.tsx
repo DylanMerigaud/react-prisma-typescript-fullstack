@@ -9,15 +9,54 @@ import PostType from './../../types/Post'
 import PostList from './PostList'
 
 interface FeedQueryResponse {
-  feed: [PostType]
+  // data: {
+  feed: {
+    pageInfo: {
+      hasNextPage: boolean
+      endCursor: string
+    }
+    edges: {
+      node: PostType
+    }[]
+    aggregate: {
+      count: number
+    }
+  }
+  // }
+  // fetchMore: () => void
 }
 
 const Feed: React.FC = () => {
   const { history } = useReactRouter()
 
-  const feedQuery = useQuery(FEED_QUERY)
+  const feedQuery = useQuery<FeedQueryResponse>(FEED_QUERY)
 
   console.log('feedQuery: ', feedQuery)
+
+  const handleLoadMore = () => {
+    if (!feedQuery || !feedQuery.data || !feedQuery.data.feed) return
+    feedQuery.fetchMore({
+      variables: {
+        after: feedQuery.data.feed.pageInfo.endCursor,
+      },
+      updateQuery: (previousResult, { fetchMoreResult }) => {
+        if (!fetchMoreResult) {
+          return previousResult
+        }
+        return {
+          feed: {
+            __typename: 'PostConnection',
+            aggregate: fetchMoreResult.feed.aggregate,
+            pageInfo: fetchMoreResult.feed.pageInfo,
+            edges: [
+              ...previousResult.feed.edges,
+              ...fetchMoreResult.feed.edges,
+            ],
+          },
+        }
+      },
+    })
+  }
 
   return (
     <div>
@@ -29,21 +68,45 @@ const Feed: React.FC = () => {
       >
         logout
       </button>
+      // @ts-ignore
       {feedQuery.data && feedQuery.data.feed && (
-        <PostList posts={feedQuery.data.feed} />
+        <PostList posts={feedQuery.data.feed.edges.map((e) => e.node)} />
       )}
+      <button onClick={handleLoadMore}>loadMore</button>
     </div>
   )
 }
 
 const FEED_QUERY = gql`
-  query Feed {
-    feed {
-      id
-      title
-      author {
-        id
-        name
+  query Feed(
+    $after: String
+    $orderBy: PostOrderByInput
+    $where: PostWhereInput
+    $skip: Int
+  ) {
+    feed(
+      after: $after
+      orderBy: $orderBy
+      where: $where
+      first: 5
+      skip: $skip
+    ) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      edges {
+        node {
+          id
+          title
+          author {
+            id
+            name
+          }
+        }
+      }
+      aggregate {
+        count
       }
     }
   }

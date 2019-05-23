@@ -18,8 +18,10 @@ import * as cors from 'cors'
 import { any } from 'prop-types'
 import { PrismaClient } from 'nexus-prisma/dist/types'
 
+import PostConnection from './postConnection'
+
 const schema = makePrismaSchema({
-  types: [Query, Mutation, Aliment, AuthPayload],
+  types: [Query, Mutation, Aliment, AuthPayload, PostConnection],
   prisma: {
     datamodelInfo,
     client: prisma,

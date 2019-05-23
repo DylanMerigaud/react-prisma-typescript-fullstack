@@ -12,16 +12,22 @@ const Query = prismaObjectType({
       type: 'PostConnection',
       args: t.prismaType.postsConnection.args,
       resolve: (_, args, ctx: GraphQLServerContext) => {
-        return ctx.prisma.postsConnection({ where: { published: true } })
+        console.log({ args })
+
+        return ctx.prisma.postsConnection({
+          ...args,
+          where: { ...args.where, published: true },
+        })
       },
     })
-    t.list.field('drafts', {
-      type: 'Post',
+    t.field('drafts', {
+      type: 'PostConnection',
       resolve: async (_, args, ctx: GraphQLServerContext) => {
         const user = await ctx.user
         if (!user) throw Error('Not auth.')
-        return ctx.prisma.posts({
-          where: { published: false, author: { id: user.id } },
+        return ctx.prisma.postsConnection({
+          ...args,
+          where: { ...args.where, published: false, author: { id: user.id } },
         })
       },
     })
