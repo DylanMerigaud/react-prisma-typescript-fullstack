@@ -10,7 +10,8 @@ const Query = prismaObjectType({
     t.prismaFields(['post'])
     t.field('feed', {
       type: 'PostConnection',
-      resolve: (_, args, ctx) => {
+      args: t.prismaType.postsConnection.args,
+      resolve: (_, args, ctx: GraphQLServerContext) => {
         return ctx.prisma.postsConnection({ where: { published: true } })
       },
     })
