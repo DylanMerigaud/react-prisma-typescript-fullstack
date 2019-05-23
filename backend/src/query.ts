@@ -22,6 +22,7 @@ const Query = prismaObjectType({
     })
     t.field('drafts', {
       type: 'PostConnection',
+      args: t.prismaType.postsConnection.args,
       resolve: async (_, args, ctx: GraphQLServerContext) => {
         const user = await ctx.user
         if (!user) throw Error('Not auth.')

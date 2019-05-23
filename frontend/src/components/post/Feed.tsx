@@ -3,13 +3,13 @@ import { useQuery } from 'react-apollo-hooks'
 import useReactRouter from 'use-react-router'
 
 import gql from 'graphql-tag'
+import get from 'lodash.get'
 
 import PostType from './../../types/Post'
 
 import PostList from './PostList'
 
 interface FeedQueryResponse {
-  // data: {
   feed: {
     pageInfo: {
       hasNextPage: boolean
@@ -22,8 +22,6 @@ interface FeedQueryResponse {
       count: number
     }
   }
-  // }
-  // fetchMore: () => void
 }
 
 const Feed: React.FC = () => {
@@ -72,7 +70,9 @@ const Feed: React.FC = () => {
       {feedQuery.data && feedQuery.data.feed && (
         <PostList posts={feedQuery.data.feed.edges.map((e) => e.node)} />
       )}
-      <button onClick={handleLoadMore}>loadMore</button>
+      {get(feedQuery, 'data.feed.pageInfo.hasNextPage') && (
+        <button onClick={handleLoadMore}>loadMore</button>
+      )}
     </div>
   )
 }
