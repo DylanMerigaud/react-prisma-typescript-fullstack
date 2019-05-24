@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { makeStyles, Theme } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
@@ -6,9 +6,12 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import MenuIcon from '@material-ui/icons/Menu'
 import Typography from '@material-ui/core/Typography'
+import MoreVertIcon from '@material-ui/icons/MoreVert'
 
 import clsx from 'clsx'
 import useReactRouter from 'use-react-router'
+
+import HeaderMenu from './HeaderMenu'
 
 const drawerWidth = 240
 
@@ -33,12 +36,38 @@ const useStyles = makeStyles((theme: Theme) => ({
   hide: {
     display: 'none',
   },
+  title: {
+    flexGrow: 1,
+  },
+  moreVert: {
+    color: 'white',
+  },
 }))
 
 const Header: React.FC<Props> = ({ isDrawerOpen, onDrawerOpen }) => {
+  const [menuAnchorEl, setMenuAnchorEl] = useState<Element | null>(null)
   const classes = useStyles({})
 
   const { history } = useReactRouter()
+
+  const handleMenuOpen = (e: any) => {
+    setMenuAnchorEl(e.currentTarget)
+  }
+
+  const handleMenuClose = () => {
+    setMenuAnchorEl(null)
+  }
+
+  const handleLogout = () => {
+    handleMenuClose()
+    localStorage.removeItem('token')
+    history.push('/login')
+  }
+
+  const handleToProfile = () => {
+    handleMenuClose()
+    history.push('/profile')
+  }
 
   return (
     <AppBar
@@ -57,9 +86,23 @@ const Header: React.FC<Props> = ({ isDrawerOpen, onDrawerOpen }) => {
         >
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6" noWrap>
+        <Typography variant="h6" noWrap className={classes.title}>
           React GraphQl Typescript
         </Typography>
+        <IconButton
+          aria-label="More"
+          aria-owns={Boolean(menuAnchorEl) ? 'long-menu' : undefined}
+          aria-haspopup="true"
+          onClick={handleMenuOpen}
+        >
+          <MoreVertIcon className={classes.moreVert} />
+        </IconButton>
+        <HeaderMenu
+          anchorEl={menuAnchorEl}
+          onClose={handleMenuClose}
+          onLogout={handleLogout}
+          onToProfile={handleToProfile}
+        />
       </Toolbar>
     </AppBar>
   )

@@ -1,6 +1,7 @@
 import React from 'react'
 import { useQuery } from 'react-apollo-hooks'
-import useReactRouter from 'use-react-router'
+
+import Button from '@material-ui/core/Button'
 
 import gql from 'graphql-tag'
 import get from 'lodash.get'
@@ -25,8 +26,6 @@ interface FeedQueryResponse {
 }
 
 const Feed: React.FC = () => {
-  const { history } = useReactRouter()
-
   const feedQuery = useQuery<FeedQueryResponse>(FEED_QUERY)
 
   console.log('feedQuery: ', feedQuery)
@@ -58,20 +57,12 @@ const Feed: React.FC = () => {
 
   return (
     <div>
-      <button
-        onClick={() => {
-          localStorage.removeItem('token')
-          history.push('/login')
-        }}
-      >
-        logout
-      </button>
       <h1>Feed</h1>
       {feedQuery.data && feedQuery.data.feed && (
         <PostList posts={feedQuery.data.feed.edges.map((e) => e.node)} />
       )}
       {get(feedQuery, 'data.feed.pageInfo.hasNextPage') && (
-        <button onClick={handleLoadMore}>loadMore</button>
+        <Button onClick={handleLoadMore}>Load More</Button>
       )}
     </div>
   )

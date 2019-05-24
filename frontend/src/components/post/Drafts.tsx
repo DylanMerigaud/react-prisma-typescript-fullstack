@@ -1,6 +1,7 @@
 import React from 'react'
 import { useQuery } from 'react-apollo-hooks'
-import useReactRouter from 'use-react-router'
+
+import Button from '@material-ui/core/Button'
 
 import gql from 'graphql-tag'
 import get from 'lodash.get'
@@ -25,8 +26,6 @@ interface FeedQueryResponse {
 }
 
 const Drafts: React.FC = () => {
-  const { history } = useReactRouter()
-
   const draftsQuery = useQuery(DRAFTS_QUERY)
 
   console.log('draftsQuery: ', draftsQuery)
@@ -58,14 +57,6 @@ const Drafts: React.FC = () => {
 
   return (
     <div>
-      <button
-        onClick={() => {
-          localStorage.removeItem('token')
-          history.push('/login')
-        }}
-      >
-        logout
-      </button>
       <h1>Drafts</h1>
       {get(draftsQuery, 'data.drafts.edges') && (
         <PostList
@@ -73,7 +64,7 @@ const Drafts: React.FC = () => {
         />
       )}
       {get(draftsQuery, 'data.drafts.pageInfo.hasNextPage') && (
-        <button onClick={handleLoadMore}>loadMore</button>
+        <Button onClick={handleLoadMore}>Load More</Button>
       )}
     </div>
   )
