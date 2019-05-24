@@ -66,6 +66,7 @@ const Drafts: React.FC = () => {
       >
         logout
       </button>
+      <h1>Drafts</h1>
       {get(draftsQuery, 'data.drafts.edges') && (
         <PostList
           posts={draftsQuery.data.drafts.edges.map((e: any) => e.node)}

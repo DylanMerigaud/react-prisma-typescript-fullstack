@@ -66,6 +66,7 @@ const Feed: React.FC = () => {
       >
         logout
       </button>
+      <h1>Feed</h1>
       {feedQuery.data && feedQuery.data.feed && (
         <PostList posts={feedQuery.data.feed.edges.map((e) => e.node)} />
       )}

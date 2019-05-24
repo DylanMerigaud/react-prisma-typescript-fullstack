@@ -11,6 +11,7 @@ import gql from 'graphql-tag'
 
 import useReactRouter from 'use-react-router'
 import MeQueryContext from '../../context/MeQueryContext'
+import DialogConfirmDelete from './DialogConfirmDelete'
 
 interface PostQueryResponse {
   post: PostType
@@ -30,6 +31,7 @@ interface MatchParam {
 
 const PostDetail: React.FC = () => {
   const [error, setError] = useState()
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
   const { match, history } = useReactRouter<MatchParam>()
   const client = useApolloClient()
   const meQuery = useContext(MeQueryContext)
@@ -69,17 +71,24 @@ const PostDetail: React.FC = () => {
       },
     })
       .then(() => {
-        client
-          .resetStore()
-          .then(() =>
-            history.push(
-              postQuery.data && postQuery.data.post.published ? '/' : '/drafts',
-            ),
+        client.resetStore().then(() => {
+          history.push(
+            postQuery.data && postQuery.data.post.published ? '/' : '/drafts',
           )
+          handleDeleteDialogClose()
+        })
       })
       .catch((e) => {
         setError(e.message)
       })
+  }
+
+  const handleDeleteDialogClose = () => {
+    setIsDeleteDialogOpen(false)
+  }
+
+  const handleDeleteDialogOpen = () => {
+    setIsDeleteDialogOpen(true)
   }
 
   console.log('PostDetail: ', postQuery)
@@ -108,8 +117,14 @@ const PostDetail: React.FC = () => {
       {isOwner && !postQuery.data.post.published && (
         <Button onClick={handlePublish}>Publish</Button>
       )}
-      {isOwner && <Button onClick={handleDelete}>Delete</Button>}
+      {isOwner && <Button onClick={handleDeleteDialogOpen}>Delete</Button>}
       {error}
+      <DialogConfirmDelete
+        title={postQuery.data.post.title}
+        open={isDeleteDialogOpen}
+        onClose={handleDeleteDialogClose}
+        onConfirm={handleDelete}
+      />
     </div>
   )
 }

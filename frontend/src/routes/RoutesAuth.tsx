@@ -15,6 +15,7 @@ import Drafts from './../components/post/Drafts'
 import PostCreate from './../components/post/PostCreate'
 import PostDetail from './../components/post/PostDetail'
 import PostEdit from './../components/post/PostEdit'
+import Profile from './../components/user/Profile'
 
 import MeQueryContext, { MeQueryResponse } from './../context/MeQueryContext'
 
@@ -32,6 +33,7 @@ const RoutesAuth: React.FC = () => {
           <AuthRoute exact path="/create" component={PostCreate} />
           <AuthRoute path="/post/:id/edit" component={PostEdit} />
           <AuthRoute path="/post/:id" component={PostDetail} />
+          <AuthRoute path="/profile" component={Profile} />
           <Route component={NotFound} />
         </Switch>
       </AuthLayout>
@@ -44,6 +46,7 @@ const ME_QUERY = gql`
     me {
       id
       name
+      email
       role
     }
   }

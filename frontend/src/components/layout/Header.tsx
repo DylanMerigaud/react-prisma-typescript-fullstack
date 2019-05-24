@@ -35,12 +35,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }))
 
-const historyPathToTitle: { [key: string]: string } = {
-  '/': 'Feed',
-  '/drafts': 'Drafts',
-  '/create': 'Create Draft',
-}
-
 const Header: React.FC<Props> = ({ isDrawerOpen, onDrawerOpen }) => {
   const classes = useStyles({})
 
@@ -64,7 +58,7 @@ const Header: React.FC<Props> = ({ isDrawerOpen, onDrawerOpen }) => {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" noWrap>
-          {historyPathToTitle[history.location.pathname] || 'Persistent drawer'}
+          React GraphQl Typescript
         </Typography>
       </Toolbar>
     </AppBar>
