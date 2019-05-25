@@ -85,6 +85,7 @@ const Signup: React.FC<Props> = () => {
       alignItems="center"
       flexDirection="column"
       minHeight="100vh"
+      minWidth="100vw"
       bgcolor="#989898"
     >
       <Box p={3} clone>
