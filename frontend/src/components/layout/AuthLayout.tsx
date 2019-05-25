@@ -46,7 +46,6 @@ const AuthLayout: React.FC<Props> = ({ children }) => {
   const classes = useStyles({})
 
   const resize = useCallback(() => {
-    console.log('resize')
     setState({
       ...state,
       isMobile: checkIsMobile(),

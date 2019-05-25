@@ -22,8 +22,6 @@ import MeQueryContext, { MeQueryResponse } from './../context/MeQueryContext'
 const RoutesAuth: React.FC = () => {
   const meQuery = useQuery<MeQueryResponse>(ME_QUERY)
 
-  console.log({ meQuery })
-
   return (
     <MeQueryContext.Provider value={meQuery}>
       <AuthLayout>

@@ -25,10 +25,23 @@ interface FeedQueryResponse {
   }
 }
 
-const Drafts: React.FC = () => {
-  const draftsQuery = useQuery(DRAFTS_QUERY)
+interface DraftsQueryResponse {
+  drafts: {
+    pageInfo: {
+      hasNextPage: boolean
+      endCursor: string
+    }
+    edges: {
+      node: PostType
+    }[]
+    aggregate: {
+      count: number
+    }
+  }
+}
 
-  console.log('draftsQuery: ', draftsQuery)
+const Drafts: React.FC = () => {
+  const draftsQuery = useQuery<DraftsQueryResponse>(DRAFTS_QUERY)
 
   const handleLoadMore = () => {
     if (!draftsQuery || !draftsQuery.data || !draftsQuery.data.drafts) return
@@ -58,7 +71,7 @@ const Drafts: React.FC = () => {
   return (
     <div>
       <h1>Drafts</h1>
-      {get(draftsQuery, 'data.drafts.edges') && (
+      {draftsQuery && draftsQuery.data && draftsQuery.data.drafts && (
         <PostList
           posts={draftsQuery.data.drafts.edges.map((e: any) => e.node)}
         />

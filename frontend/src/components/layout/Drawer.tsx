@@ -78,7 +78,7 @@ const MyDrawer: React.FC<Props> = ({
         </IconButton>
       </div>
       <Divider />
-      <List>
+      <List onClick={isMobile ? onDrawerClose : undefined}>
         {items.map((item, index) => (
           <ListItem
             button

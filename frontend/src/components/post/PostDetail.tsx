@@ -72,10 +72,10 @@ const PostDetail: React.FC = () => {
     })
       .then(() => {
         client.resetStore().then(() => {
+          handleDeleteDialogClose()
           history.push(
             postQuery.data && postQuery.data.post.published ? '/' : '/drafts',
           )
-          handleDeleteDialogClose()
         })
       })
       .catch((e) => {
@@ -91,13 +91,11 @@ const PostDetail: React.FC = () => {
     setIsDeleteDialogOpen(true)
   }
 
-  console.log('PostDetail: ', postQuery)
-
   if (!meQuery || !meQuery.data || !postQuery || !postQuery.data)
     return <div>ERROR</div>
   if (meQuery.loading || postQuery.loading) return <div>Loading</div>
   if (postQuery.error)
-    return <div>Post query error: {postQuery.error.message}</div> // TODO Error || Loading
+    return <div>Post query error: {postQuery.error.message}</div>
   if (meQuery.error) return <div>Me query error: {meQuery.error.message}</div>
   if (!postQuery.data.post) return <div>Post not found</div>
 

@@ -70,7 +70,7 @@ const Login: React.FC = () => {
   }
 
   return (
-    <Box p={1} clone>
+    <Box p={3} clone>
       <Paper>
         <h1>Create Draft</h1>
         <Formik

@@ -28,8 +28,6 @@ interface FeedQueryResponse {
 const Feed: React.FC = () => {
   const feedQuery = useQuery<FeedQueryResponse>(FEED_QUERY)
 
-  console.log('feedQuery: ', feedQuery)
-
   const handleLoadMore = () => {
     if (!feedQuery || !feedQuery.data || !feedQuery.data.feed) return
     feedQuery.fetchMore({
