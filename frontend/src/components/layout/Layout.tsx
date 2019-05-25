@@ -8,17 +8,8 @@ import Box from '@material-ui/core/Box'
 const Layout: React.FC = () => {
   return (
     <Router>
-      <Box
-        clone
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        flexDirection="column"
-        minHeight="100vh"
-      >
-        <Container>
-          <GlobalRoutes />
-        </Container>
+      <Box display="flex">
+        <GlobalRoutes />
       </Box>
     </Router>
   )

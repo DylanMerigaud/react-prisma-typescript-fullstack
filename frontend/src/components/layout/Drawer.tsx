@@ -44,7 +44,19 @@ const items = [
   },
 ]
 
-const MyDrawer: React.FC<Props> = ({ open, onDrawerClose }) => {
+interface Props {
+  open: boolean
+  onDrawerClose: () => void
+  isMobile: boolean
+  onClose: () => void
+}
+
+const MyDrawer: React.FC<Props> = ({
+  open,
+  onDrawerClose,
+  isMobile,
+  onClose,
+}) => {
   const classes = useStyles({})
 
   const { history } = useReactRouter()
@@ -52,12 +64,13 @@ const MyDrawer: React.FC<Props> = ({ open, onDrawerClose }) => {
   return (
     <Drawer
       className={classes.drawer}
-      variant="persistent"
+      variant={isMobile ? 'temporary' : 'persistent'}
       anchor="left"
       open={open}
       classes={{
         paper: classes.drawerPaper,
       }}
+      onClose={onClose}
     >
       <div className={classes.drawerHeader}>
         <IconButton onClick={onDrawerClose}>
@@ -82,11 +95,6 @@ const MyDrawer: React.FC<Props> = ({ open, onDrawerClose }) => {
       <Divider />
     </Drawer>
   )
-}
-
-interface Props {
-  open: boolean
-  onDrawerClose: () => void
 }
 
 export default MyDrawer

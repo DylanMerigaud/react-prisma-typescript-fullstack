@@ -44,7 +44,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }))
 
-const Header: React.FC<Props> = ({ isDrawerOpen, onDrawerOpen }) => {
+interface Props {
+  isDrawerOpen: boolean
+  onDrawerOpen: () => void
+  isMobile: boolean
+}
+
+const Header: React.FC<Props> = ({ isDrawerOpen, onDrawerOpen, isMobile }) => {
   const [menuAnchorEl, setMenuAnchorEl] = useState<Element | null>(null)
   const classes = useStyles({})
 
@@ -73,7 +79,7 @@ const Header: React.FC<Props> = ({ isDrawerOpen, onDrawerOpen }) => {
     <AppBar
       position="fixed"
       className={clsx(classes.appBar, {
-        [classes.appBarShift]: isDrawerOpen,
+        [classes.appBarShift]: isDrawerOpen && !isMobile,
       })}
     >
       <Toolbar>
@@ -82,7 +88,10 @@ const Header: React.FC<Props> = ({ isDrawerOpen, onDrawerOpen }) => {
           aria-label="Open drawer"
           onClick={onDrawerOpen}
           edge="start"
-          className={clsx(classes.menuButton, isDrawerOpen && classes.hide)}
+          className={clsx(
+            classes.menuButton,
+            isDrawerOpen && !isMobile && classes.hide,
+          )}
         >
           <MenuIcon />
         </IconButton>
@@ -106,11 +115,6 @@ const Header: React.FC<Props> = ({ isDrawerOpen, onDrawerOpen }) => {
       </Toolbar>
     </AppBar>
   )
-}
-
-interface Props {
-  isDrawerOpen: boolean
-  onDrawerOpen: () => void
 }
 
 export default Header
