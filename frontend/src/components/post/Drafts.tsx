@@ -11,7 +11,7 @@ import PostType from './../../types/Post'
 import PostList from './PostList'
 
 interface FeedQueryResponse {
-  feed: {
+  drafts: {
     pageInfo: {
       hasNextPage: boolean
       endCursor: string
@@ -25,55 +25,72 @@ interface FeedQueryResponse {
   }
 }
 
-const Feed: React.FC = () => {
-  const feedQuery = useQuery<FeedQueryResponse>(FEED_QUERY)
+interface DraftsQueryResponse {
+  drafts: {
+    pageInfo: {
+      hasNextPage: boolean
+      endCursor: string
+    }
+    edges: {
+      node: PostType
+    }[]
+    aggregate: {
+      count: number
+    }
+  }
+}
+
+const Drafts: React.FC = () => {
+  const draftsQuery = useQuery<DraftsQueryResponse>(DRAFTS_QUERY)
 
   const handleLoadMore = useCallback(() => {
-    if (!feedQuery || !feedQuery.data || !feedQuery.data.feed) return
-    feedQuery.fetchMore({
+    if (!draftsQuery || !draftsQuery.data || !draftsQuery.data.drafts) return
+    draftsQuery.fetchMore({
       variables: {
-        after: feedQuery.data.feed.pageInfo.endCursor,
+        after: draftsQuery.data.drafts.pageInfo.endCursor,
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
         if (!fetchMoreResult) {
           return previousResult
         }
         return {
-          feed: {
+          drafts: {
             __typename: 'PostConnection',
-            aggregate: fetchMoreResult.feed.aggregate,
-            pageInfo: fetchMoreResult.feed.pageInfo,
+            aggregate: fetchMoreResult.drafts.aggregate,
+            pageInfo: fetchMoreResult.drafts.pageInfo,
             edges: [
-              ...previousResult.feed.edges,
-              ...fetchMoreResult.feed.edges,
+              ...previousResult.drafts.edges,
+              ...fetchMoreResult.drafts.edges,
             ],
           },
         }
       },
     })
-  }, [feedQuery])
+  }, [draftsQuery])
 
   return (
     <div>
-      <h1>Feed</h1>
-      {feedQuery.data && feedQuery.data.feed && (
-        <PostList posts={feedQuery.data.feed.edges.map((e) => e.node)} />
+      <h1>Drafts</h1>
+      {draftsQuery && draftsQuery.data && draftsQuery.data.drafts && (
+        <PostList
+          posts={draftsQuery.data.drafts.edges.map((e: any) => e.node)}
+        />
       )}
-      {get(feedQuery, 'data.feed.pageInfo.hasNextPage') && (
+      {get(draftsQuery, 'data.drafts.pageInfo.hasNextPage') && (
         <Button onClick={handleLoadMore}>Load More</Button>
       )}
     </div>
   )
 }
 
-const FEED_QUERY = gql`
-  query Feed(
+const DRAFTS_QUERY = gql`
+  query Drafts(
     $after: String
     $orderBy: PostOrderByInput
     $where: PostWhereInput
     $skip: Int
   ) {
-    feed(
+    drafts(
       after: $after
       orderBy: $orderBy
       where: $where
@@ -101,4 +118,4 @@ const FEED_QUERY = gql`
   }
 `
 
-export default Feed
+export default Drafts

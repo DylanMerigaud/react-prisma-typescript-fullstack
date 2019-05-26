@@ -1,24 +1,27 @@
-import { prisma, } from './generated/prisma-client'
+import { prisma, User } from './generated/prisma-client'
 import datamodelInfo from './generated/nexus-prisma'
 import * as path from 'path'
-import { makePrismaSchema, } from 'nexus-prisma'
-import { GraphQLServer, } from 'graphql-yoga'
-import { rule, shield, } from 'graphql-shield'
-import { ContextParameters, } from 'graphql-yoga/dist/types'
+import { makePrismaSchema } from 'nexus-prisma'
+import { GraphQLServer } from 'graphql-yoga'
+import { ContextParameters } from 'graphql-yoga/dist/types'
 
 import Query from './query'
 import Mutation from './mutation'
 
 import permissions from './permissions'
 
-import { Aliment, AuthPayload, } from './schemas'
+import { Aliment, AuthPayload } from './schemas'
 
-import { getUser, } from './auth'
+import { getUser } from './auth'
 
 import * as cors from 'cors'
+import { any } from 'prop-types'
+import { PrismaClient } from 'nexus-prisma/dist/types'
+
+import PostConnection from './postConnection'
 
 const schema = makePrismaSchema({
-  types: [Query, Mutation, Aliment, AuthPayload,],
+  types: [Query, Mutation, Aliment, AuthPayload, PostConnection],
   prisma: {
     datamodelInfo,
     client: prisma,
@@ -36,7 +39,7 @@ const server = new GraphQLServer({
     user: getUser(req),
     prisma,
   }),
-  middlewares: [permissions,],
+  middlewares: [permissions],
 })
 
 const options = {
@@ -52,10 +55,10 @@ server.express.get('/', (req, res) => {
   res.send('Hello world!')
 })
 
-server.start(options, ({ port, playground, }) =>
+server.start(options, ({ port, playground }) =>
   console.log(
-    `Server started, listening on port ${port} for incoming requests.\nYou can test the playground at http://localhost:4000${playground}`
-  )
+    `Server started, listening on port ${port} for incoming requests.\nYou can test the playground at http://localhost:4000${playground}`,
+  ),
 )
 
 server.express.use((req, res) => {
