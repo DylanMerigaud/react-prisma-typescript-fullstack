@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useCallback, ReactChild } from 'react'
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  ReactChild,
+  useRef,
+} from 'react'
 import { makeStyles, Theme } from '@material-ui/core/styles'
 import clsx from 'clsx'
 
@@ -45,23 +51,40 @@ const AuthLayout: React.FC<Props> = ({ children }) => {
   const [state, setState] = useState(initialState)
   const classes = useStyles({})
   console.log('AuthLayout')
+  const checkIsMobile = useCallback(
+    () => (window.innerWidth < 600 ? true : false),
+    [],
+  )
+
   const resize = useCallback(() => {
-    setState({
-      ...state,
+    setState((currentState) => ({
+      ...currentState,
       isMobile: checkIsMobile(),
       isDrawerOpen: checkIsMobile() ? false : true,
-    })
-  }, [state])
+    }))
+  }, [checkIsMobile])
 
+  const initialResizeCalled = useRef(false)
   useEffect(() => {
     window.addEventListener('resize', resize)
-    resize()
+    if (!initialResizeCalled.current) {
+      resize()
+      initialResizeCalled.current = true
+    }
+    return () => {
+      window.removeEventListener('resize', resize)
+    }
   }, [resize])
 
-  const checkIsMobile = () => (window.innerWidth < 600 ? true : false)
-
-  const handleDrawerClose = () => setState({ ...state, isDrawerOpen: false })
-  const handleDrawerOpen = () => setState({ ...state, isDrawerOpen: true })
+  const handleDrawerClose = useCallback(
+    () =>
+      setState((currentState) => ({ ...currentState, isDrawerOpen: false })),
+    [],
+  )
+  const handleDrawerOpen = useCallback(
+    () => setState((currentState) => ({ ...currentState, isDrawerOpen: true })),
+    [],
+  )
 
   return (
     <React.Fragment>
