@@ -1,7 +1,5 @@
 # React Prisma Typescript Fullstack
 
-- [Yarn Workspace](https://yarnpkg.com/en/docs/workspaces)
-
 ### Backend
 
 - [Express](https://www.npmjs.com/package/express)
@@ -11,11 +9,11 @@
 ### Frontend
 
 - [Create-React-App](https://github.com/facebook/create-react-app)
+- [Material-UI v4](https://www.npmjs.com/package/@material-ui/core), [AtomicCSS using Box](https://material-ui.com/components/box/)
+- [React-apollo](https://www.npmjs.com/package/react-apollo), [react-apollo-hooks](https://www.npmjs.com/package/react-apollo-hooks)
 - [Formik](https://www.npmjs.com/package/formik) for forms
 - [Yup](https://github.com/jquense/yup) for form schema validation
-- [Material-UI v4](https://www.npmjs.com/package/@material-ui/core), [AtomicCss using Box](https://material-ui.com/components/box/)
-- [React-apollo](https://www.npmjs.com/package/react-apollo), [react-apollo-hooks](https://www.npmjs.com/package/react-apollo-hooks)
-- Route authentication verification
+- [React-Router](https://reacttraining.com/react-router/web/guides/quick-start) with route authentication verification
 
 ### Installation
 
@@ -41,6 +39,10 @@ _in a new terminal / window_
 
 - Front is hosted on [Firebase Hosting](https://firebase.google.com/docs/hosting)
 - Back is hosted on [Google Cloud App Engine](https://cloud.google.com/appengine/)
+
+### Workspace
+
+- [Yarn Workspace](https://yarnpkg.com/en/docs/workspaces)
 
 ### Licence
 
