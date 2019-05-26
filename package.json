@@ -1,8 +1,11 @@
 {
-  "name": "messenger-project",
+  "name": "react-prisma-typescript-fullstack",
   "version": "1.0.0",
   "repository": "git@github.com:DylanMerigaud/messenger-project.git",
   "author": "DylanMerigaud <dylanmerigaud@gmail.com>",
+  "contributors": [
+    "Léopold Szabatura <l.szabatura@gmail.com>"
+  ],
   "license": "MIT",
   "workspaces": {
     "packages": [
