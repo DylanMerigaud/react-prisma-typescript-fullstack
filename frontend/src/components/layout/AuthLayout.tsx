@@ -50,7 +50,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 const AuthLayout: React.FC<Props> = ({ children }) => {
   const [state, setState] = useState(initialState)
   const classes = useStyles({})
-  console.log('AuthLayout')
   const checkIsMobile = useCallback(
     () => (window.innerWidth < 600 ? true : false),
     [],
