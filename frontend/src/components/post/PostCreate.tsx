@@ -99,9 +99,11 @@ const Login: React.FC = () => {
                   value={values.title}
                 />
                 {errors.title && touched.title && errors.title}
-                <Button type="submit" disabled={isSubmitting}>
-                  Submit
-                </Button>
+                <Box mt={2} clone>
+                  <Button type="submit" disabled={isSubmitting}>
+                    Submit
+                  </Button>
+                </Box>
               </form>
             </Box>
           )}

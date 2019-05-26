@@ -8,12 +8,6 @@ import Signup from './../components/auth/Signup'
 
 import NoAuthRoute from './../components/NoAuthRoute'
 
-// const initialState = {
-// 	isSideBarOpen: false,
-// 	variant: 'permanent',
-// 	isMobile: false
-// }
-
 const GlobalRoutes: React.FC = () => {
   return (
     <Switch>

@@ -98,7 +98,7 @@ const PostEdit: React.FC = () => {
   if (!postQuery.data.post) return <div>Post not found</div>
 
   return (
-    <Box p={1} clone>
+    <Box p={3} clone>
       <Paper>
         <h1>Update {postQuery.data.post.published ? 'Post' : 'Draft'}</h1>
         <Formik
@@ -127,9 +127,11 @@ const PostEdit: React.FC = () => {
                   value={values.title}
                 />
                 {errors.title && touched.title && errors.title}
-                <Button type="submit" disabled={isSubmitting}>
-                  Save
-                </Button>
+                <Box mt={2} clone>
+                  <Button type="submit" disabled={isSubmitting}>
+                    Save
+                  </Button>
+                </Box>
               </form>
             </Box>
           )}
