@@ -1,6 +1,4 @@
-# React Prisma Typescript
-
-### Features
+# React Prisma Typescript Fullstack
 
 - [Yarn Workspace](https://yarnpkg.com/en/docs/workspaces)
 
