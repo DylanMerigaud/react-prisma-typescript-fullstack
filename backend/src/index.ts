@@ -15,8 +15,6 @@ import { Aliment, AuthPayload } from './schemas'
 import { getUser } from './auth'
 
 import * as cors from 'cors'
-import { any } from 'prop-types'
-import { PrismaClient } from 'nexus-prisma/dist/types'
 
 import PostConnection from './postConnection'
 
