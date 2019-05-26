@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 
 import { makeStyles, Theme } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
@@ -56,24 +56,27 @@ const Header: React.FC<Props> = ({ isDrawerOpen, onDrawerOpen, isMobile }) => {
 
   const { history } = useReactRouter()
 
-  const handleMenuOpen = (e: any) => {
-    setMenuAnchorEl(e.currentTarget)
-  }
+  const handleMenuOpen = useCallback(
+    (e: any) => {
+      setMenuAnchorEl(e.currentTarget)
+    },
+    [setMenuAnchorEl],
+  )
 
-  const handleMenuClose = () => {
+  const handleMenuClose = useCallback(() => {
     setMenuAnchorEl(null)
-  }
+  }, [setMenuAnchorEl])
 
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     handleMenuClose()
     localStorage.removeItem('token')
     history.push('/login')
-  }
+  }, [handleMenuClose, history])
 
-  const handleToProfile = () => {
+  const handleToProfile = useCallback(() => {
     handleMenuClose()
     history.push('/profile')
-  }
+  }, [handleMenuClose, history])
 
   return (
     <AppBar

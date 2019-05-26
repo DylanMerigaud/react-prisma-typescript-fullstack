@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { Formik, FormikActions } from 'formik'
 
 import TextField from '@material-ui/core/TextField'
@@ -52,31 +52,31 @@ const Signup: React.FC<Props> = () => {
   const { history } = useReactRouter()
   const [error, setError] = useState<string>()
 
-  const handleSubmit = (
-    values: FormValues,
-    { setSubmitting }: FormikActions<FormValues>,
-  ) => {
-    setError(undefined)
-    signupMutation({
-      variables: {
-        name: values.name,
-        email: values.email,
-        password: values.password,
-      },
-    })
-      .then((res) => {
-        if (!res.data) throw Error()
-        // console.log('signup success: ', res.data.login)
+  const handleSubmit = useCallback(
+    (values: FormValues, { setSubmitting }: FormikActions<FormValues>) => {
+      setError(undefined)
+      signupMutation({
+        variables: {
+          name: values.name,
+          email: values.email,
+          password: values.password,
+        },
+      })
+        .then((res) => {
+          if (!res.data) throw Error()
+          // console.log('signup success: ', res.data.login)
 
-        localStorage.setItem('token', res.data.signup.token)
-        history.push('/')
-      })
-      .catch((e) => {
-        console.error(e)
-        setError(e.message)
-        setSubmitting(false)
-      })
-  }
+          localStorage.setItem('token', res.data.signup.token)
+          history.push('/')
+        })
+        .catch((e) => {
+          console.error(e)
+          setError(e.message)
+          setSubmitting(false)
+        })
+    },
+    [history, signupMutation],
+  )
 
   return (
     <Box
