@@ -99,7 +99,7 @@ const Header: React.FC<Props> = ({ isDrawerOpen, onDrawerOpen, isMobile }) => {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" noWrap className={classes.title}>
-          React Prisma Typescript
+          React Prisma Typescript Fullstack
         </Typography>
         <IconButton
           aria-label="More"
