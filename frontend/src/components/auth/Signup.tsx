@@ -134,13 +134,23 @@ const Signup: React.FC<Props> = () => {
                     value={values.password}
                   />
                   {errors.password && touched.password && errors.password}
-                  <Button type="submit" disabled={isSubmitting}>
-                    Submit
-                  </Button>
+                  <Box clone my={2}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      type="submit"
+                      disabled={isSubmitting}
+                    >
+                      Submit
+                    </Button>
+                  </Box>
                 </form>
               </Box>
             )}
           </Formik>
+          <Box display="flex" flexDirection="column" alignItems="flex-end">
+            <Button onClick={() => history.push('/login')}>Login</Button>
+          </Box>
           {error}
         </Paper>
       </Box>

@@ -56,7 +56,7 @@ const AuthLayout: React.FC<Props> = ({ children }) => {
   useEffect(() => {
     window.addEventListener('resize', resize)
     resize()
-  }, [resize])
+  }, []) // eslint-disable-line
 
   const checkIsMobile = () => (window.innerWidth < 600 ? true : false)
 
