@@ -131,7 +131,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - backend/generated
+            - backend/src/generated
   deploy-backend:
     <<: *useGcloud
     steps:
