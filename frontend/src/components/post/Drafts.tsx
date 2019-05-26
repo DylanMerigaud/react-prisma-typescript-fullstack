@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useQuery } from 'react-apollo-hooks'
 
 import Button from '@material-ui/core/Button'
@@ -43,7 +43,7 @@ interface DraftsQueryResponse {
 const Drafts: React.FC = () => {
   const draftsQuery = useQuery<DraftsQueryResponse>(DRAFTS_QUERY)
 
-  const handleLoadMore = () => {
+  const handleLoadMore = useCallback(() => {
     if (!draftsQuery || !draftsQuery.data || !draftsQuery.data.drafts) return
     draftsQuery.fetchMore({
       variables: {
@@ -66,7 +66,7 @@ const Drafts: React.FC = () => {
         }
       },
     })
-  }
+  }, [draftsQuery])
 
   return (
     <div>

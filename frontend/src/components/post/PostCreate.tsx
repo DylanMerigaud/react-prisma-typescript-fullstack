@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useCallback } from 'react'
 import { Formik, FormikActions } from 'formik'
 
 import TextField from '@material-ui/core/TextField'
@@ -45,29 +45,29 @@ const Login: React.FC = () => {
   const meQuery = useContext(MeQueryContext)
   const client = useApolloClient()
 
-  const handleSubmit = (
-    values: FormValues,
-    { setSubmitting }: FormikActions<FormValues>,
-  ) => {
-    if (!meQuery || !meQuery.data) return
+  const handleSubmit = useCallback(
+    (values: FormValues, { setSubmitting }: FormikActions<FormValues>) => {
+      if (!meQuery || !meQuery.data) return
 
-    setError(undefined)
-    createDraftMutation({
-      variables: {
-        title: values.title,
-        authorId: meQuery.data.me.id,
-      },
-    })
-      .then((res) => {
-        if (!res.data) return
-        client.resetStore().then(() => history.push('/drafts'))
+      setError(undefined)
+      createDraftMutation({
+        variables: {
+          title: values.title,
+          authorId: meQuery.data.me.id,
+        },
       })
-      .catch((e) => {
-        console.error(e)
-        setError(e.message)
-        setSubmitting(false)
-      })
-  }
+        .then((res) => {
+          if (!res.data) return
+          client.resetStore().then(() => history.push('/drafts'))
+        })
+        .catch((e) => {
+          console.error(e)
+          setError(e.message)
+          setSubmitting(false)
+        })
+    },
+    [client, createDraftMutation, history, meQuery],
+  )
 
   return (
     <Box p={3} clone>

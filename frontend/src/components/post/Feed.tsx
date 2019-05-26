@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useQuery } from 'react-apollo-hooks'
 
 import Button from '@material-ui/core/Button'
@@ -28,7 +28,7 @@ interface FeedQueryResponse {
 const Feed: React.FC = () => {
   const feedQuery = useQuery<FeedQueryResponse>(FEED_QUERY)
 
-  const handleLoadMore = () => {
+  const handleLoadMore = useCallback(() => {
     if (!feedQuery || !feedQuery.data || !feedQuery.data.feed) return
     feedQuery.fetchMore({
       variables: {
@@ -51,7 +51,7 @@ const Feed: React.FC = () => {
         }
       },
     })
-  }
+  }, [feedQuery])
 
   return (
     <div>

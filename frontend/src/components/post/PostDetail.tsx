@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useCallback } from 'react'
 
 import PostType from './../../types/Post'
 
@@ -30,8 +30,8 @@ interface MatchParam {
 }
 
 const PostDetail: React.FC = () => {
-  const [error, setError] = useState()
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+  const [error, setError] = useState<string>()
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false)
   const { match, history } = useReactRouter<MatchParam>()
   const client = useApolloClient()
   const meQuery = useContext(MeQueryContext)
@@ -46,7 +46,7 @@ const PostDetail: React.FC = () => {
 
   const deleteMutation = useMutation<DeleteMutationResponse>(DELETE_MUTATION)
 
-  const handlePublish = () => {
+  const handlePublish = useCallback(() => {
     if (!postQuery.data) return
 
     publishMutation({
@@ -60,9 +60,13 @@ const PostDetail: React.FC = () => {
       .catch((e) => {
         setError(e.message)
       })
-  }
+  }, [client, history, postQuery.data, publishMutation])
 
-  const handleDelete = () => {
+  const handleDeleteDialogClose = useCallback(() => {
+    setIsDeleteDialogOpen(false)
+  }, [])
+
+  const handleDelete = useCallback(() => {
     if (!postQuery.data) return
 
     deleteMutation({
@@ -81,15 +85,11 @@ const PostDetail: React.FC = () => {
       .catch((e) => {
         setError(e.message)
       })
-  }
+  }, [client, deleteMutation, handleDeleteDialogClose, history, postQuery.data])
 
-  const handleDeleteDialogClose = () => {
-    setIsDeleteDialogOpen(false)
-  }
-
-  const handleDeleteDialogOpen = () => {
+  const handleDeleteDialogOpen = useCallback(() => {
     setIsDeleteDialogOpen(true)
-  }
+  }, [])
 
   if (!meQuery || !meQuery.data || !postQuery || !postQuery.data)
     return <div>ERROR</div>

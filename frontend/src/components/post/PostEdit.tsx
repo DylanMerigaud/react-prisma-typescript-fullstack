@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { Formik, FormikActions } from 'formik'
 
 import TextField from '@material-ui/core/TextField'
@@ -57,39 +57,41 @@ const PostEdit: React.FC = () => {
     },
   })
 
-  const handleSubmit = (
-    values: FormValues,
-    { setSubmitting }: FormikActions<FormValues>,
-  ) => {
-    if (!postQuery || !postQuery.data || !postQuery.data.post) return
+  const handleSubmit = useCallback(
+    (values: FormValues, { setSubmitting }: FormikActions<FormValues>) => {
+      if (!postQuery || !postQuery.data || !postQuery.data.post) return
 
-    setError(undefined)
-    createDraftMutation({
-      variables: {
-        data: {
-          title: values.title,
+      setError(undefined)
+      createDraftMutation({
+        variables: {
+          data: {
+            title: values.title,
+          },
+          where: {
+            id: postQuery.data.post.id,
+          },
         },
-        where: {
-          id: postQuery.data.post.id,
-        },
-      },
-    })
-      .then((res) => {
-        if (!res.data) return
-        client
-          .resetStore()
-          .then(() =>
-            history.push(
-              postQuery.data && postQuery.data.post.published ? '/' : '/drafts',
-            ),
-          ) // TODO wtf typescript
       })
-      .catch((e) => {
-        console.error(e)
-        setError(e.message)
-        setSubmitting(false)
-      })
-  }
+        .then((res) => {
+          if (!res.data) return
+          client
+            .resetStore()
+            .then(() =>
+              history.push(
+                postQuery.data && postQuery.data.post.published
+                  ? '/'
+                  : '/drafts',
+              ),
+            ) // TODO wtf typescript
+        })
+        .catch((e) => {
+          console.error(e)
+          setError(e.message)
+          setSubmitting(false)
+        })
+    },
+    [client, createDraftMutation, history, postQuery],
+  )
 
   if (!postQuery || !postQuery.data) return <div>ERROR</div>
   if (postQuery.loading) return <div>Loading</div>
