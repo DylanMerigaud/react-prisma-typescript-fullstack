@@ -6,13 +6,13 @@
 
 - [Express](https://www.npmjs.com/package/express)
 - [Prisma](https://github.com/prisma/prisma) & [Nexus](https://www.npmjs.com/package/nexus) for generating schemas and resolvers
-- [Yup](https://github.com/jquense/yup) for schemas validation
+- [Yup](https://github.com/jquense/yup) for schema validation
 
 ### Frontend
 
 - [Create-React-App](https://github.com/facebook/create-react-app)
 - [Formik](https://www.npmjs.com/package/formik) for forms
-- [Yup](https://github.com/jquense/yup) for schemas validation
+- [Yup](https://github.com/jquense/yup) for form schema validation
 - [Material-UI v4](https://www.npmjs.com/package/@material-ui/core), [AtomicCss using Box](https://material-ui.com/components/box/)
 - [React-apollo](https://www.npmjs.com/package/react-apollo), [react-apollo-hooks](https://www.npmjs.com/package/react-apollo-hooks)
 - Route authentication verification
