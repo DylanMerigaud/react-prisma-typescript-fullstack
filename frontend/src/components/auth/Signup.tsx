@@ -104,7 +104,6 @@ const Signup: React.FC<Props> = () => {
               handleBlur,
               handleSubmit,
               isSubmitting,
-              /* and other goodies */
             }) => (
               <Box display="flex" flexDirection="column" clone>
                 <form onSubmit={handleSubmit}>
@@ -129,6 +128,7 @@ const Signup: React.FC<Props> = () => {
                   <TextField
                     type="password"
                     name="password"
+                    placeholder="password"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.password}
