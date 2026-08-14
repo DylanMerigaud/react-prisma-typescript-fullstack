@@ -122,9 +122,10 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
-      - run:
-          name: Install prisma
-          command: yarn global add prisma
+      # The Prisma 1 CLI is an exact devDependency of backend (1.33.0), matching the
+      # prismagraphql/prisma:1.33 server image. It arrives through the attached
+      # workspace, so no global install is needed. Installing one globally without a
+      # version was what pulled in a newer 1.x CLI and broke deploy against 1.33.
       - run:
           name: Deploy prisma
           command: cd backend && yarn prisma:deploy
