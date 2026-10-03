@@ -46,5 +46,8 @@
       "eslint --fix",
       "git add"
     ]
+  },
+  "resolutions": {
+    "adm-zip": "^0.6.1"
   }
 }
